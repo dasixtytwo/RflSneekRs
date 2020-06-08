@@ -1,0 +1,177 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+  xmlns:app="http://schemas.android.com/apk/res-auto"
+  xmlns:tools="http://schemas.android.com/tools"
+  android:layout_width="match_parent"
+  android:layout_height="match_parent"
+  tools:context=".authentication.LoginActivity"
+  android:fillViewport="true">
+
+  <androidx.constraintlayout.widget.ConstraintLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:paddingStart="20dp"
+    android:paddingTop="20dp"
+    android:paddingEnd="20dp"
+    android:paddingBottom="20dp">
+
+    <ImageView
+      android:id="@+id/imageView"
+      android:layout_width="364dp"
+      android:layout_height="53dp"
+      android:contentDescription="@string/register_image"
+      app:layout_constraintEnd_toEndOf="parent"
+      app:layout_constraintHorizontal_bias="0.5"
+      app:layout_constraintStart_toStartOf="parent"
+      app:layout_constraintTop_toTopOf="parent"
+      app:srcCompat="@drawable/sneak_logo" />
+
+    <TextView
+      android:id="@+id/regTitleTv"
+      android:layout_width="0dp"
+      android:layout_height="wrap_content"
+      android:layout_marginTop="16dp"
+      android:fontFamily="@font/barlow_condensed_bold"
+      android:text="@string/register_title"
+      android:textAlignment="center"
+      android:textColor="@color/colorFilled"
+      android:textSize="24sp"
+      android:typeface="normal"
+      app:layout_constraintEnd_toEndOf="parent"
+      app:layout_constraintHorizontal_bias="0.5"
+      app:layout_constraintStart_toStartOf="parent"
+      app:layout_constraintTop_toBottomOf="@+id/imageView"
+      tools:text="@string/login_title" />
+
+    <com.google.android.material.textfield.TextInputLayout
+      android:id="@+id/textInputLayout3"
+      android:layout_width="0dp"
+      android:layout_height="wrap_content"
+      android:layout_marginTop="10dp"
+      app:layout_constraintEnd_toEndOf="parent"
+      app:layout_constraintHorizontal_bias="0.5"
+      app:layout_constraintStart_toStartOf="parent"
+      app:layout_constraintTop_toBottomOf="@+id/regTitleTv">
+
+      <EditText
+        android:id="@+id/email_edt_text"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/barlow_regular"
+        android:hint="@string/email_hint"
+        android:inputType="textEmailAddress"
+        android:textSize="18sp"
+        android:typeface="normal" />
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+      android:id="@+id/textInputLayout4"
+      android:layout_width="0dp"
+      android:layout_height="wrap_content"
+      android:layout_marginTop="10dp"
+      app:layout_constraintEnd_toEndOf="parent"
+      app:layout_constraintHorizontal_bias="0.5"
+      app:layout_constraintStart_toStartOf="parent"
+      app:layout_constraintTop_toBottomOf="@+id/textInputLayout3">
+
+      <EditText
+        android:id="@+id/pass_edt_text"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/barlow_regular"
+        android:hint="@string/password_hint"
+        android:inputType="textPassword"
+        android:textSize="18sp"
+        android:typeface="normal" />
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <TextView
+      android:id="@+id/reset_pass_tv"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_marginTop="20dp"
+      android:clickable="true"
+      android:text="@string/get_password_link"
+      app:layout_constraintEnd_toEndOf="parent"
+      app:layout_constraintTop_toBottomOf="@+id/textInputLayout4"
+      android:focusable="true" />
+
+    <TextView
+      android:id="@+id/activity_main_link"
+      android:layout_width="0dp"
+      android:layout_height="wrap_content"
+      android:layout_marginTop="30dp"
+      android:fontFamily="@font/barlow_regular"
+      android:text="@string/login_hlink"
+      android:textAlignment="center"
+      android:textSize="14sp"
+      android:typeface="normal"
+      app:layout_constraintBottom_toTopOf="@+id/login_btn"
+      app:layout_constraintEnd_toEndOf="parent"
+      app:layout_constraintHorizontal_bias="0.6"
+      app:layout_constraintStart_toStartOf="parent"
+      app:layout_constraintTop_toBottomOf="@+id/reset_pass_tv"
+      app:layout_constraintVertical_bias="0.0" />
+
+    <Button
+      android:id="@+id/login_btn"
+      android:layout_width="0dp"
+      android:layout_height="wrap_content"
+      android:layout_marginTop="30dp"
+      android:layout_marginBottom="10dp"
+      android:background="@drawable/solid_button_style"
+      android:fontFamily="@font/barlow_condensed_bold"
+      android:text="@string/login_btn"
+      android:textColor="@color/colorUnFilled"
+      android:textSize="18sp"
+      android:typeface="normal"
+      app:layout_constraintBottom_toTopOf="@+id/textView"
+      app:layout_constraintEnd_toEndOf="parent"
+      app:layout_constraintHorizontal_bias="0.6"
+      app:layout_constraintStart_toStartOf="parent"
+      app:layout_constraintTop_toBottomOf="@+id/progressBar"
+      app:layout_constraintVertical_bias="1.0" />
+
+    <TextView
+      android:id="@+id/textView"
+      android:layout_width="0dp"
+      android:layout_height="wrap_content"
+      android:layout_marginBottom="210dp"
+      android:fontFamily="@font/barlow_regular"
+      android:text="@string/not_a_member"
+      android:textAlignment="textEnd"
+      android:textSize="14sp"
+      android:typeface="normal"
+      app:layout_constraintBottom_toBottomOf="parent"
+      app:layout_constraintEnd_toStartOf="@+id/signup_Tv"
+      app:layout_constraintStart_toStartOf="parent" />
+
+    <TextView
+      android:id="@+id/signup_Tv"
+      android:layout_width="0dp"
+      android:layout_height="wrap_content"
+      android:layout_marginStart="7dp"
+      android:layout_marginBottom="210dp"
+      android:fontFamily="@font/barlow_regular"
+      android:text="@string/signup_Tv"
+      app:layout_constraintBottom_toBottomOf="parent"
+      app:layout_constraintEnd_toEndOf="parent"
+      app:layout_constraintStart_toEndOf="@+id/textView" />
+
+    <ProgressBar
+      android:id="@+id/progressBar"
+      android:layout_width="0dp"
+      android:layout_height="wrap_content"
+      android:visibility="gone"
+      app:layout_constraintBottom_toBottomOf="parent"
+      app:layout_constraintEnd_toEndOf="parent"
+      app:layout_constraintHorizontal_bias="0.5"
+      app:layout_constraintStart_toStartOf="parent"
+      app:layout_constraintTop_toTopOf="parent" />
+
+
+  </androidx.constraintlayout.widget.ConstraintLayout>
+
+</ScrollView>

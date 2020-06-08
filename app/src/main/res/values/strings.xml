@@ -1,0 +1,43 @@
+<resources>
+  <string name="app_name">RflSneekRs</string>
+  <string name="email_hint">Email</string>
+  <string name="password_hint">Password</string>
+  <string name="first_name">First Name</string>
+  <string name="last_name">Last Name</string>
+  <string name="signup_btn">Join Us</string>
+  <string name="signup_Tv">Join Us</string>
+  <string name="login_btn">Sign In</string>
+  <string name="logout">Log Out</string>
+  <string name="login_title">YOUR ACCOUNT FOR EVERYTHING RFLSNEEKRS</string>
+  <string name="register_info">Create your SneekRs Member profile and get first access to the very best Brand products, inspiration and community.</string>
+  <string name="register_title">BECOME RFLSNEEKRS MEMBER</string>
+  <string name="register_image">RflSneekRs</string>
+  <string name="new_password">New Password</string>
+  <string name="update_pass">Update Password</string>
+  <string name="get_password_link">Forgoten your Password?</string>
+  <string name="get_reset_pass">Reset</string>
+  <string name="back">Log In</string>
+  <string name="register">Join Now</string>
+  <string name="login">Log in</string>
+  <string name="guest">Continue as Guest</string>
+  <string name="logo_info">Welcome to SneekRs Raffle. Your ultimate sneakers destination.</string>
+  <string name="logo_description">SneekRs raffle</string>
+  <string name="home">Home</string>
+  <string name="discover">Discover</string>
+  <string name="inbox">Inbox</string>
+  <string name="profile">Profile</string>
+  <string name="not_a_member">Not a member?</string>
+  <string name="login_hlink">By logging in, you agree to Rfl SneekRs\'s <a href="http://davideagosti.me">Privacy Policy</a> \n and <a href="http://davideagosti.me">Terms of use</a></string>
+  <string name="register_hlink">By creating an account, you agree to Rfl SneekRs\'s \n <a href="http://davideagosti.me">Privacy Policy</a> and <a href="http://davideagosti.me">Terms of use</a></string>
+  <string name="nationality_Et">Nationality</string>
+  <string name="input_error_email_invalid">enter a valid email</string>
+  <string name="registration_success">Registered Successfully</string>
+  <string name="already_a_member">Already a member?</string>
+  <string name="preferred_products">Preferred Products</string>
+  <string name="register_notify">Sign up emails to get updates from RflSneekRs on products, offers and your Member</string>
+  <string name="register_gender_women_s">Women\'s</string>
+  <string name="register_gender_men_s">Men\'s</string>
+  <string name="reset_pass_title">Reset Password</string>
+  <string name="reset_pass_info">Enter your email to receive instructions on how to reset your password.</string>
+  <string name="reset_back_to">Or return to</string>
+</resources>

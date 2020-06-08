@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "611097470540",
+    "firebase_url": "https://com-da-rflsneekrs.firebaseio.com",
+    "project_id": "com-da-rflsneekrs",
+    "storage_bucket": "com-da-rflsneekrs.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:611097470540:android:ff7130eb366ec0335eb6e9",
+        "android_client_info": {
+          "package_name": "com.da.rflsneekrs"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "611097470540-rqe9qgvm6d5tlpvh99t9k97qon0gdtvl.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.da.rflsneekrs",
+            "certificate_hash": "b205707425ba5b94ee37185c81d846a6fbedc93f"
+          }
+        },
+        {
+          "client_id": "611097470540-hn5407f532ss8703eurkqtdp2j3k812i.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBYa4AaQUNSa3DDetcy15RVXEbz20aRPsc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "611097470540-hn5407f532ss8703eurkqtdp2j3k812i.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
