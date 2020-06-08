@@ -3,6 +3,7 @@ package com.da.rflsneekrs.mainview;
 import android.content.Intent;
 import android.os.Bundle;
 
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 
 import android.view.LayoutInflater;
@@ -59,6 +60,7 @@ public class ProfileFragment extends Fragment {
   @Override
   public void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
+    ((AppCompatActivity) getActivity()).getSupportActionBar().show();
 
     if (getArguments() != null) {
       mParam1 = getArguments().getString(ARG_PARAM1);
@@ -88,6 +90,7 @@ public class ProfileFragment extends Fragment {
       auth.signOut();
     Intent intent = new Intent(getActivity(), MainActivity.class);
     intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+    intent.addFlags((Intent.FLAG_ACTIVITY_CLEAR_TASK));
     startActivity(intent);
   }
 }

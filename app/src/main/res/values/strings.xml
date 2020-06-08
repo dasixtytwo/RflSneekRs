@@ -27,7 +27,7 @@
   <string name="inbox">Inbox</string>
   <string name="profile">Profile</string>
   <string name="not_a_member">Not a member?</string>
-  <string name="login_hlink">By logging in, you agree to Rfl SneekRs\'s <a href="http://davideagosti.me">Privacy Policy</a> \n and <a href="http://davideagosti.me">Terms of use</a></string>
+  <string name="login_hlink">By logging in, you agree to Rfl SneekRs\'s <a href="http://davideagosti.me">Privacy Policy</a> and <a href="http://davideagosti.me">Terms of use</a></string>
   <string name="register_hlink">By creating an account, you agree to Rfl SneekRs\'s \n <a href="http://davideagosti.me">Privacy Policy</a> and <a href="http://davideagosti.me">Terms of use</a></string>
   <string name="nationality_Et">Nationality</string>
   <string name="input_error_email_invalid">enter a valid email</string>
@@ -40,4 +40,7 @@
   <string name="reset_pass_title">Reset Password</string>
   <string name="reset_pass_info">Enter your email to receive instructions on how to reset your password.</string>
   <string name="reset_back_to">Or return to</string>
+  <string name="hoem_tab_feed">Feed</string>
+  <string name="hoem_tab_in_stock">In Stock</string>
+  <string name="hoem_tab_upcomming">UpComming</string>
 </resources>
