@@ -273,7 +273,7 @@
       android:textColor="@color/colorUnFilled"
       android:textSize="16sp"
       android:typeface="normal"
-      app:layout_constraintBottom_toTopOf="@+id/textView4"
+      app:layout_constraintBottom_toTopOf="@+id/login_btn"
       app:layout_constraintEnd_toEndOf="parent"
       app:layout_constraintStart_toStartOf="parent"
       app:layout_constraintTop_toBottomOf="@+id/activity_main_link" />
@@ -285,16 +285,20 @@
       android:layout_marginStart="5dp"
       android:fontFamily="@font/barlow_regular"
       android:text="@string/login_btn"
+      android:textAllCaps="false"
       android:textSize="14sp"
       android:typeface="normal"
       app:layout_constraintBottom_toBottomOf="parent"
       app:layout_constraintEnd_toEndOf="parent"
-      app:layout_constraintStart_toEndOf="@+id/textView4" />
+      app:layout_constraintStart_toEndOf="@+id/textView4"
+      app:layout_constraintTop_toBottomOf="@+id/signup_btn" />
 
     <TextView
       android:id="@+id/textView4"
       android:layout_width="0dp"
       android:layout_height="wrap_content"
+      android:layout_marginStart="5dp"
+      android:layout_marginTop="10dp"
       android:fontFamily="@font/barlow_regular"
       android:text="@string/already_a_member"
       android:textAlignment="textEnd"
@@ -302,7 +306,8 @@
       android:typeface="normal"
       app:layout_constraintBottom_toBottomOf="parent"
       app:layout_constraintEnd_toStartOf="@+id/login_btn"
-      app:layout_constraintStart_toStartOf="parent" />
+      app:layout_constraintStart_toStartOf="parent"
+      app:layout_constraintTop_toBottomOf="@+id/signup_btn" />
 
     <ProgressBar
       android:id="@+id/progressBar"
