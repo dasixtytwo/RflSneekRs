@@ -21,6 +21,7 @@
   <string name="login">Log in</string>
   <string name="guest">Continue as Guest</string>
   <string name="logo_info">Welcome to SneekRs Raffle. Your ultimate sneakers destination.</string>
+  <string name="unlogged_info">Get exclusive content straight from the source and enjoy unparralleled acces to all your favourite sneakers.</string>
   <string name="logo_description">SneekRs raffle</string>
   <string name="home">Home</string>
   <string name="discover">Discover</string>
@@ -43,4 +44,5 @@
   <string name="hoem_tab_feed">Feed</string>
   <string name="hoem_tab_in_stock">In Stock</string>
   <string name="hoem_tab_upcomming">UpComming</string>
+  <string name="unlogged_title">Why \n Log In?</string>
 </resources>

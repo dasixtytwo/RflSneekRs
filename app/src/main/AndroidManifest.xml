@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.da.rflsneekrs">
+  package="com.da.rflsneekrs">
 
   <application
     android:allowBackup="true"
@@ -9,6 +9,7 @@
     android:roundIcon="@mipmap/ic_launcher_round"
     android:supportsRtl="true"
     android:theme="@style/AppTheme">
+    <activity android:name=".MainUnlogActivity"></activity>
     <activity android:name=".mainview.MainViewActivity" />
     <activity android:name=".authentication.ForgotPasswordActivity" />
     <activity android:name=".authentication.RegistrationActivity" />
