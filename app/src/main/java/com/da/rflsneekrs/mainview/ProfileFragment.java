@@ -12,6 +12,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 
 import com.da.rflsneekrs.MainActivity;
+import com.da.rflsneekrs.MainUnlogActivity;
 import com.da.rflsneekrs.R;
 import com.da.rflsneekrs.authentication.LoginActivity;
 import com.google.firebase.auth.FirebaseAuth;
@@ -73,14 +74,23 @@ public class ProfileFragment extends Fragment {
     auth = FirebaseAuth.getInstance();
     // Inflate the layout for this fragment
     View rootView = inflater.inflate(R.layout.fragment_profile, container, false);
-    logout = (Button) rootView.findViewById(R.id.logout_btn);
 
-    logout.setOnClickListener(new View.OnClickListener() {
-      @Override
-      public void onClick(View v) {
-        logout();
-      }
-    });
+    if(auth.getCurrentUser() == null){
+
+      Intent intent = new Intent(getActivity(), MainUnlogActivity.class);
+      startActivity(intent);
+
+    } else {
+
+      logout = (Button) rootView.findViewById(R.id.logout_btn);
+      logout.setOnClickListener(new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+          logout();
+        }
+      });
+
+    }
 
     return rootView;
   }
