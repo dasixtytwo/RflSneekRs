@@ -21,13 +21,14 @@
   <string name="login">Log in</string>
   <string name="guest">Continue as Guest</string>
   <string name="logo_info">Welcome to SneekRs Raffle. Your ultimate sneakers destination.</string>
+  <string name="unlogged_info">Get exclusive content straight from the source and enjoy unparralleled acces to all your favourite sneakers.</string>
   <string name="logo_description">SneekRs raffle</string>
   <string name="home">Home</string>
   <string name="discover">Discover</string>
   <string name="inbox">Inbox</string>
   <string name="profile">Profile</string>
   <string name="not_a_member">Not a member?</string>
-  <string name="login_hlink">By logging in, you agree to Rfl SneekRs\'s <a href="http://davideagosti.me">Privacy Policy</a> \n and <a href="http://davideagosti.me">Terms of use</a></string>
+  <string name="login_hlink">By logging in, you agree to Rfl SneekRs\'s <a href="http://davideagosti.me">Privacy Policy</a> and <a href="http://davideagosti.me">Terms of use</a></string>
   <string name="register_hlink">By creating an account, you agree to Rfl SneekRs\'s \n <a href="http://davideagosti.me">Privacy Policy</a> and <a href="http://davideagosti.me">Terms of use</a></string>
   <string name="nationality_Et">Nationality</string>
   <string name="input_error_email_invalid">enter a valid email</string>
@@ -40,4 +41,8 @@
   <string name="reset_pass_title">Reset Password</string>
   <string name="reset_pass_info">Enter your email to receive instructions on how to reset your password.</string>
   <string name="reset_back_to">Or return to</string>
+  <string name="hoem_tab_feed">Feed</string>
+  <string name="hoem_tab_in_stock">In Stock</string>
+  <string name="hoem_tab_upcomming">UpComming</string>
+  <string name="unlogged_title">Why \n Log In?</string>
 </resources>

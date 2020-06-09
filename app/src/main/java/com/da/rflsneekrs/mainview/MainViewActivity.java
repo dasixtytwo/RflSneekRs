@@ -4,12 +4,14 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
 
 import android.widget.Button;
 
 import com.da.rflsneekrs.R;
+import com.da.rflsneekrs.authentication.LoginActivity;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 
@@ -22,12 +24,26 @@ public class MainViewActivity extends AppCompatActivity {
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_main_view);
+
     auth = FirebaseAuth.getInstance();
 
     initializeViews();
 
     bottomNavigationView.setOnNavigationItemSelectedListener(bottomNavMethod);
     getSupportFragmentManager().beginTransaction().replace(R.id.fgContainer, new HomeFragment()).commit();
+  }
+
+  @Override
+  public void onBackPressed() {
+    //super.onBackPressed();
+    if(auth.getCurrentUser() != null) {
+      Intent intent = new Intent(Intent.ACTION_MAIN);
+      intent.addCategory(Intent.CATEGORY_HOME);
+      intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+      startActivity(intent);
+    } else {
+      finish();
+    }
   }
 
   private BottomNavigationView.OnNavigationItemSelectedListener bottomNavMethod = new BottomNavigationView.OnNavigationItemSelectedListener() {

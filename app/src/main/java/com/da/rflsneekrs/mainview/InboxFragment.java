@@ -1,14 +1,18 @@
 package com.da.rflsneekrs.mainview;
 
+import android.content.Intent;
 import android.os.Bundle;
 
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.da.rflsneekrs.MainUnlogActivity;
 import com.da.rflsneekrs.R;
+import com.google.firebase.auth.FirebaseAuth;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -16,7 +20,6 @@ import com.da.rflsneekrs.R;
  * create an instance of this fragment.
  */
 public class InboxFragment extends Fragment {
-
   // TODO: Rename parameter arguments, choose names that match
   // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
   private static final String ARG_PARAM1 = "param1";
@@ -25,6 +28,8 @@ public class InboxFragment extends Fragment {
   // TODO: Rename and change types of parameters
   private String mParam1;
   private String mParam2;
+
+  FirebaseAuth auth;
 
   public InboxFragment() {
     // Required empty public constructor
@@ -51,6 +56,8 @@ public class InboxFragment extends Fragment {
   @Override
   public void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
+    ((AppCompatActivity) getActivity()).getSupportActionBar().hide();
+
     if (getArguments() != null) {
       mParam1 = getArguments().getString(ARG_PARAM1);
       mParam2 = getArguments().getString(ARG_PARAM2);
@@ -60,7 +67,16 @@ public class InboxFragment extends Fragment {
   @Override
   public View onCreateView(LayoutInflater inflater, ViewGroup container,
                            Bundle savedInstanceState) {
+    auth = FirebaseAuth.getInstance();
+
     // Inflate the layout for this fragment
-    return inflater.inflate(R.layout.fragment_inbox, container, false);
+    View rootView = inflater.inflate(R.layout.fragment_inbox, container, false);
+
+    if(auth.getCurrentUser() == null){
+      Intent intent = new Intent(getActivity(), MainUnlogActivity.class);
+      startActivity(intent);
+    }
+
+    return rootView;
   }
 }

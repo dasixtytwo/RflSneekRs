@@ -3,6 +3,7 @@ package com.da.rflsneekrs.mainview;
 import android.content.Intent;
 import android.os.Bundle;
 
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 
 import android.view.LayoutInflater;
@@ -11,6 +12,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 
 import com.da.rflsneekrs.MainActivity;
+import com.da.rflsneekrs.MainUnlogActivity;
 import com.da.rflsneekrs.R;
 import com.da.rflsneekrs.authentication.LoginActivity;
 import com.google.firebase.auth.FirebaseAuth;
@@ -59,6 +61,7 @@ public class ProfileFragment extends Fragment {
   @Override
   public void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
+    ((AppCompatActivity) getActivity()).getSupportActionBar().show();
 
     if (getArguments() != null) {
       mParam1 = getArguments().getString(ARG_PARAM1);
@@ -71,14 +74,23 @@ public class ProfileFragment extends Fragment {
     auth = FirebaseAuth.getInstance();
     // Inflate the layout for this fragment
     View rootView = inflater.inflate(R.layout.fragment_profile, container, false);
-    logout = (Button) rootView.findViewById(R.id.logout_btn);
 
-    logout.setOnClickListener(new View.OnClickListener() {
-      @Override
-      public void onClick(View v) {
-        logout();
-      }
-    });
+    if(auth.getCurrentUser() == null){
+
+      Intent intent = new Intent(getActivity(), MainUnlogActivity.class);
+      startActivity(intent);
+
+    } else {
+
+      logout = (Button) rootView.findViewById(R.id.logout_btn);
+      logout.setOnClickListener(new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+          logout();
+        }
+      });
+
+    }
 
     return rootView;
   }
@@ -88,6 +100,7 @@ public class ProfileFragment extends Fragment {
       auth.signOut();
     Intent intent = new Intent(getActivity(), MainActivity.class);
     intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+    intent.addFlags((Intent.FLAG_ACTIVITY_CLEAR_TASK));
     startActivity(intent);
   }
 }

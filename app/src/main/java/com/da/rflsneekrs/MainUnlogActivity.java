@@ -1,10 +1,10 @@
 package com.da.rflsneekrs;
 
 import androidx.appcompat.app.AppCompatActivity;
+
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
-import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.TextView;
 
@@ -13,31 +13,23 @@ import com.da.rflsneekrs.authentication.RegistrationActivity;
 import com.da.rflsneekrs.mainview.MainViewActivity;
 import com.google.firebase.auth.FirebaseAuth;
 
-public class MainActivity extends AppCompatActivity {
-
+public class MainUnlogActivity extends AppCompatActivity {
   Button registerBtn, loginBtn;
   TextView guestBtn;
   FirebaseAuth auth;
+
   @Override
   protected void onCreate(Bundle savedInstanceState) {
-
     super.onCreate(savedInstanceState);
-    setContentView(R.layout.activity_main);
+    setContentView(R.layout.activity_main_unlog);
     getSupportActionBar().hide(); //hide title bar
 
-    auth = FirebaseAuth.getInstance();
-
-    initializeViews();
-
-    if (auth.getCurrentUser() != null){
-      Intent intent = new Intent(MainActivity.this, MainViewActivity.class);
-      startActivity(intent);
-    }
+    initialize();
 
     registerBtn.setOnClickListener(new View.OnClickListener() {
       @Override
       public void onClick(View v) {
-        Intent intent = new Intent(MainActivity.this, RegistrationActivity.class);
+        Intent intent = new Intent(MainUnlogActivity.this, RegistrationActivity.class);
         startActivity(intent);
       }
     });
@@ -45,7 +37,7 @@ public class MainActivity extends AppCompatActivity {
     loginBtn.setOnClickListener(new View.OnClickListener() {
       @Override
       public void onClick(View v) {
-        Intent intent = new Intent(MainActivity.this, LoginActivity.class);
+        Intent intent = new Intent(MainUnlogActivity.this, LoginActivity.class);
         startActivity(intent);
       }
     });
@@ -53,13 +45,13 @@ public class MainActivity extends AppCompatActivity {
     guestBtn.setOnClickListener(new View.OnClickListener() {
       @Override
       public void onClick(View v) {
-        Intent intent = new Intent(MainActivity.this, MainViewActivity.class);
+        Intent intent = new Intent(MainUnlogActivity.this, MainViewActivity.class);
         startActivity(intent);
       }
     });
   }
 
-  private void initializeViews() {
+  private void initialize() {
     registerBtn = findViewById(R.id.register);
     loginBtn = findViewById(R.id.login);
     guestBtn = findViewById(R.id.tvGuest);
