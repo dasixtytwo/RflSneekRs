@@ -6,7 +6,18 @@
   android:layout_height="match_parent"
   tools:context=".mainview.ProfileFragment">
 
+    <androidx.appcompat.widget.Toolbar
+      android:id="@+id/settingsTb"
+      style="@style/HeaderBar"
+      android:layout_width="match_parent"
+      android:layout_height="?attr/actionBarSize"
+      app:layout_constraintEnd_toEndOf="parent"
+      app:layout_constraintHorizontal_bias="0.5"
+      app:layout_constraintStart_toStartOf="parent"
+      app:layout_constraintTop_toTopOf="parent"/>
+
     <TextView
+      android:id="@+id/textView5"
       android:layout_width="wrap_content"
       android:layout_height="wrap_content"
       android:layout_centerInParent="true"
@@ -18,8 +29,13 @@
 
     <Button
       android:id="@+id/logout_btn"
-      android:layout_width="match_parent"
-      android:layout_height="56dp"
-      android:text="@string/logout" />
+      android:layout_width="0dp"
+      android:layout_height="wrap_content"
+      android:text="@string/logout"
+      app:layout_constraintBottom_toTopOf="@+id/textView5"
+      app:layout_constraintEnd_toEndOf="parent"
+      app:layout_constraintHorizontal_bias="0.5"
+      app:layout_constraintStart_toStartOf="parent"
+      app:layout_constraintTop_toTopOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

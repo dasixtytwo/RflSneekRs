@@ -9,7 +9,7 @@
     android:roundIcon="@mipmap/ic_launcher_round"
     android:supportsRtl="true"
     android:theme="@style/AppTheme">
-    <activity android:name=".MainUnlogActivity"></activity>
+    <activity android:name=".MainUnlogActivity" />
     <activity android:name=".mainview.MainViewActivity" />
     <activity android:name=".authentication.ForgotPasswordActivity" />
     <activity android:name=".authentication.RegistrationActivity" />

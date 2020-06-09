@@ -12,7 +12,7 @@
     android:layout_height="wrap_content">
 
     <com.google.android.material.tabs.TabLayout
-      android:id="@+id/homeTabs"
+      android:id="@+id/homeTabsLayout"
       android:layout_width="match_parent"
       android:layout_height="wrap_content"
       app:layout_constraintEnd_toEndOf="parent"
@@ -23,19 +23,26 @@
       <com.google.android.material.tabs.TabItem
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/hoem_tab_feed" />
+        android:text="@string/home_tab_feed" />
 
       <com.google.android.material.tabs.TabItem
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/hoem_tab_in_stock" />
+        android:text="@string/home_tab_in_stock" />
 
       <com.google.android.material.tabs.TabItem
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/hoem_tab_upcomming" />
+        android:text="@string/home_tab_upcomming" />
 
     </com.google.android.material.tabs.TabLayout>
+
+    <androidx.viewpager.widget.ViewPager
+      android:id="@+id/view_pager"
+      android:layout_width="match_parent"
+      android:layout_height="match_parent"
+      app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior"
+      />
 
   </androidx.constraintlayout.widget.ConstraintLayout>
 

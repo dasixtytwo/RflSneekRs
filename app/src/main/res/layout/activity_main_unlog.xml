@@ -7,12 +7,25 @@
   android:padding="11dp"
   tools:context=".MainUnlogActivity">
 
+  <Button
+    android:id="@+id/closeBtn"
+    android:layout_width="0dp"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="10dp"
+    android:background="@android:color/transparent"
+    android:clickable="true"
+    android:drawableEnd="@drawable/ic_close"
+    android:focusable="true"
+    app:layout_constraintBottom_toTopOf="@+id/textView3"
+    app:layout_constraintEnd_toEndOf="parent"
+    app:layout_constraintTop_toTopOf="parent" />
+
   <TextView
     android:id="@+id/textView3"
     android:layout_width="0dp"
     android:layout_height="wrap_content"
-    android:layout_marginTop="80dp"
-    android:layout_marginBottom="10dp"
+    android:layout_marginTop="50dp"
+    android:layout_marginBottom="8dp"
     android:fontFamily="@font/futura_condensed_bold"
     android:lineSpacingExtra="-15sp"
     android:text="@string/unlogged_title"
@@ -23,7 +36,6 @@
     android:typeface="normal"
     app:layout_constraintBottom_toTopOf="@+id/logoIv"
     app:layout_constraintEnd_toEndOf="parent"
-    app:layout_constraintHorizontal_bias="0.5"
     app:layout_constraintStart_toStartOf="parent"
     app:layout_constraintTop_toTopOf="parent" />
 
