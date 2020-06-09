@@ -12,30 +12,21 @@
     android:layout_height="wrap_content">
 
     <com.google.android.material.tabs.TabLayout
-      android:id="@+id/homeTabs"
+      android:id="@+id/homeTabsLayout"
       android:layout_width="match_parent"
       android:layout_height="wrap_content"
       app:layout_constraintEnd_toEndOf="parent"
       app:layout_constraintStart_toStartOf="parent"
       app:layout_constraintTop_toTopOf="parent"
-      app:tabIndicatorColor="@color/colorFilled">
+      app:tabIndicatorColor="@color/colorFilled" />
 
-      <com.google.android.material.tabs.TabItem
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/hoem_tab_feed" />
-
-      <com.google.android.material.tabs.TabItem
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/hoem_tab_in_stock" />
-
-      <com.google.android.material.tabs.TabItem
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/hoem_tab_upcomming" />
-
-    </com.google.android.material.tabs.TabLayout>
+    <androidx.viewpager.widget.ViewPager
+      android:id="@+id/view_pager"
+      android:layout_width="match_parent"
+      android:layout_height="match_parent"
+      app:tabMode="scrollable"
+      app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior"
+      android:layout_weight="1" />
 
   </androidx.constraintlayout.widget.ConstraintLayout>
 
