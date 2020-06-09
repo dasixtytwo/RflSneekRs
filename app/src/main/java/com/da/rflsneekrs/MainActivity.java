@@ -11,11 +11,13 @@ import android.widget.TextView;
 import com.da.rflsneekrs.authentication.LoginActivity;
 import com.da.rflsneekrs.authentication.RegistrationActivity;
 import com.da.rflsneekrs.mainview.MainViewActivity;
+import com.google.firebase.auth.FirebaseAuth;
 
 public class MainActivity extends AppCompatActivity {
 
   Button registerBtn, loginBtn;
   TextView guestBtn;
+  FirebaseAuth auth;
   @Override
   protected void onCreate(Bundle savedInstanceState) {
 
@@ -23,7 +25,14 @@ public class MainActivity extends AppCompatActivity {
     setContentView(R.layout.activity_main);
     getSupportActionBar().hide(); //hide title bar
 
+    auth = FirebaseAuth.getInstance();
+
     initializeViews();
+
+    if (auth.getCurrentUser() != null){
+      Intent intent = new Intent(MainActivity.this, MainViewActivity.class);
+      startActivity(intent);
+    }
 
     registerBtn.setOnClickListener(new View.OnClickListener() {
       @Override
@@ -32,6 +41,7 @@ public class MainActivity extends AppCompatActivity {
         startActivity(intent);
       }
     });
+
     loginBtn.setOnClickListener(new View.OnClickListener() {
       @Override
       public void onClick(View v) {
@@ -39,6 +49,7 @@ public class MainActivity extends AppCompatActivity {
         startActivity(intent);
       }
     });
+
     guestBtn.setOnClickListener(new View.OnClickListener() {
       @Override
       public void onClick(View v) {
