@@ -18,31 +18,15 @@
       app:layout_constraintEnd_toEndOf="parent"
       app:layout_constraintStart_toStartOf="parent"
       app:layout_constraintTop_toTopOf="parent"
-      app:tabIndicatorColor="@color/colorFilled">
-
-      <com.google.android.material.tabs.TabItem
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/home_tab_feed" />
-
-      <com.google.android.material.tabs.TabItem
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/home_tab_in_stock" />
-
-      <com.google.android.material.tabs.TabItem
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/home_tab_upcomming" />
-
-    </com.google.android.material.tabs.TabLayout>
+      app:tabIndicatorColor="@color/colorFilled" />
 
     <androidx.viewpager.widget.ViewPager
       android:id="@+id/view_pager"
       android:layout_width="match_parent"
       android:layout_height="match_parent"
+      app:tabMode="scrollable"
       app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior"
-      />
+      android:layout_weight="1" />
 
   </androidx.constraintlayout.widget.ConstraintLayout>
 

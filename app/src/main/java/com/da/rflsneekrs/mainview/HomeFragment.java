@@ -2,14 +2,23 @@ package com.da.rflsneekrs.mainview;
 
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentPagerAdapter;
+import androidx.viewpager.widget.ViewPager;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.da.rflsneekrs.R;
+import com.google.android.material.tabs.TabLayout;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -26,6 +35,13 @@ public class HomeFragment extends Fragment {
   // TODO: Rename and change types of parameters
   private String mParam1;
   private String mParam2;
+
+  TabLayout tabLayout;
+  ViewPager viewPager;
+
+  private FeedFragment feedFragment;
+  private InStockFragment inStockFragment;
+  private UpComingFragment upComingFragment;
 
   public HomeFragment() {
     // Required empty public constructor
@@ -64,6 +80,53 @@ public class HomeFragment extends Fragment {
   public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
     // Inflate the layout for this fragment
     View rootView =  inflater.inflate(R.layout.fragment_home, container, false);
+
+    tabLayout = (TabLayout) rootView.findViewById(R.id.homeTabsLayout);
+    viewPager = rootView.findViewById(R.id.view_pager);
+
+    feedFragment = new FeedFragment();
+    inStockFragment = new InStockFragment();
+    upComingFragment = new UpComingFragment();
+
+    tabLayout.setupWithViewPager(viewPager);
+
+    ViewPagerAdapter viewPagerAdapter = new ViewPagerAdapter(getChildFragmentManager(), 0);
+    viewPagerAdapter.addFragment(feedFragment, "FEED");
+    viewPagerAdapter.addFragment(inStockFragment, "IN STOCK");
+    viewPagerAdapter.addFragment(upComingFragment, "UPCOMING");
+    viewPager.setAdapter(viewPagerAdapter);
+
     return rootView;
+  }
+
+  private class ViewPagerAdapter extends FragmentPagerAdapter {
+    private List<Fragment> fragments = new ArrayList<>();
+    private List<String> fragmentTitle = new ArrayList<>();
+
+    public ViewPagerAdapter(@NonNull FragmentManager fm, int behavior) {
+      super(fm, behavior);
+    }
+
+    public void addFragment(Fragment fragment, String title){
+      fragments.add(fragment);
+      fragmentTitle.add(title);
+    }
+
+    @NonNull
+    @Override
+    public Fragment getItem(int position){
+      return fragments.get(position);
+    }
+
+    @Override
+    public int getCount(){
+      return fragments.size();
+    }
+
+    @Nullable
+    @Override
+    public CharSequence getPageTitle(int position) {
+      return fragmentTitle.get(position);
+    }
   }
 }
