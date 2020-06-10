@@ -41,8 +41,8 @@
   <string name="reset_pass_title">Reset Password</string>
   <string name="reset_pass_info">Enter your email to receive instructions on how to reset your password.</string>
   <string name="reset_back_to">Or return to</string>
-  <string name="hoem_tab_feed">Feed</string>
-  <string name="hoem_tab_in_stock">In Stock</string>
-  <string name="hoem_tab_upcomming">UpComming</string>
-  <string name="unlogged_title">Why \n Log In?</string>
+  <string name="home_tab_feed">Feed</string>
+  <string name="home_tab_in_stock">In Stock</string>
+  <string name="home_tab_upcomming">UpComming</string>
+  <string name="unlogged_title">Why\n Log In?</string>
 </resources>

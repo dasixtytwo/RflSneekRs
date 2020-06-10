@@ -14,7 +14,6 @@ import android.widget.Button;
 import com.da.rflsneekrs.MainActivity;
 import com.da.rflsneekrs.MainUnlogActivity;
 import com.da.rflsneekrs.R;
-import com.da.rflsneekrs.authentication.LoginActivity;
 import com.google.firebase.auth.FirebaseAuth;
 
 /**
@@ -61,7 +60,8 @@ public class ProfileFragment extends Fragment {
   @Override
   public void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
-    ((AppCompatActivity) getActivity()).getSupportActionBar().show();
+    ((AppCompatActivity) getActivity()).getSupportActionBar().hide();
+
 
     if (getArguments() != null) {
       mParam1 = getArguments().getString(ARG_PARAM1);
@@ -76,12 +76,9 @@ public class ProfileFragment extends Fragment {
     View rootView = inflater.inflate(R.layout.fragment_profile, container, false);
 
     if(auth.getCurrentUser() == null){
-
       Intent intent = new Intent(getActivity(), MainUnlogActivity.class);
       startActivity(intent);
-
     } else {
-
       logout = (Button) rootView.findViewById(R.id.logout_btn);
       logout.setOnClickListener(new View.OnClickListener() {
         @Override
@@ -89,7 +86,6 @@ public class ProfileFragment extends Fragment {
           logout();
         }
       });
-
     }
 
     return rootView;
@@ -99,8 +95,8 @@ public class ProfileFragment extends Fragment {
     if (auth.getCurrentUser() != null)
       auth.signOut();
     Intent intent = new Intent(getActivity(), MainActivity.class);
-    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-    intent.addFlags((Intent.FLAG_ACTIVITY_CLEAR_TASK));
+    intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+    intent.setFlags((Intent.FLAG_ACTIVITY_CLEAR_TASK));
     startActivity(intent);
   }
 }

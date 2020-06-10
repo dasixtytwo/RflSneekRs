@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.text.method.LinkMovementMethod;
 import android.util.Patterns;
 import android.view.View;
 import android.widget.Button;
@@ -57,6 +58,7 @@ public class RegistrationActivity extends AppCompatActivity {
         registerNewUser();
       }
     });
+    setupHyperLink();
 
     loginBtn.setOnClickListener(new View.OnClickListener() {
       @Override
@@ -64,6 +66,12 @@ public class RegistrationActivity extends AppCompatActivity {
         startActivity(new Intent(getApplicationContext(),LoginActivity.class));
       }
     });
+  }
+
+  // setting the link on the activity
+  private void setupHyperLink() {
+    TextView hlTextView = findViewById(R.id.activity_main_link);
+    hlTextView.setMovementMethod(LinkMovementMethod.getInstance());
   }
 
   private void registerNewUser() {
