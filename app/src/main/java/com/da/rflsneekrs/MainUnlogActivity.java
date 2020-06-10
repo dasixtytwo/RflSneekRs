@@ -62,6 +62,7 @@ public class MainUnlogActivity extends AppCompatActivity {
     });
   }
 
+  // Block the user to come back at the previous activity
   @Override
   public void onBackPressed() {
     //super.onBackPressed();

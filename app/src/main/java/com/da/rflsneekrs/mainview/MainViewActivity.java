@@ -32,6 +32,7 @@ public class MainViewActivity extends AppCompatActivity {
     getSupportFragmentManager().beginTransaction().replace(R.id.fgContainer, new HomeFragment()).commit();
   }
 
+  // Block the user come back to previous activity
   @Override
   public void onBackPressed() {
     //super.onBackPressed();
