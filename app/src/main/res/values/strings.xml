@@ -45,4 +45,6 @@
   <string name="home_tab_in_stock">In Stock</string>
   <string name="home_tab_upcomming">UpComming</string>
   <string name="unlogged_title">Why\n Log In?</string>
+  <string name="row_text">TextView</string>
+  <string name="row_content_description">SneekRs Product</string>
 </resources>
