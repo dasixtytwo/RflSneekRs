@@ -58,6 +58,17 @@ public class MainActivity extends AppCompatActivity {
     });
   }
 
+  // Block the user to come back at the previous activity
+  @Override
+  public void onBackPressed() {
+    //super.onBackPressed();
+    Intent intent = new Intent(Intent.ACTION_MAIN);
+    intent.addCategory(Intent.CATEGORY_HOME);
+    intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+    startActivity(intent);
+    finishAffinity();
+  }
+
   private void initializeViews() {
     registerBtn = findViewById(R.id.register);
     loginBtn = findViewById(R.id.login);
