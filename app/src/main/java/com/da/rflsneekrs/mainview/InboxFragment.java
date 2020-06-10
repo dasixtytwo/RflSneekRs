@@ -70,12 +70,12 @@ public class InboxFragment extends Fragment {
     auth = FirebaseAuth.getInstance();
 
     // Inflate the layout for this fragment
-    View rootView = inflater.inflate(R.layout.fragment_inbox, container, false);
+    View fragmentView = inflater.inflate(R.layout.fragment_inbox, container, false);
     if(auth.getCurrentUser() == null){
       Intent intent = new Intent(getActivity(), MainUnlogActivity.class);
       startActivity(intent);
     }
 
-    return rootView;
+    return fragmentView;
   }
 }

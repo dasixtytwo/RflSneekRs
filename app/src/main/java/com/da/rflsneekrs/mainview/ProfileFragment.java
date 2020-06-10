@@ -73,13 +73,13 @@ public class ProfileFragment extends Fragment {
   public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
     auth = FirebaseAuth.getInstance();
     // Inflate the layout for this fragment
-    View rootView = inflater.inflate(R.layout.fragment_profile, container, false);
+    View fragmentView = inflater.inflate(R.layout.fragment_profile, container, false);
 
     if(auth.getCurrentUser() == null){
       Intent intent = new Intent(getActivity(), MainUnlogActivity.class);
       startActivity(intent);
     } else {
-      logout = (Button) rootView.findViewById(R.id.logout_btn);
+      logout = (Button) fragmentView.findViewById(R.id.logout_btn);
       logout.setOnClickListener(new View.OnClickListener() {
         @Override
         public void onClick(View v) {
@@ -88,7 +88,7 @@ public class ProfileFragment extends Fragment {
       });
     }
 
-    return rootView;
+    return fragmentView;
   }
 
   private void logout() {
