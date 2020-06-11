@@ -1,42 +1,46 @@
-package com.da.rflsneekrs;
+package com.da.rflsneekrs.activities;
 
 import androidx.appcompat.app.AppCompatActivity;
+
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
-import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.TextView;
 
+import com.da.rflsneekrs.R;
 import com.da.rflsneekrs.authentication.LoginActivity;
 import com.da.rflsneekrs.authentication.RegistrationActivity;
-import com.da.rflsneekrs.mainview.MainViewActivity;
 import com.google.firebase.auth.FirebaseAuth;
 
-public class MainActivity extends AppCompatActivity {
-
-  Button registerBtn, loginBtn;
+public class MainUnlogActivity extends AppCompatActivity {
+  Button registerBtn, loginBtn, closeBtn;
   TextView guestBtn;
   FirebaseAuth auth;
+
   @Override
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
-    setContentView(R.layout.activity_main);
+    setContentView(R.layout.activity_main_unlog);
     getSupportActionBar().hide(); //hide title bar
 
-    auth = FirebaseAuth.getInstance();
+    initialize();
 
-    initializeViews();
-
-    if (auth.getCurrentUser() != null){
-      Intent intent = new Intent(MainActivity.this, MainViewActivity.class);
-      startActivity(intent);
-    }
+    closeBtn.setOnClickListener(new View.OnClickListener() {
+      @Override
+      public void onClick(View v) {
+        Intent intent = new Intent(MainUnlogActivity.this, MainViewActivity.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        startActivity(intent);
+        finish();
+      }
+    });
 
     registerBtn.setOnClickListener(new View.OnClickListener() {
       @Override
       public void onClick(View v) {
-        Intent intent = new Intent(MainActivity.this, RegistrationActivity.class);
+        Intent intent = new Intent(MainUnlogActivity.this, RegistrationActivity.class);
         startActivity(intent);
       }
     });
@@ -44,7 +48,7 @@ public class MainActivity extends AppCompatActivity {
     loginBtn.setOnClickListener(new View.OnClickListener() {
       @Override
       public void onClick(View v) {
-        Intent intent = new Intent(MainActivity.this, LoginActivity.class);
+        Intent intent = new Intent(MainUnlogActivity.this, LoginActivity.class);
         startActivity(intent);
       }
     });
@@ -52,7 +56,7 @@ public class MainActivity extends AppCompatActivity {
     guestBtn.setOnClickListener(new View.OnClickListener() {
       @Override
       public void onClick(View v) {
-        Intent intent = new Intent(MainActivity.this, MainViewActivity.class);
+        Intent intent = new Intent(MainUnlogActivity.this, MainViewActivity.class);
         startActivity(intent);
       }
     });
@@ -62,16 +66,17 @@ public class MainActivity extends AppCompatActivity {
   @Override
   public void onBackPressed() {
     //super.onBackPressed();
-    Intent intent = new Intent(Intent.ACTION_MAIN);
-    intent.addCategory(Intent.CATEGORY_HOME);
-    intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+    Intent intent = new Intent(getApplicationContext(), MainViewActivity.class);
+    intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+    intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
     startActivity(intent);
-    finishAffinity();
+    finish();
   }
 
-  private void initializeViews() {
+  private void initialize() {
     registerBtn = findViewById(R.id.register);
     loginBtn = findViewById(R.id.login);
     guestBtn = findViewById(R.id.tvGuest);
+    closeBtn = findViewById(R.id.closeBtn);
   }
 }

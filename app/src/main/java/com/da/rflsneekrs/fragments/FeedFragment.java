@@ -1,27 +1,21 @@
-package com.da.rflsneekrs.mainview;
+package com.da.rflsneekrs.fragments;
 
-import android.content.Intent;
 import android.os.Bundle;
 
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 
-import com.da.rflsneekrs.MainActivity;
-import com.da.rflsneekrs.MainUnlogActivity;
 import com.da.rflsneekrs.R;
-import com.google.firebase.auth.FirebaseAuth;
 
 /**
  * A simple {@link Fragment} subclass.
- * Use the {@link ProfileFragment#newInstance} factory method to
+ * Use the {@link FeedFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class ProfileFragment extends Fragment {
+public class FeedFragment extends Fragment {
 
   // TODO: Rename parameter arguments, choose names that match
   // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -32,10 +26,7 @@ public class ProfileFragment extends Fragment {
   private String mParam1;
   private String mParam2;
 
-  Button logout;
-  FirebaseAuth auth;
-
-  public ProfileFragment() {
+  public FeedFragment() {
     // Required empty public constructor
   }
 
@@ -45,11 +36,11 @@ public class ProfileFragment extends Fragment {
    *
    * @param param1 Parameter 1.
    * @param param2 Parameter 2.
-   * @return A new instance of fragment ProfileFragment.
+   * @return A new instance of fragment FeedFragment.
    */
   // TODO: Rename and change types and number of parameters
-  public static ProfileFragment newInstance(String param1, String param2) {
-    ProfileFragment fragment = new ProfileFragment();
+  public static FeedFragment newInstance(String param1, String param2) {
+    FeedFragment fragment = new FeedFragment();
     Bundle args = new Bundle();
     args.putString(ARG_PARAM1, param1);
     args.putString(ARG_PARAM2, param2);
@@ -60,9 +51,6 @@ public class ProfileFragment extends Fragment {
   @Override
   public void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
-    ((AppCompatActivity) getActivity()).getSupportActionBar().hide();
-
-
     if (getArguments() != null) {
       mParam1 = getArguments().getString(ARG_PARAM1);
       mParam2 = getArguments().getString(ARG_PARAM2);
@@ -71,32 +59,8 @@ public class ProfileFragment extends Fragment {
 
   @Override
   public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-    auth = FirebaseAuth.getInstance();
     // Inflate the layout for this fragment
-    View fragmentView = inflater.inflate(R.layout.fragment_profile, container, false);
-
-    if(auth.getCurrentUser() == null){
-      Intent intent = new Intent(getActivity(), MainUnlogActivity.class);
-      startActivity(intent);
-    } else {
-      logout = (Button) fragmentView.findViewById(R.id.logout_btn);
-      logout.setOnClickListener(new View.OnClickListener() {
-        @Override
-        public void onClick(View v) {
-          logout();
-        }
-      });
-    }
-
+    View fragmentView = inflater.inflate(R.layout.fragment_feed, container, false);
     return fragmentView;
-  }
-
-  private void logout() {
-    if (auth.getCurrentUser() != null)
-      auth.signOut();
-    Intent intent = new Intent(getActivity(), MainActivity.class);
-    intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-    intent.setFlags((Intent.FLAG_ACTIVITY_CLEAR_TASK));
-    startActivity(intent);
   }
 }

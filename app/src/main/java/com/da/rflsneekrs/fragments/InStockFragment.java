@@ -1,4 +1,4 @@
-package com.da.rflsneekrs.mainview;
+package com.da.rflsneekrs.fragments;
 
 import android.os.Bundle;
 

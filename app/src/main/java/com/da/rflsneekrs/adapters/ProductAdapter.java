@@ -16,12 +16,12 @@ import com.da.rflsneekrs.models.Product;
 import java.util.List;
 
 public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ProdViewHolder> {
-  Context pContext;
+  Context context;
   List<Product> productData;
 
-  public ProductAdapter(Context pContext, List<Product> productData){
-    this.pContext = pContext;
-    this.productData = productData;
+  public ProductAdapter(Context cx, List<Product> pd){
+    context = cx;
+    productData = pd;
   }
 
   @NonNull
@@ -32,10 +32,9 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ProdView
 
   @Override
   public void onBindViewHolder(@NonNull ProdViewHolder holder, int position) {
-    //super.onBindViewHolder(holder, position, payloads);
     holder.tvName.setText(productData.get(position).getName());
     holder.tvBrand.setText(productData.get(position).getBrand());
-    Glide.with(pContext).load(productData.get(position).getImage()).into(holder.imgProduct);
+    Glide.with(context).load(productData.get(position).getImage()).into(holder.imgProduct);
   }
 
   @Override
