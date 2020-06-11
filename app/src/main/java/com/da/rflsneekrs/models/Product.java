@@ -29,41 +29,41 @@ public class Product {
     return brand;
   }
   public void setBrand(String brand) {
-    this.name = brand;
+    this.brand = brand;
   }
 
   public String getDescription() {
     return description;
   }
   public void setDescription(String description) {
-    this.name = description;
+    this.description = description;
   }
 
   public String getGender() {
     return gender;
   }
   public void setGender(String gender) {
-    this.name = gender;
+    this.gender = gender;
   }
 
   public String getImage() {
     return image;
   }
   public void setImage(String image) {
-    this.name = image;
+    this.image = image;
   }
 
   public Boolean getInStock() {
     return inStock;
   }
-  public void setInStock(String inStock) {
-    this.name = inStock;
+  public void setInStock(Boolean inStock) {
+    this.inStock = inStock;
   }
 
   public Double getPrice() {
     return price;
   }
-  public void setPrice(String price) {
-    this.name = price;
+  public void setPrice(Double price) {
+    this.price = price;
   }
 }
