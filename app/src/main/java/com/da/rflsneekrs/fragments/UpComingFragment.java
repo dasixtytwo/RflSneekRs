@@ -1,8 +1,7 @@
-package com.da.rflsneekrs.mainview;
+package com.da.rflsneekrs.fragments;
 
 import android.os.Bundle;
 
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 
 import android.view.LayoutInflater;
@@ -13,10 +12,10 @@ import com.da.rflsneekrs.R;
 
 /**
  * A simple {@link Fragment} subclass.
- * Use the {@link DiscoverFragment#newInstance} factory method to
+ * Use the {@link UpComingFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class DiscoverFragment extends Fragment {
+public class UpComingFragment extends Fragment {
 
   // TODO: Rename parameter arguments, choose names that match
   // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -27,7 +26,7 @@ public class DiscoverFragment extends Fragment {
   private String mParam1;
   private String mParam2;
 
-  public DiscoverFragment() {
+  public UpComingFragment() {
     // Required empty public constructor
   }
 
@@ -37,11 +36,11 @@ public class DiscoverFragment extends Fragment {
    *
    * @param param1 Parameter 1.
    * @param param2 Parameter 2.
-   * @return A new instance of fragment DiscoverFragment.
+   * @return A new instance of fragment UpComingFragment.
    */
   // TODO: Rename and change types and number of parameters
-  public static DiscoverFragment newInstance(String param1, String param2) {
-    DiscoverFragment fragment = new DiscoverFragment();
+  public static UpComingFragment newInstance(String param1, String param2) {
+    UpComingFragment fragment = new UpComingFragment();
     Bundle args = new Bundle();
     args.putString(ARG_PARAM1, param1);
     args.putString(ARG_PARAM2, param2);
@@ -52,7 +51,6 @@ public class DiscoverFragment extends Fragment {
   @Override
   public void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
-    ((AppCompatActivity) getActivity()).getSupportActionBar().show();
     if (getArguments() != null) {
       mParam1 = getArguments().getString(ARG_PARAM1);
       mParam2 = getArguments().getString(ARG_PARAM2);
@@ -60,9 +58,9 @@ public class DiscoverFragment extends Fragment {
   }
 
   @Override
-  public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+  public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                           Bundle savedInstanceState) {
     // Inflate the layout for this fragment
-    View fragmentView = inflater.inflate(R.layout.fragment_discover, container, false);
-    return fragmentView;
+    return inflater.inflate(R.layout.fragment_upcoming, container, false);
   }
 }

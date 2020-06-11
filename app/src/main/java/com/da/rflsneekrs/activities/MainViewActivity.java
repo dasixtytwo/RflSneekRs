@@ -1,4 +1,4 @@
-package com.da.rflsneekrs.mainview;
+package com.da.rflsneekrs.activities;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -6,12 +6,13 @@ import androidx.fragment.app.Fragment;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.Menu;
 import android.view.MenuItem;
 
-import android.widget.Toast;
-
 import com.da.rflsneekrs.R;
+import com.da.rflsneekrs.fragments.DiscoverFragment;
+import com.da.rflsneekrs.fragments.HomeFragment;
+import com.da.rflsneekrs.fragments.InboxFragment;
+import com.da.rflsneekrs.fragments.ProfileFragment;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 

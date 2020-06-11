@@ -9,9 +9,9 @@ public class Product {
     this.name = name;
     this.brand = brand;
     this.description = description;
-    this.inStock = inStock;
-    this.image = image;
     this.gender = gender;
+    this.image = image;
+    this.inStock = inStock;
     this.price = price;
   }
 
@@ -39,18 +39,18 @@ public class Product {
     this.name = description;
   }
 
-  public String getImage() {
-    return image;
-  }
-  public void setImage(String image) {
-    this.name = image;
-  }
-
   public String getGender() {
     return gender;
   }
   public void setGender(String gender) {
     this.name = gender;
+  }
+
+  public String getImage() {
+    return image;
+  }
+  public void setImage(String image) {
+    this.name = image;
   }
 
   public Boolean getInStock() {

@@ -18,7 +18,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.da.rflsneekrs.R;
-import com.da.rflsneekrs.mainview.MainViewActivity;
 import com.da.rflsneekrs.models.User;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
