@@ -1,9 +1,10 @@
 package com.da.rflsneekrs.models;
 
 public class Product {
-  public String name, brand, description, image, gender;
-  public Double price;
-  public Boolean inStock;
+
+  private String name, brand, description, image, gender;
+  private Double price;
+  private Boolean inStock;
 
   public Product(String name, String brand, String description, Boolean inStock, String image, String gender, Double price){
     this.name = name;

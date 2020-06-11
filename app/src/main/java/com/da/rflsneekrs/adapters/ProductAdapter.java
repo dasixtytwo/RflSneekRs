@@ -1,6 +1,7 @@
 package com.da.rflsneekrs.adapters;
 
 import android.content.Context;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
@@ -20,14 +21,15 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ProdView
   List<Product> productData;
 
   public ProductAdapter(Context cx, List<Product> pd){
-    context = cx;
-    productData = pd;
+    this.context = cx;
+    this.productData = pd;
   }
 
   @NonNull
   @Override
   public ProdViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-    return null;
+    View row = LayoutInflater.from(context).inflate(R.layout.row_product_item,parent,false);
+    return new ProdViewHolder(row);
   }
 
   @Override
