@@ -63,10 +63,11 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ProdView
           Intent postDetailActivity = new Intent(context, ProductDetailActivity.class);
           int position = getAdapterPosition();
 
-          postDetailActivity.putExtra("title",productData.get(position).getName());
-          postDetailActivity.putExtra("postImage",productData.get(position).getImage());
+          postDetailActivity.putExtra("name",productData.get(position).getName());
+          postDetailActivity.putExtra("brand",productData.get(position).getBrand());
+          postDetailActivity.putExtra("image",productData.get(position).getImage());
           postDetailActivity.putExtra("description",productData.get(position).getDescription());
-          postDetailActivity.putExtra("userPhoto",productData.get(position).getPrice());
+          postDetailActivity.putExtra("price",productData.get(position).getPrice());
           // will fix this later i forgot to add user name to post object
           //long timestamp  = (long) productData.get(position).getTimeStamp();
           //postDetailActivity.putExtra("postDate",timestamp) ;
