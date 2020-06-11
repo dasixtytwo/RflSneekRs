@@ -79,10 +79,10 @@ public class HomeFragment extends Fragment {
   @Override
   public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
     // Inflate the layout for this fragment
-    View rootView =  inflater.inflate(R.layout.fragment_home, container, false);
+    View fragmentView =  inflater.inflate(R.layout.fragment_home, container, false);
 
-    tabLayout = (TabLayout) rootView.findViewById(R.id.homeTabsLayout);
-    viewPager = rootView.findViewById(R.id.view_pager);
+    tabLayout = (TabLayout) fragmentView.findViewById(R.id.homeTabsLayout);
+    viewPager = fragmentView.findViewById(R.id.view_pager);
 
     feedFragment = new FeedFragment();
     inStockFragment = new InStockFragment();
@@ -96,7 +96,7 @@ public class HomeFragment extends Fragment {
     viewPagerAdapter.addFragment(upComingFragment, "UPCOMING");
     viewPager.setAdapter(viewPagerAdapter);
 
-    return rootView;
+    return fragmentView;
   }
 
   private class ViewPagerAdapter extends FragmentPagerAdapter {
