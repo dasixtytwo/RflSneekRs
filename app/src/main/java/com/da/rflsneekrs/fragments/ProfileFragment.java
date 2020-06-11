@@ -1,4 +1,4 @@
-package com.da.rflsneekrs.mainview;
+package com.da.rflsneekrs.fragments;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -11,8 +11,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 
-import com.da.rflsneekrs.MainActivity;
-import com.da.rflsneekrs.MainUnlogActivity;
+import com.da.rflsneekrs.activities.MainActivity;
+import com.da.rflsneekrs.activities.MainUnlogActivity;
 import com.da.rflsneekrs.R;
 import com.google.firebase.auth.FirebaseAuth;
 

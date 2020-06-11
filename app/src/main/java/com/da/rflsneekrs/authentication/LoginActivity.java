@@ -13,9 +13,8 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.da.rflsneekrs.MainActivity;
 import com.da.rflsneekrs.R;
-import com.da.rflsneekrs.mainview.MainViewActivity;
+import com.da.rflsneekrs.activities.MainViewActivity;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;

@@ -1,26 +1,36 @@
-package com.da.rflsneekrs.mainview;
+package com.da.rflsneekrs.fragments;
 
-import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.da.rflsneekrs.MainUnlogActivity;
 import com.da.rflsneekrs.R;
-import com.google.firebase.auth.FirebaseAuth;
+import com.da.rflsneekrs.adapters.ProductAdapter;
+import com.da.rflsneekrs.models.Product;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * A simple {@link Fragment} subclass.
- * Use the {@link InboxFragment#newInstance} factory method to
+ * Use the {@link DiscoverFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class InboxFragment extends Fragment {
+public class DiscoverFragment extends Fragment {
+
   // TODO: Rename parameter arguments, choose names that match
   // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
   private static final String ARG_PARAM1 = "param1";
@@ -30,9 +40,7 @@ public class InboxFragment extends Fragment {
   private String mParam1;
   private String mParam2;
 
-  FirebaseAuth auth;
-
-  public InboxFragment() {
+  public DiscoverFragment() {
     // Required empty public constructor
   }
 
@@ -42,11 +50,11 @@ public class InboxFragment extends Fragment {
    *
    * @param param1 Parameter 1.
    * @param param2 Parameter 2.
-   * @return A new instance of fragment InboxFragment.
+   * @return A new instance of fragment DiscoverFragment.
    */
   // TODO: Rename and change types and number of parameters
-  public static InboxFragment newInstance(String param1, String param2) {
-    InboxFragment fragment = new InboxFragment();
+  public static DiscoverFragment newInstance(String param1, String param2) {
+    DiscoverFragment fragment = new DiscoverFragment();
     Bundle args = new Bundle();
     args.putString(ARG_PARAM1, param1);
     args.putString(ARG_PARAM2, param2);
@@ -57,8 +65,7 @@ public class InboxFragment extends Fragment {
   @Override
   public void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
-    ((AppCompatActivity) getActivity()).getSupportActionBar().hide();
-
+    ((AppCompatActivity) getActivity()).getSupportActionBar().show();
     if (getArguments() != null) {
       mParam1 = getArguments().getString(ARG_PARAM1);
       mParam2 = getArguments().getString(ARG_PARAM2);
@@ -67,15 +74,8 @@ public class InboxFragment extends Fragment {
 
   @Override
   public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-    auth = FirebaseAuth.getInstance();
-
     // Inflate the layout for this fragment
-    View fragmentView = inflater.inflate(R.layout.fragment_inbox, container, false);
-    if(auth.getCurrentUser() == null){
-      Intent intent = new Intent(getActivity(), MainUnlogActivity.class);
-      startActivity(intent);
-    }
-
+    View fragmentView = inflater.inflate(R.layout.fragment_discover, container, false);
     return fragmentView;
   }
 }

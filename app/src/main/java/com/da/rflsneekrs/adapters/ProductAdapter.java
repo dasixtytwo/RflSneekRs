@@ -1,6 +1,7 @@
 package com.da.rflsneekrs.adapters;
 
 import android.content.Context;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
@@ -16,26 +17,26 @@ import com.da.rflsneekrs.models.Product;
 import java.util.List;
 
 public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ProdViewHolder> {
-  Context pContext;
+  Context context;
   List<Product> productData;
 
-  public ProductAdapter(Context pContext, List<Product> productData){
-    this.pContext = pContext;
-    this.productData = productData;
+  public ProductAdapter(Context cx, List<Product> pd){
+    this.context = cx;
+    this.productData = pd;
   }
 
   @NonNull
   @Override
   public ProdViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-    return null;
+    View row = LayoutInflater.from(context).inflate(R.layout.row_product_item,parent,false);
+    return new ProdViewHolder(row);
   }
 
   @Override
   public void onBindViewHolder(@NonNull ProdViewHolder holder, int position) {
-    //super.onBindViewHolder(holder, position, payloads);
     holder.tvName.setText(productData.get(position).getName());
     holder.tvBrand.setText(productData.get(position).getBrand());
-    Glide.with(pContext).load(productData.get(position).getImage()).into(holder.imgProduct);
+    Glide.with(context).load(productData.get(position).getImage()).into(holder.imgProduct);
   }
 
   @Override

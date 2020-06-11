@@ -4,12 +4,13 @@
   xmlns:tools="http://schemas.android.com/tools"
   android:layout_width="match_parent"
   android:layout_height="match_parent"
-  tools:context=".mainview.FeedFragment">
+  tools:context=".fragments.FeedFragment">
 
   <androidx.recyclerview.widget.RecyclerView
-    android:id="@+id/productRV"
+    android:id="@+id/product_recycle_view"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    />
+    android:layout_height="match_parent" >
+
+  </androidx.recyclerview.widget.RecyclerView>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
