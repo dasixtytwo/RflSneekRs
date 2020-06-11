@@ -3,20 +3,23 @@
   xmlns:app="http://schemas.android.com/apk/res-auto"
   xmlns:tools="http://schemas.android.com/tools"
   android:layout_width="match_parent"
-  android:layout_height="300dp">
+  android:layout_marginBottom="5dp"
+  android:layout_height="405dp">
 
 
   <ImageView
     android:id="@+id/row_product_image"
-    android:scaleType="centerCrop"
     android:layout_width="0dp"
     android:layout_height="0dp"
     android:contentDescription="@string/row_content_description"
+    android:scaleType="centerCrop"
     app:layout_constraintBottom_toBottomOf="parent"
     app:layout_constraintEnd_toEndOf="parent"
+    app:layout_constraintHorizontal_bias="1.0"
     app:layout_constraintStart_toStartOf="parent"
     app:layout_constraintTop_toTopOf="parent"
-    app:srcCompat="@drawable/ic_launcher_background"/>
+    app:layout_constraintVertical_bias="0.0"
+    app:srcCompat="@drawable/ic_launcher_background" />
 
   <TextView
     android:id="@+id/row_product_name"
@@ -24,23 +27,29 @@
     android:layout_height="wrap_content"
     android:layout_marginStart="30dp"
     android:layout_marginTop="20dp"
-    android:fontFamily="@font/barlow_condensed_regular"
+    android:fontFamily="@font/barlow_condensed_light"
     android:text="@string/row_text"
+    android:textAllCaps="true"
     android:textColor="@color/colorFilled"
-    android:textSize="14sp"
+    android:textSize="18sp"
     android:typeface="normal"
     app:layout_constraintStart_toStartOf="parent"
     app:layout_constraintTop_toTopOf="parent" />
 
   <TextView
     android:id="@+id/row_product_brand"
-    android:layout_width="wrap_content"
+    android:layout_width="0dp"
     android:layout_height="wrap_content"
     android:layout_marginStart="30dp"
-    android:layout_marginTop="5dp"
+    android:layout_marginTop="35dp"
+    android:fontFamily="@font/barlow_condensed_bold"
     android:text="@string/row_text"
+    android:textAllCaps="true"
+    android:textColor="@color/colorFilled"
+    android:textSize="32sp"
+    android:typeface="normal"
     app:layout_constraintStart_toStartOf="parent"
-    app:layout_constraintTop_toBottomOf="@+id/row_product_name" />
+    app:layout_constraintTop_toTopOf="parent" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
