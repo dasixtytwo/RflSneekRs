@@ -3,15 +3,14 @@
   xmlns:app="http://schemas.android.com/apk/res-auto"
   xmlns:tools="http://schemas.android.com/tools"
   android:layout_width="match_parent"
-  android:layout_marginBottom="5dp"
-  android:layout_height="405dp">
+  android:layout_height="405dp"
+  android:layout_marginBottom="5dp">
 
 
   <ImageView
     android:id="@+id/row_product_image"
     android:layout_width="0dp"
-    android:layout_height="0dp"
-    android:contentDescription="@string/row_content_description"
+    android:layout_height="match_parent"
     android:scaleType="centerCrop"
     app:layout_constraintBottom_toBottomOf="parent"
     app:layout_constraintEnd_toEndOf="parent"
@@ -19,7 +18,8 @@
     app:layout_constraintStart_toStartOf="parent"
     app:layout_constraintTop_toTopOf="parent"
     app:layout_constraintVertical_bias="0.0"
-    app:srcCompat="@drawable/ic_launcher_background" />
+    app:srcCompat="@drawable/ic_launcher_background"
+    tools:ignore="ContentDescription" />
 
   <TextView
     android:id="@+id/row_product_name"
@@ -51,5 +51,29 @@
     app:layout_constraintStart_toStartOf="parent"
     app:layout_constraintTop_toTopOf="parent" />
 
+  <ImageButton
+    android:id="@+id/share_btn"
+    android:layout_width="0dp"
+    android:layout_height="wrap_content"
+    android:layout_marginEnd="30dp"
+    android:layout_marginBottom="20dp"
+    android:background="@android:color/transparent"
+    app:layout_constraintBottom_toBottomOf="parent"
+    app:layout_constraintEnd_toStartOf="@+id/favorite_btn"
+    app:srcCompat="@drawable/ic_share"
+    android:focusable="true"
+    tools:ignore="ContentDescription"/>
+
+  <ImageButton
+    android:id="@+id/favorite_btn"
+    android:layout_width="0dp"
+    android:layout_height="wrap_content"
+    android:layout_marginEnd="30dp"
+    android:layout_marginBottom="20dp"
+    android:background="@android:color/transparent"
+    app:srcCompat="@drawable/ic_favorite"
+    app:layout_constraintBottom_toBottomOf="parent"
+    app:layout_constraintEnd_toEndOf="parent"
+    tools:ignore="ContentDescription"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

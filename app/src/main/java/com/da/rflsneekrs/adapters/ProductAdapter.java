@@ -2,13 +2,17 @@ package com.da.rflsneekrs.adapters;
 
 import android.content.Context;
 import android.content.Intent;
+import android.view.Display;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
@@ -49,6 +53,7 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ProdView
   public class ProdViewHolder extends RecyclerView.ViewHolder {
     TextView tvName, tvBrand;
     ImageView imgProduct;
+    ImageButton imgShare;
 
     public ProdViewHolder(View ItemView){
       super(ItemView);
@@ -56,6 +61,14 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ProdView
       tvName = ItemView.findViewById(R.id.row_product_name);
       tvBrand = ItemView.findViewById(R.id.row_product_brand);
       imgProduct = ItemView.findViewById(R.id.row_product_image);
+      imgShare = ItemView.findViewById(R.id.share_btn);
+
+      imgShare.setOnClickListener(new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+          Toast.makeText(context, "The favorite is clicked!", Toast.LENGTH_SHORT).show();
+        }
+      });
 
       itemView.setOnClickListener(new View.OnClickListener() {
         @Override
