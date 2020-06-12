@@ -7,11 +7,10 @@ import android.os.Bundle;
 import android.view.MenuItem;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import com.bumptech.glide.Glide;
 import com.da.rflsneekrs.R;
 import com.google.firebase.database.FirebaseDatabase;
+import com.squareup.picasso.Picasso;
 
 public class ProductDetailActivity extends AppCompatActivity {
 
@@ -33,8 +32,8 @@ public class ProductDetailActivity extends AppCompatActivity {
     // we need to send product detail data to this activity first ...
     // now we can get product data
     // ImageView on activity product detail
-    String productImage = getIntent().getExtras().getString("image") ;
-    Glide.with(this).load(productImage).into(imgProduct);
+    String productImage = getIntent().getExtras().getString("image");
+    Picasso.get().load(productImage).into(imgProduct);
     // TextView on activity product detail
     String productName = getIntent().getExtras().getString("name");
     txtViewName.setText(productName);
