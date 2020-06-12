@@ -12,6 +12,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.squareup.picasso.Picasso;
@@ -67,7 +68,9 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ProdView
       imgShare.setOnClickListener(new View.OnClickListener() {
         @Override
         public void onClick(View v) {
-          Toast.makeText(context, "The favorite is clicked!", Toast.LENGTH_SHORT).show();
+          Intent sharingIntent = new Intent(android.content.Intent.ACTION_SEND);
+          sharingIntent.setType("text/plain");
+          context.startActivity(Intent.createChooser(sharingIntent, "Share via"));
         }
       });
 
