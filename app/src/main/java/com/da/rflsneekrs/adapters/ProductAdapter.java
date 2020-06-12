@@ -2,16 +2,20 @@ package com.da.rflsneekrs.adapters;
 
 import android.content.Context;
 import android.content.Intent;
+
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.bumptech.glide.Glide;
+import com.squareup.picasso.Picasso;
+
 import com.da.rflsneekrs.R;
 import com.da.rflsneekrs.activities.ProductDetailActivity;
 import com.da.rflsneekrs.models.Product;
@@ -38,7 +42,8 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ProdView
   public void onBindViewHolder(@NonNull ProdViewHolder holder, int position) {
     holder.tvName.setText(productData.get(position).getName());
     holder.tvBrand.setText(productData.get(position).getBrand());
-    Glide.with(context).load(productData.get(position).getImage()).into(holder.imgProduct);
+    String imageUri = productData.get(position).getImage();
+    Picasso.get().load(imageUri).placeholder(R.drawable.ic_broken_image).into(holder.imgProduct);
   }
 
   @Override
@@ -49,6 +54,7 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ProdView
   public class ProdViewHolder extends RecyclerView.ViewHolder {
     TextView tvName, tvBrand;
     ImageView imgProduct;
+    ImageButton imgShare;
 
     public ProdViewHolder(View ItemView){
       super(ItemView);
@@ -56,6 +62,14 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ProdView
       tvName = ItemView.findViewById(R.id.row_product_name);
       tvBrand = ItemView.findViewById(R.id.row_product_brand);
       imgProduct = ItemView.findViewById(R.id.row_product_image);
+      imgShare = ItemView.findViewById(R.id.share_btn);
+
+      imgShare.setOnClickListener(new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+          Toast.makeText(context, "The favorite is clicked!", Toast.LENGTH_SHORT).show();
+        }
+      });
 
       itemView.setOnClickListener(new View.OnClickListener() {
         @Override
