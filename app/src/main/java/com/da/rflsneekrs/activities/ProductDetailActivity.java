@@ -10,7 +10,6 @@ import android.view.View;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.da.rflsneekrs.R;
 import com.google.firebase.database.FirebaseDatabase;

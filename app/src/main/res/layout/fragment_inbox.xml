@@ -15,7 +15,7 @@
     <com.google.android.material.tabs.TabLayout
       android:id="@+id/in_box_tab_layout"
       android:layout_width="match_parent"
-      android:layout_height="65dp"
+      android:layout_height="58dp"
       android:background="@drawable/tab_layout_border"
       app:tabIndicatorColor="@color/colorFilled"
       app:tabSelectedTextColor="@color/colorFilled"
