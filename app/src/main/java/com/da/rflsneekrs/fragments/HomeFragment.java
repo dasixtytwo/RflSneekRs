@@ -15,6 +15,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.da.rflsneekrs.R;
+import com.da.rflsneekrs.adapters.ViewPagerAdapter;
 import com.google.android.material.tabs.TabLayout;
 
 import java.util.ArrayList;
@@ -81,7 +82,7 @@ public class HomeFragment extends Fragment {
     // Inflate the layout for this fragment
     View fragmentView =  inflater.inflate(R.layout.fragment_home, container, false);
 
-    tabLayout = (TabLayout) fragmentView.findViewById(R.id.homeTabsLayout);
+    tabLayout = fragmentView.findViewById(R.id.homeTabsLayout);
     viewPager = fragmentView.findViewById(R.id.view_pager);
 
     feedFragment = new FeedFragment();
@@ -99,7 +100,7 @@ public class HomeFragment extends Fragment {
     return fragmentView;
   }
 
-  private class ViewPagerAdapter extends FragmentPagerAdapter {
+  /*private static class ViewPagerAdapter extends FragmentPagerAdapter {
     private List<Fragment> fragments = new ArrayList<>();
     private List<String> fragmentTitle = new ArrayList<>();
 
@@ -128,5 +129,5 @@ public class HomeFragment extends Fragment {
     public CharSequence getPageTitle(int position) {
       return fragmentTitle.get(position);
     }
-  }
+  }*/
 }

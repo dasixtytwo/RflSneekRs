@@ -3,16 +3,19 @@ package com.da.rflsneekrs.adapters;
 import android.content.Context;
 import android.content.Intent;
 
+import android.graphics.Bitmap;
+import android.graphics.Canvas;
+import android.graphics.Color;
+import android.graphics.drawable.Drawable;
+import android.net.Uri;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.squareup.picasso.Picasso;
@@ -21,6 +24,9 @@ import com.da.rflsneekrs.R;
 import com.da.rflsneekrs.activities.ProductDetailActivity;
 import com.da.rflsneekrs.models.Product;
 
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.util.List;
 
 public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ProdViewHolder> {
@@ -68,9 +74,13 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ProdView
       imgShare.setOnClickListener(new View.OnClickListener() {
         @Override
         public void onClick(View v) {
-          Intent sharingIntent = new Intent(android.content.Intent.ACTION_SEND);
-          sharingIntent.setType("text/plain");
-          context.startActivity(Intent.createChooser(sharingIntent, "Share via"));
+          int position = getAdapterPosition();
+          Intent intent = new Intent(Intent.ACTION_SEND);
+          intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+          intent.putExtra(Intent.EXTRA_TEXT, productData.get(position).getName());
+          intent.setType("text/*");
+          Intent shareIntent = Intent.createChooser(intent, "Share via");
+          context.startActivity(shareIntent);
         }
       });
 
@@ -80,11 +90,16 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ProdView
           Intent postDetailActivity = new Intent(context, ProductDetailActivity.class);
           int position = getAdapterPosition();
 
+          // Save the double data Type from database in a variable, ready to be converted
+          Double d = productData.get(position).getPrice();
+          // convert the variable above in a string
+          String price = "£." + d;
+
           postDetailActivity.putExtra("name",productData.get(position).getName());
           postDetailActivity.putExtra("brand",productData.get(position).getBrand());
           postDetailActivity.putExtra("image",productData.get(position).getImage());
           postDetailActivity.putExtra("description",productData.get(position).getDescription());
-          postDetailActivity.putExtra("price",productData.get(position).getPrice());
+          postDetailActivity.putExtra("price", price);
           // will fix this later i forgot to add user name to post object
           //long timestamp  = (long) productData.get(position).getTimeStamp();
           //postDetailActivity.putExtra("postDate",timestamp) ;

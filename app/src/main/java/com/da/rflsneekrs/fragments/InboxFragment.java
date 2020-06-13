@@ -3,8 +3,13 @@ package com.da.rflsneekrs.fragments;
 import android.content.Intent;
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentPagerAdapter;
+import androidx.viewpager.widget.ViewPager;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -12,7 +17,12 @@ import android.view.ViewGroup;
 
 import com.da.rflsneekrs.activities.MainUnlogActivity;
 import com.da.rflsneekrs.R;
+import com.da.rflsneekrs.adapters.ViewPagerAdapter;
+import com.google.android.material.tabs.TabLayout;
 import com.google.firebase.auth.FirebaseAuth;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -30,6 +40,12 @@ public class InboxFragment extends Fragment {
   private String mParam2;
 
   FirebaseAuth auth;
+
+  TabLayout inboxTab;
+  ViewPager inboxVP;
+
+  private NotificationsFragment notificationsFragment;
+  private OrdersFragment ordersFragment;
 
   public InboxFragment() {
     // Required empty public constructor
@@ -70,9 +86,25 @@ public class InboxFragment extends Fragment {
 
     // Inflate the layout for this fragment
     View fragmentView = inflater.inflate(R.layout.fragment_inbox, container, false);
+
+    // Initialize layouts
+    inboxTab = fragmentView.findViewById(R.id.in_box_tab_layout);
+    inboxVP = fragmentView.findViewById(R.id.in_box_view_pager);
+
+    // Initialize Fragments
+    notificationsFragment = new NotificationsFragment();
+    ordersFragment = new OrdersFragment();
+
+    inboxTab.setupWithViewPager(inboxVP);
+
     if(auth.getCurrentUser() == null){
       Intent intent = new Intent(getActivity(), MainUnlogActivity.class);
       startActivity(intent);
+    } else {
+      ViewPagerAdapter viewPagerAdapter = new ViewPagerAdapter(getChildFragmentManager(), 0);
+      viewPagerAdapter.addFragment(notificationsFragment, "NOTIFICATIONS");
+      viewPagerAdapter.addFragment(ordersFragment, "ORDERS");
+      inboxVP.setAdapter(viewPagerAdapter);
     }
 
     return fragmentView;
