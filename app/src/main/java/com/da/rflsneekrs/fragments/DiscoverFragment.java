@@ -66,6 +66,11 @@ public class DiscoverFragment extends Fragment {
   public void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     ((AppCompatActivity) getActivity()).getSupportActionBar().show();
+
+    if (((AppCompatActivity) getActivity()).getSupportActionBar() != null) {
+      ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle("DISCOVER");
+    }
+
     if (getArguments() != null) {
       mParam1 = getArguments().getString(ARG_PARAM1);
       mParam2 = getArguments().getString(ARG_PARAM2);
