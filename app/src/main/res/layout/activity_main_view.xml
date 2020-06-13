@@ -20,7 +20,7 @@
     android:id="@+id/bottom_navigation"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@color/colorUnFilled"
+    android:background="@drawable/nav_layout_border"
     app:itemIconTint="@color/bottom_nav_selector"
     app:itemTextColor="@color/bottom_nav_selector"
     app:layout_constraintBottom_toBottomOf="parent"

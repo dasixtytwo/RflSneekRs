@@ -42,7 +42,7 @@ public class ProductDetailActivity extends AppCompatActivity {
     String productImage = Objects.requireNonNull(getIntent().getExtras()).getString("image");
     Picasso.get().load(productImage).into(imgProduct);
     // TextView on activity product detail
-    String productName = getIntent().getExtras().getString("name");
+    final String productName = getIntent().getExtras().getString("name");
     txtViewName.setText(productName);
     String productBrand = getIntent().getExtras().getString("brand");
     txtViewBrand.setText(productBrand);
@@ -51,7 +51,7 @@ public class ProductDetailActivity extends AppCompatActivity {
     String productSecBrand = getIntent().getExtras().getString("brand");
     txtViewSecondaryBrand.setText(productSecBrand);
     String productPrice = getIntent().getExtras().getString("price");
-    txtViewPrice.setText(productPrice);
+    txtViewPrice.setText(String.valueOf(productPrice));
     String productDescription = getIntent().getExtras().getString("description");
     txtViewDescription.setText(productDescription);
 
@@ -59,7 +59,10 @@ public class ProductDetailActivity extends AppCompatActivity {
       @Override
       public void onClick(View v) {
         Intent sharingIntent = new Intent(android.content.Intent.ACTION_SEND);
-        sharingIntent.setType("text/plain");
+        sharingIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        sharingIntent.putExtra(Intent.EXTRA_TEXT, productName);
+        sharingIntent.setType("text/*");
+        Intent shareIntent = Intent.createChooser(sharingIntent, "Share via");
         startActivity(Intent.createChooser(sharingIntent, "Share via"));
       }
     });
