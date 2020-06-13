@@ -92,35 +92,4 @@ public class HomeFragment extends Fragment {
 
     return fragmentView;
   }
-
-  /*private static class ViewPagerAdapter extends FragmentPagerAdapter {
-    private List<Fragment> fragments = new ArrayList<>();
-    private List<String> fragmentTitle = new ArrayList<>();
-
-    public ViewPagerAdapter(@NonNull FragmentManager fm, int behavior) {
-      super(fm, behavior);
-    }
-
-    public void addFragment(Fragment fragment, String title){
-      fragments.add(fragment);
-      fragmentTitle.add(title);
-    }
-
-    @NonNull
-    @Override
-    public Fragment getItem(int position){
-      return fragments.get(position);
-    }
-
-    @Override
-    public int getCount(){
-      return fragments.size();
-    }
-
-    @Nullable
-    @Override
-    public CharSequence getPageTitle(int position) {
-      return fragmentTitle.get(position);
-    }
-  }*/
 }
