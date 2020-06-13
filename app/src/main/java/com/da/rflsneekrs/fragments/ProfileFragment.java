@@ -3,10 +3,14 @@ package com.da.rflsneekrs.fragments;
 import android.content.Intent;
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -14,6 +18,7 @@ import android.widget.Button;
 import com.da.rflsneekrs.activities.MainActivity;
 import com.da.rflsneekrs.activities.MainUnlogActivity;
 import com.da.rflsneekrs.R;
+import com.da.rflsneekrs.activities.SettingsActivity;
 import com.google.firebase.auth.FirebaseAuth;
 
 /**
@@ -60,12 +65,33 @@ public class ProfileFragment extends Fragment {
   @Override
   public void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
-    ((AppCompatActivity) getActivity()).getSupportActionBar().hide();
-
+    ((AppCompatActivity) getActivity()).getSupportActionBar().show();
+    ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle("PROFILE");
+    // Setting the menu item
+    setHasOptionsMenu(true);
 
     if (getArguments() != null) {
       mParam1 = getArguments().getString(ARG_PARAM1);
       mParam2 = getArguments().getString(ARG_PARAM2);
+    }
+  }
+
+  @Override
+  public void onCreateOptionsMenu(@NonNull Menu menu, @NonNull MenuInflater inflater) {
+    super.onCreateOptionsMenu(menu,inflater);
+    inflater.inflate(R.menu.profile_setting, menu);
+  }
+
+  @Override
+  public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+    switch (item.getItemId())
+    {
+      case R.id.setting_button:
+        Intent intent = new Intent(getActivity(), SettingsActivity.class);
+        startActivity(intent);
+        return true;
+      default:
+        return super.onOptionsItemSelected(item);
     }
   }
 
