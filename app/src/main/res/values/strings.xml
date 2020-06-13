@@ -47,4 +47,6 @@
   <string name="unlogged_title">Why\n Log In?</string>
   <string name="row_text">TextView</string>
   <string name="row_content_description">SneekRs Product</string>
+  <string name="notifications_fragment">NO MESSAGES</string>
+  <string name="orders_fragment">NO ORDERS</string>
 </resources>

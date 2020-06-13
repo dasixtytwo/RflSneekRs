@@ -2,12 +2,8 @@ package com.da.rflsneekrs.fragments;
 
 import android.os.Bundle;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentPagerAdapter;
 import androidx.viewpager.widget.ViewPager;
 
 import android.view.LayoutInflater;
@@ -15,10 +11,8 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.da.rflsneekrs.R;
+import com.da.rflsneekrs.adapters.ViewPagerAdapter;
 import com.google.android.material.tabs.TabLayout;
-
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -81,7 +75,7 @@ public class HomeFragment extends Fragment {
     // Inflate the layout for this fragment
     View fragmentView =  inflater.inflate(R.layout.fragment_home, container, false);
 
-    tabLayout = (TabLayout) fragmentView.findViewById(R.id.homeTabsLayout);
+    tabLayout = fragmentView.findViewById(R.id.homeTabsLayout);
     viewPager = fragmentView.findViewById(R.id.view_pager);
 
     feedFragment = new FeedFragment();
@@ -97,36 +91,5 @@ public class HomeFragment extends Fragment {
     viewPager.setAdapter(viewPagerAdapter);
 
     return fragmentView;
-  }
-
-  private class ViewPagerAdapter extends FragmentPagerAdapter {
-    private List<Fragment> fragments = new ArrayList<>();
-    private List<String> fragmentTitle = new ArrayList<>();
-
-    public ViewPagerAdapter(@NonNull FragmentManager fm, int behavior) {
-      super(fm, behavior);
-    }
-
-    public void addFragment(Fragment fragment, String title){
-      fragments.add(fragment);
-      fragmentTitle.add(title);
-    }
-
-    @NonNull
-    @Override
-    public Fragment getItem(int position){
-      return fragments.get(position);
-    }
-
-    @Override
-    public int getCount(){
-      return fragments.size();
-    }
-
-    @Nullable
-    @Override
-    public CharSequence getPageTitle(int position) {
-      return fragmentTitle.get(position);
-    }
   }
 }
