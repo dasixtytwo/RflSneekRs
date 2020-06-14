@@ -9,6 +9,7 @@ import androidx.viewpager.widget.ViewPager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
 
 import com.da.rflsneekrs.R;
 import com.da.rflsneekrs.adapters.ViewPagerAdapter;
@@ -32,6 +33,7 @@ public class HomeFragment extends Fragment {
 
   TabLayout tabLayout;
   ViewPager viewPager;
+  ImageButton spanButton, filterButton;
 
   private FeedFragment feedFragment;
   private InStockFragment inStockFragment;
@@ -77,6 +79,8 @@ public class HomeFragment extends Fragment {
 
     tabLayout = fragmentView.findViewById(R.id.homeTabsLayout);
     viewPager = fragmentView.findViewById(R.id.view_pager);
+    spanButton = fragmentView.findViewById(R.id.spanBtn);
+    filterButton = fragmentView.findViewById(R.id.filterBtn);
 
     feedFragment = new FeedFragment();
     inStockFragment = new InStockFragment();
@@ -89,6 +93,30 @@ public class HomeFragment extends Fragment {
     viewPagerAdapter.addFragment(inStockFragment, "IN STOCK");
     viewPagerAdapter.addFragment(upComingFragment, "UPCOMING");
     viewPager.setAdapter(viewPagerAdapter);
+
+    viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+      @Override
+      public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+      }
+
+      @Override
+      public void onPageSelected(int position) {
+        if (position == 0) {
+          spanButton.setVisibility(View.VISIBLE);
+          filterButton.setVisibility(View.VISIBLE);
+        } else if (position == 1) {
+          spanButton.setVisibility(View.VISIBLE);
+          filterButton.setVisibility(View.VISIBLE);
+        } else {
+          spanButton.setVisibility(View.GONE);
+          filterButton.setVisibility(View.GONE);
+        }
+      }
+
+      @Override
+      public void onPageScrollStateChanged(int state) {
+      }
+    });
 
     return fragmentView;
   }
