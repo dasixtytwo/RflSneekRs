@@ -21,19 +21,17 @@ import com.google.android.material.tabs.TabLayout;
  * create an instance of this fragment.
  */
 public class HomeFragment extends Fragment {
-
-  // TODO: Rename parameter arguments, choose names that match
   // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
   private static final String ARG_PARAM1 = "param1";
   private static final String ARG_PARAM2 = "param2";
 
-  // TODO: Rename and change types of parameters
   private String mParam1;
   private String mParam2;
 
   TabLayout tabLayout;
   ViewPager viewPager;
-  ImageButton spanButton, filterButton;
+  public ImageButton spanButton;
+  ImageButton filterButton;
 
   private FeedFragment feedFragment;
   private InStockFragment inStockFragment;
@@ -51,7 +49,6 @@ public class HomeFragment extends Fragment {
    * @param param2 Parameter 2.
    * @return A new instance of fragment HomeFragment.
    */
-  // TODO: Rename and change types and number of parameters
   public static HomeFragment newInstance(String param1, String param2) {
     HomeFragment fragment = new HomeFragment();
     Bundle args = new Bundle();
