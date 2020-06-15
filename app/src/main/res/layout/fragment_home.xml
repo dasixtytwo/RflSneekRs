@@ -8,20 +8,62 @@
 
   <androidx.viewpager.widget.ViewPager
     android:id="@+id/view_pager"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    app:tabMode="scrollable">
-
-    <com.google.android.material.tabs.TabLayout
-      android:id="@+id/homeTabsLayout"
-      android:layout_width="match_parent"
-      android:layout_height="58dp"
-      android:background="@drawable/tab_layout_border"
-      app:tabIndicatorColor="@color/colorFilled"
-      app:tabSelectedTextColor="@color/colorFilled"
-      app:tabTextAppearance="@style/CustomViewAllTab"
-      app:tabTextColor="@color/colorSecondary" />
-
+    android:layout_width="0dp"
+    android:layout_height="0dp"
+    app:layout_constraintBottom_toBottomOf="parent"
+    app:layout_constraintEnd_toEndOf="parent"
+    app:layout_constraintStart_toStartOf="parent"
+    app:layout_constraintTop_toBottomOf="@+id/spanBtn"
+    app:tabMode="scrollable" >
   </androidx.viewpager.widget.ViewPager>
+
+  <com.google.android.material.tabs.TabLayout
+    android:id="@+id/homeTabsLayout"
+    android:layout_width="match_parent"
+    android:layout_height="58dp"
+    android:background="@drawable/tab_layout_border"
+    app:tabIndicatorColor="@color/colorFilled"
+    app:tabSelectedTextColor="@color/colorFilled"
+    app:tabTextAppearance="@style/CustomViewAllTab"
+    app:tabTextColor="@color/colorSecondary"
+    tools:ignore="MissingConstraints" />
+
+  <ImageButton
+    android:id="@+id/spanBtn"
+    android:layout_width="0dp"
+    android:layout_height="58dp"
+    android:layout_gravity="bottom|end"
+    android:background="@drawable/border_bottom_layout"
+    android:src="@drawable/ic_span_list"
+    android:visibility="visible"
+    app:layout_constraintEnd_toStartOf="@+id/filterBtn"
+    app:layout_constraintStart_toStartOf="parent"
+    app:layout_constraintTop_toBottomOf="@+id/homeTabsLayout"
+    tools:ignore="ContentDescription" />
+
+  <ImageButton
+    android:id="@+id/filterBtn"
+    android:layout_width="0dp"
+    android:layout_height="58dp"
+    android:background="@drawable/border_bottom_layout"
+    android:src="@drawable/ic_filter"
+    android:visibility="visible"
+    app:layout_constraintEnd_toEndOf="parent"
+    app:layout_constraintStart_toEndOf="@+id/spanBtn"
+    app:layout_constraintTop_toBottomOf="@+id/homeTabsLayout"
+    tools:ignore="ContentDescription" />
+
+  <com.google.android.material.floatingactionbutton.FloatingActionButton
+    android:id="@+id/fab_search"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_marginEnd="16dp"
+    android:layout_marginBottom="16dp"
+    app:backgroundTint="@android:color/white"
+    android:src="@drawable/ic_search"
+    android:clickable="true"
+    android:focusable="true"
+    app:layout_constraintBottom_toBottomOf="parent"
+    app:layout_constraintEnd_toEndOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
