@@ -19,6 +19,7 @@ import com.da.rflsneekrs.activities.MainActivity;
 import com.da.rflsneekrs.activities.MainUnlogActivity;
 import com.da.rflsneekrs.R;
 import com.da.rflsneekrs.activities.SettingsActivity;
+import com.google.android.material.tabs.TabLayout;
 import com.google.firebase.auth.FirebaseAuth;
 
 /**
@@ -37,6 +38,7 @@ public class ProfileFragment extends Fragment {
 
   Button logout;
   FirebaseAuth auth;
+  TabLayout tabLayout;
 
   public ProfileFragment() {
     // Required empty public constructor
@@ -97,6 +99,10 @@ public class ProfileFragment extends Fragment {
     auth = FirebaseAuth.getInstance();
     // Inflate the layout for this fragment
     View fragmentView = inflater.inflate(R.layout.fragment_profile, container, false);
+    tabLayout = fragmentView.findViewById(R.id.profile_tabs);
+    tabLayout.addTab(tabLayout.newTab().setText("FAVOURITES"));
+    tabLayout.addTab(tabLayout.newTab().setText("PURCHASES"));
+    tabLayout.setTabGravity(TabLayout.GRAVITY_CENTER);
 
     if(auth.getCurrentUser() == null){
       Intent intent = new Intent(getActivity(), MainUnlogActivity.class);

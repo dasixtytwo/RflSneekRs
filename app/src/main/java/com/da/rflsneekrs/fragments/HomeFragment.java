@@ -5,6 +5,7 @@ import android.os.Bundle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.viewpager.widget.ViewPager;
+import androidx.viewpager2.widget.ViewPager2;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -98,16 +99,7 @@ public class HomeFragment extends Fragment {
 
       @Override
       public void onPageSelected(int position) {
-        if (position == 0) {
-          spanButton.setVisibility(View.VISIBLE);
-          filterButton.setVisibility(View.VISIBLE);
-        } else if (position == 1) {
-          spanButton.setVisibility(View.VISIBLE);
-          filterButton.setVisibility(View.VISIBLE);
-        } else {
-          spanButton.setVisibility(View.GONE);
-          filterButton.setVisibility(View.GONE);
-        }
+
       }
 
       @Override

@@ -28,31 +28,17 @@
           android:textAlignment="center" />
 
         <com.google.android.material.tabs.TabLayout
-          android:id="@+id/tabs"
+          android:id="@+id/profile_tabs"
           android:layout_width="match_parent"
           android:layout_height="58dp"
           android:background="@drawable/tab_layout_border"
           app:layout_scrollFlags="scroll|enterAlways"
-          app:tabGravity="center"
           app:tabIndicatorColor="@color/colorFilled"
           app:tabIndicatorGravity="bottom"
-          app:tabMinWidth="196dp"
           app:tabMode="scrollable"
           app:tabSelectedTextColor="@color/colorFilled"
           app:tabTextAppearance="@style/CustomViewAllTab"
-          app:tabTextColor="@color/colorSecondary">
-
-            <com.google.android.material.tabs.TabItem
-              android:layout_width="match_parent"
-              android:layout_height="match_parent"
-              android:text="FAVOURITES" />
-
-            <com.google.android.material.tabs.TabItem
-              android:layout_width="match_parent"
-              android:layout_height="match_parent"
-              android:text="PURCHASES" />
-
-        </com.google.android.material.tabs.TabLayout>
+          app:tabTextColor="@color/colorSecondary"/>
 
     </com.google.android.material.appbar.AppBarLayout>
 
