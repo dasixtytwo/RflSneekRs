@@ -36,7 +36,6 @@ public class ProfileFragment extends Fragment {
   private String mParam1;
   private String mParam2;
 
-  Button logout;
   FirebaseAuth auth;
   TabLayout tabLayout;
 
@@ -107,25 +106,8 @@ public class ProfileFragment extends Fragment {
     if(auth.getCurrentUser() == null){
       Intent intent = new Intent(getActivity(), MainUnlogActivity.class);
       startActivity(intent);
-    } else {
-      logout = (Button) fragmentView.findViewById(R.id.logout_btn);
-      logout.setOnClickListener(new View.OnClickListener() {
-        @Override
-        public void onClick(View v) {
-          logout();
-        }
-      });
     }
 
     return fragmentView;
-  }
-
-  private void logout() {
-    if (auth.getCurrentUser() != null)
-      auth.signOut();
-    Intent intent = new Intent(getActivity(), MainActivity.class);
-    intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-    intent.setFlags((Intent.FLAG_ACTIVITY_CLEAR_TASK));
-    startActivity(intent);
   }
 }
