@@ -13,6 +13,7 @@ import android.view.ViewGroup;
 
 import com.da.rflsneekrs.R;
 import com.da.rflsneekrs.adapters.GridAdapter;
+import com.da.rflsneekrs.decoration.SpaceGridDecoration;
 import com.da.rflsneekrs.models.Product;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -111,6 +112,7 @@ public class InStockFragment extends Fragment {
         }
         gridAdapter = new GridAdapter(getActivity(),productList, gridLayoutManager);
         recyclerView.setAdapter(gridAdapter);
+        recyclerView.addItemDecoration(new SpaceGridDecoration(5));
       }
 
       @Override

@@ -11,7 +11,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
-import android.widget.Toast;
 
 import com.da.rflsneekrs.R;
 import com.da.rflsneekrs.adapters.ListGridAdapter;
@@ -89,7 +88,6 @@ public class FeedFragment extends Fragment {
 
     // Inflate the layout for this fragment
     View fragmentView = inflater.inflate(R.layout.fragment_feed, container, false);
-    View fragmentHome = inflater.inflate(R.layout.fragment_home, container, false);
 
     productRecyclerView = (RecyclerView) fragmentView.findViewById(R.id.feed_recycle_view);
     productRecyclerView.setHasFixedSize(true);
