@@ -14,13 +14,22 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.TextView;
 
-import com.da.rflsneekrs.activities.MainActivity;
 import com.da.rflsneekrs.activities.MainUnlogActivity;
 import com.da.rflsneekrs.R;
 import com.da.rflsneekrs.activities.SettingsActivity;
+import com.da.rflsneekrs.models.User;
 import com.google.android.material.tabs.TabLayout;
 import com.google.firebase.auth.FirebaseAuth;
+
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
+import com.google.firebase.database.ValueEventListener;
+
 
 /**
  * A simple {@link Fragment} subclass.
@@ -36,8 +45,14 @@ public class ProfileFragment extends Fragment {
   private String mParam1;
   private String mParam2;
 
-  FirebaseAuth auth;
+  private FirebaseAuth auth;
+  private FirebaseDatabase fbDatabase;
+  private DatabaseReference dbReference;
+
   TabLayout tabLayout;
+  TextView profileTv;
+
+  public String firstName, lastName, email;
 
   public ProfileFragment() {
     // Required empty public constructor
@@ -96,8 +111,12 @@ public class ProfileFragment extends Fragment {
   @Override
   public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
     auth = FirebaseAuth.getInstance();
+    fbDatabase = FirebaseDatabase.getInstance();
+    dbReference = fbDatabase.getReference("Users");
+
     // Inflate the layout for this fragment
     View fragmentView = inflater.inflate(R.layout.fragment_profile, container, false);
+    profileTv = fragmentView.findViewById(R.id.profileName);
     tabLayout = fragmentView.findViewById(R.id.profile_tabs);
     tabLayout.addTab(tabLayout.newTab().setText("FAVOURITES"));
     tabLayout.addTab(tabLayout.newTab().setText("PURCHASES"));
@@ -106,8 +125,28 @@ public class ProfileFragment extends Fragment {
     if(auth.getCurrentUser() == null){
       Intent intent = new Intent(getActivity(), MainUnlogActivity.class);
       startActivity(intent);
+    } else {
+      getUser();
     }
 
     return fragmentView;
+  }
+
+  private void getUser() {
+    final String UID = auth.getUid();
+    dbReference.addListenerForSingleValueEvent(new ValueEventListener() {
+      @Override
+      public void onDataChange(@NonNull DataSnapshot userSnapShot) {
+        assert UID != null;
+        User user = userSnapShot.child(UID).getValue(User.class);
+        assert user != null;
+        String fullName = user.getFirstName() + " " + user.getLastName();
+        profileTv.setText(fullName);
+      }
+
+      @Override
+      public void onCancelled(@NonNull DatabaseError databaseError) {
+      }
+    });
   }
 }
