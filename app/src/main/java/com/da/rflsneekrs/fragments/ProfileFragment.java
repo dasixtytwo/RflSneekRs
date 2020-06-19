@@ -23,15 +23,15 @@ import com.da.rflsneekrs.R;
 import com.da.rflsneekrs.activities.SettingsActivity;
 import com.da.rflsneekrs.adapters.ViewPagerAdapter;
 import com.da.rflsneekrs.models.User;
+
 import com.google.android.material.tabs.TabLayout;
 import com.google.firebase.auth.FirebaseAuth;
-
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
+
 import com.squareup.picasso.Picasso;
 
 
@@ -141,8 +141,15 @@ public class ProfileFragment extends Fragment {
     viewPagerAdapter.addFragment(purchasesFragment, "PURCHASES");
     viewPager.setAdapter(viewPagerAdapter);
 
-    // Load an image using Picasso library
-    Picasso.get().load("http://davideagosti.co.uk/wp-content/uploads/2020/06/mid77.jpg").into(profileImg);
+    // Load an image if exist on database otherwise load default one using Picasso library
+    if (auth.getCurrentUser().getPhotoUrl() != null) {
+      Picasso.get()
+          .load(auth.getCurrentUser().getPhotoUrl())
+          .into(profileImg);
+    } else {
+      String imgUri = "http://davideagosti.co.uk/wp-content/uploads/2020/06/avatar.png";
+      Picasso.get().load(imgUri).error(R.drawable.avatar).into(profileImg);
+    }
 
     if(auth.getCurrentUser() == null){
       Intent intent = new Intent(getActivity(), MainUnlogActivity.class);
