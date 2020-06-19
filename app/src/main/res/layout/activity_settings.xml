@@ -1,22 +1,317 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
   xmlns:app="http://schemas.android.com/apk/res-auto"
   xmlns:tools="http://schemas.android.com/tools"
   android:layout_width="match_parent"
   android:layout_height="match_parent"
-  tools:context=".activities.SettingsActivity">
+  tools:context=".activities.SettingsActivity"
+  android:fillViewport="true">
 
-  <Button
-    android:id="@+id/logout_btn"
-    android:layout_width="0dp"
-    android:layout_height="wrap_content"
-    android:layout_marginStart="16dp"
-    android:layout_marginBottom="24dp"
-    android:background="@android:color/transparent"
-    android:text="@string/logout"
-    android:textAlignment="textStart"
-    app:layout_constraintBottom_toBottomOf="parent"
-    app:layout_constraintEnd_toEndOf="parent"
-    app:layout_constraintStart_toStartOf="parent" />
+  <androidx.constraintlayout.widget.ConstraintLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content" >
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+    <androidx.cardview.widget.CardView
+      android:id="@+id/picture_cv"
+      android:layout_width="100dp"
+      android:layout_height="wrap_content"
+      android:layout_marginTop="30dp"
+      android:background="@drawable/circle_border_shape"
+      app:cardCornerRadius="50dp"
+      app:cardPreventCornerOverlap="false"
+      app:layout_constraintEnd_toEndOf="parent"
+      app:layout_constraintHorizontal_bias="0.5"
+      app:layout_constraintStart_toStartOf="parent"
+      app:layout_constraintTop_toTopOf="parent">
+
+      <ImageView
+        android:id="@+id/profileImg"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:scaleType="centerCrop"
+        tools:ignore="ContentDescription" />
+
+    </androidx.cardview.widget.CardView>
+
+    <androidx.cardview.widget.CardView
+      android:id="@+id/upload_cv"
+      android:layout_width="26dp"
+      android:layout_height="26dp"
+      android:layout_marginTop="89dp"
+      android:background="@drawable/circle_border_shape"
+      app:cardCornerRadius="13dp"
+      app:cardPreventCornerOverlap="false"
+      app:layout_constraintEnd_toEndOf="parent"
+      app:layout_constraintStart_toStartOf="parent"
+      app:layout_constraintTop_toTopOf="@+id/picture_cv">
+
+      <ImageButton
+        android:id="@+id/upload_pictures_iv"
+        android:layout_width="24dp"
+        android:layout_height="24dp"
+        android:layout_margin="1dp"
+        android:clickable="true"
+        android:contentDescription="@string/add_pictures"
+        android:focusable="true"
+        android:src="@drawable/ic_add_circle" />
+
+    </androidx.cardview.widget.CardView>
+
+    <com.google.android.material.textfield.TextInputLayout
+      android:id="@+id/textInputFirstName"
+      android:layout_width="0dp"
+      android:layout_height="wrap_content"
+      android:layout_marginStart="16dp"
+      android:layout_marginTop="20dp"
+      android:layout_marginEnd="16dp"
+      app:layout_constraintEnd_toEndOf="parent"
+      app:layout_constraintStart_toStartOf="parent"
+      app:layout_constraintTop_toBottomOf="@+id/picture_cv">
+
+      <EditText
+        android:id="@+id/firstname_edt_text"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:autofillHints="@string/first_name"
+        android:fontFamily="@font/barlow_regular"
+        android:hint="@string/first_name"
+        android:inputType="text"
+        android:textSize="16sp"
+        android:typeface="normal" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+      android:id="@+id/textInputLastName"
+      android:layout_width="0dp"
+      android:layout_height="wrap_content"
+      android:layout_marginStart="16dp"
+      android:layout_marginTop="10dp"
+      android:layout_marginEnd="16dp"
+      app:layout_constraintEnd_toEndOf="parent"
+      app:layout_constraintStart_toStartOf="parent"
+      app:layout_constraintTop_toBottomOf="@+id/textInputFirstName">
+
+      <EditText
+        android:id="@+id/lastname_edt_text"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:autofillHints="@string/last_name"
+        android:fontFamily="@font/barlow_regular"
+        android:hint="@string/last_name"
+        android:inputType="text"
+        android:textSize="16sp"
+        android:typeface="normal" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+      android:id="@+id/type_input_email"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:layout_marginStart="16dp"
+      android:layout_marginTop="10dp"
+      android:layout_marginEnd="16dp"
+      app:layout_constraintEnd_toEndOf="parent"
+      app:layout_constraintStart_toStartOf="parent"
+      app:layout_constraintTop_toBottomOf="@+id/textInputLastName">
+
+      <EditText
+        android:id="@+id/email_edt_text"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:autofillHints="@string/email_hint"
+        android:fontFamily="@font/barlow_regular"
+        android:hint="@string/email_hint"
+        android:inputType="textEmailAddress"
+        android:textSize="16sp"
+        android:typeface="normal" />
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <TextView
+      android:id="@+id/dialog_label"
+      android:layout_width="fill_parent"
+      android:layout_height="wrap_content"
+      android:layout_marginStart="20dp"
+      android:layout_marginTop="50dp"
+      android:layout_marginEnd="16dp"
+      android:fontFamily="@font/barlow_regular"
+      android:hint="@string/profile_gender_select"
+      android:textSize="16sp"
+      android:typeface="normal"
+      app:layout_constraintEnd_toEndOf="parent"
+      app:layout_constraintStart_toStartOf="parent"
+      app:layout_constraintTop_toBottomOf="@+id/type_input_email" />
+
+    <Spinner
+      android:id="@+id/gender_spinner"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:layout_marginStart="20dp"
+      android:layout_marginEnd="16dp"
+      android:spinnerMode="dialog"
+      app:layout_constraintEnd_toEndOf="parent"
+      app:layout_constraintHorizontal_bias="0.0"
+      app:layout_constraintStart_toStartOf="parent"
+      app:layout_constraintTop_toBottomOf="@+id/dialog_label" />
+
+    <TextView
+      android:id="@+id/dialog_shoes_label"
+      android:layout_width="fill_parent"
+      android:layout_height="wrap_content"
+      android:layout_marginStart="20dp"
+      android:layout_marginTop="20dp"
+      android:layout_marginEnd="16dp"
+      android:fontFamily="@font/barlow_regular"
+      android:hint="@string/profile_shoes_select"
+      android:textSize="16sp"
+      android:typeface="normal"
+      app:layout_constraintEnd_toEndOf="parent"
+      app:layout_constraintHorizontal_bias="0.5"
+      app:layout_constraintStart_toStartOf="parent"
+      app:layout_constraintTop_toBottomOf="@+id/gender_spinner" />
+
+    <Spinner
+      android:id="@+id/shoe_size_spinner"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:layout_marginStart="20dp"
+      android:layout_marginEnd="16dp"
+      android:spinnerMode="dialog"
+      app:layout_constraintEnd_toEndOf="parent"
+      app:layout_constraintHorizontal_bias="0.5"
+      app:layout_constraintStart_toStartOf="parent"
+      app:layout_constraintTop_toBottomOf="@+id/dialog_shoes_label" />
+
+    <Button
+      android:id="@+id/order_history_btn"
+      android:layout_width="0dp"
+      android:layout_height="wrap_content"
+      android:layout_marginStart="20dp"
+      android:layout_marginTop="16dp"
+      android:layout_marginEnd="20dp"
+      android:background="@android:color/transparent"
+      android:fontFamily="@font/barlow_regular"
+      android:text="@string/order_history"
+      android:textAlignment="textStart"
+      android:textAllCaps="false"
+      android:textSize="16sp"
+      android:typeface="normal"
+      app:layout_constraintEnd_toEndOf="parent"
+      app:layout_constraintHorizontal_bias="0.5"
+      app:layout_constraintStart_toStartOf="parent"
+      app:layout_constraintTop_toBottomOf="@+id/shoe_size_spinner" />
+
+    <Button
+      android:id="@+id/payment_info_btn"
+      android:layout_width="0dp"
+      android:layout_height="wrap_content"
+      android:layout_marginStart="20dp"
+      android:layout_marginTop="10dp"
+      android:layout_marginEnd="20dp"
+      android:background="@android:color/transparent"
+      android:fontFamily="@font/barlow_regular"
+      android:text="@string/payment_information"
+      android:textAlignment="textStart"
+      android:textAllCaps="false"
+      android:textSize="16sp"
+      android:typeface="normal"
+      app:layout_constraintEnd_toEndOf="parent"
+      app:layout_constraintHorizontal_bias="0.5"
+      app:layout_constraintStart_toStartOf="parent"
+      app:layout_constraintTop_toBottomOf="@+id/order_history_btn" />
+
+    <Button
+      android:id="@+id/delivery_info_btn"
+      android:layout_width="0dp"
+      android:layout_height="wrap_content"
+      android:layout_marginStart="20dp"
+      android:layout_marginTop="10dp"
+      android:layout_marginEnd="20dp"
+      android:background="@android:color/transparent"
+      android:fontFamily="@font/barlow_regular"
+      android:text="@string/delivery_information"
+      android:textAlignment="textStart"
+      android:textAllCaps="false"
+      android:textSize="16sp"
+      android:typeface="normal"
+      app:layout_constraintEnd_toEndOf="parent"
+      app:layout_constraintHorizontal_bias="0.0"
+      app:layout_constraintStart_toStartOf="parent"
+      app:layout_constraintTop_toBottomOf="@+id/payment_info_btn" />
+
+    <Button
+      android:id="@+id/country_region_btn"
+      android:layout_width="0dp"
+      android:layout_height="wrap_content"
+      android:layout_marginStart="20dp"
+      android:layout_marginTop="10dp"
+      android:layout_marginEnd="20dp"
+      android:background="@android:color/transparent"
+      android:fontFamily="@font/barlow_regular"
+      android:text="@string/country_region"
+      android:textAlignment="textStart"
+      android:textAllCaps="false"
+      android:textSize="16sp"
+      android:typeface="normal"
+      app:layout_constraintEnd_toEndOf="parent"
+      app:layout_constraintHorizontal_bias="0.5"
+      app:layout_constraintStart_toStartOf="parent"
+      app:layout_constraintTop_toBottomOf="@+id/delivery_info_btn" />
+
+    <Button
+      android:id="@+id/notification_pref_btn"
+      android:layout_width="0dp"
+      android:layout_height="wrap_content"
+      android:layout_marginStart="20dp"
+      android:layout_marginTop="10dp"
+      android:layout_marginEnd="20dp"
+      android:background="@android:color/transparent"
+      android:fontFamily="@font/barlow_regular"
+      android:text="@string/notification_preferences"
+      android:textAlignment="textStart"
+      android:textAllCaps="false"
+      android:textSize="16sp"
+      android:typeface="normal"
+      app:layout_constraintEnd_toEndOf="parent"
+      app:layout_constraintHorizontal_bias="0.5"
+      app:layout_constraintStart_toStartOf="parent"
+      app:layout_constraintTop_toBottomOf="@+id/country_region_btn" />
+
+    <Button
+      android:id="@+id/help_btn"
+      android:layout_width="0dp"
+      android:layout_height="wrap_content"
+      android:layout_marginStart="20dp"
+      android:layout_marginTop="10dp"
+      android:layout_marginEnd="20dp"
+      android:background="@android:color/transparent"
+      android:fontFamily="@font/barlow_regular"
+      android:text="@string/help"
+      android:textAlignment="textStart"
+      android:textAllCaps="false"
+      android:textSize="16sp"
+      android:typeface="normal"
+      app:layout_constraintEnd_toEndOf="parent"
+      app:layout_constraintHorizontal_bias="0.5"
+      app:layout_constraintStart_toStartOf="parent"
+      app:layout_constraintTop_toBottomOf="@+id/notification_pref_btn" />
+
+    <Button
+      android:id="@+id/logout_btn"
+      android:layout_width="0dp"
+      android:layout_height="wrap_content"
+      android:layout_marginStart="20dp"
+      android:layout_marginTop="10dp"
+      android:layout_marginEnd="20dp"
+      android:background="@android:color/transparent"
+      android:fontFamily="@font/barlow_regular"
+      android:text="@string/logout"
+      android:textAlignment="textStart"
+      android:textAllCaps="false"
+      android:textSize="16sp"
+      android:typeface="normal"
+      app:layout_constraintEnd_toEndOf="parent"
+      app:layout_constraintStart_toStartOf="parent"
+      app:layout_constraintTop_toBottomOf="@+id/help_btn" />
+  </androidx.constraintlayout.widget.ConstraintLayout>
+</ScrollView>
