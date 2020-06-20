@@ -114,39 +114,39 @@ public class RegistrationActivity extends AppCompatActivity {
     }
 
     auth.createUserWithEmailAndPassword(email,password)
-      .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
-      @Override
-      public void onComplete(@NonNull Task<AuthResult> task) {
+        .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+          @Override
+          public void onComplete(@NonNull Task<AuthResult> task) {
 
-        if(task.isSuccessful()){
-          User user = new User(
-              email,
-              firstname,
-              lastname,
-              nationality,
-              productPreference,
-              notification
-          );
+            if(task.isSuccessful()){
+              User user = new User(
+                  email,
+                  firstname,
+                  lastname,
+                  nationality,
+                  productPreference,
+                  notification
+              );
 
-          dbReference.child(auth.getCurrentUser().getUid())
-              .setValue(user).addOnCompleteListener(new OnCompleteListener<Void>() {
-            @Override
-            public void onComplete(@NonNull Task<Void> task) {
-              Toast.makeText(RegistrationActivity.this, "Registration successful!", Toast.LENGTH_LONG).show();
-              progressBar.setVisibility(View.GONE);
+              dbReference.child(auth.getCurrentUser().getUid())
+                  .setValue(user).addOnCompleteListener(new OnCompleteListener<Void>() {
+                @Override
+                public void onComplete(@NonNull Task<Void> task) {
+                  Toast.makeText(RegistrationActivity.this, "Registration successful!", Toast.LENGTH_LONG).show();
+                  progressBar.setVisibility(View.GONE);
 
-              Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
-              startActivity(intent);
-              finish();
+                  Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
+                  startActivity(intent);
+                  finish();
+                }
+              });
             }
-          });
-        }
-        else{
-          Toast.makeText(RegistrationActivity.this,"E-mail or password is wrong", Toast.LENGTH_SHORT).show();
-          progressBar.setVisibility(View.GONE);
-        }
-      }
-    });
+            else{
+              Toast.makeText(RegistrationActivity.this,"E-mail or password is wrong", Toast.LENGTH_SHORT).show();
+              progressBar.setVisibility(View.GONE);
+            }
+          }
+        });
   }
 
   private void initializeViews() {
