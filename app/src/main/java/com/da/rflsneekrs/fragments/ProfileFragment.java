@@ -6,6 +6,7 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
+import androidx.viewpager.widget.ViewPager;
 
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -14,12 +15,25 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageView;
+import android.widget.TextView;
 
-import com.da.rflsneekrs.activities.MainActivity;
 import com.da.rflsneekrs.activities.MainUnlogActivity;
 import com.da.rflsneekrs.R;
 import com.da.rflsneekrs.activities.SettingsActivity;
+import com.da.rflsneekrs.adapters.ViewPagerAdapter;
+import com.da.rflsneekrs.models.User;
+
+import com.google.android.material.tabs.TabLayout;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+
+import com.squareup.picasso.Picasso;
+
 
 /**
  * A simple {@link Fragment} subclass.
@@ -35,8 +49,19 @@ public class ProfileFragment extends Fragment {
   private String mParam1;
   private String mParam2;
 
-  Button logout;
-  FirebaseAuth auth;
+  private FirebaseAuth auth;
+  private FirebaseDatabase fbDatabase;
+  private DatabaseReference dbReference;
+
+  TabLayout tabLayout;
+  TextView profileTv;
+  ImageView profileImg;
+  ViewPager viewPager;
+
+  private FavouritesFragment favouritesFragment;
+  private PurchasesFragment purchasesFragment;
+
+  public String firstName, lastName, email;
 
   public ProfileFragment() {
     // Required empty public constructor
@@ -95,31 +120,62 @@ public class ProfileFragment extends Fragment {
   @Override
   public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
     auth = FirebaseAuth.getInstance();
+    fbDatabase = FirebaseDatabase.getInstance();
+    dbReference = fbDatabase.getReference("Users");
+
     // Inflate the layout for this fragment
     View fragmentView = inflater.inflate(R.layout.fragment_profile, container, false);
+    viewPager = fragmentView.findViewById(R.id.profile_view_pager);
+    profileTv = fragmentView.findViewById(R.id.profileName);
+    tabLayout = fragmentView.findViewById(R.id.profile_tabs);
+    profileImg = fragmentView.findViewById(R.id.profileImg);
+
+    favouritesFragment = new FavouritesFragment();
+    purchasesFragment = new PurchasesFragment();
+
+    tabLayout.setTabGravity(TabLayout.GRAVITY_FILL);
+    tabLayout.setupWithViewPager(viewPager);
+
+    ViewPagerAdapter viewPagerAdapter = new ViewPagerAdapter(getChildFragmentManager(), 0);
+    viewPagerAdapter.addFragment(favouritesFragment, "FAVOURITES");
+    viewPagerAdapter.addFragment(purchasesFragment, "PURCHASES");
+    viewPager.setAdapter(viewPagerAdapter);
+
+    // Load an image if exist on database otherwise load default one using Picasso library
+    if (auth.getCurrentUser().getPhotoUrl() != null) {
+      Picasso.get()
+          .load(auth.getCurrentUser().getPhotoUrl())
+          .into(profileImg);
+    } else {
+      String imgUri = "http://davideagosti.co.uk/wp-content/uploads/2020/06/avatar.png";
+      Picasso.get().load(imgUri).error(R.drawable.avatar).into(profileImg);
+    }
 
     if(auth.getCurrentUser() == null){
       Intent intent = new Intent(getActivity(), MainUnlogActivity.class);
       startActivity(intent);
     } else {
-      logout = (Button) fragmentView.findViewById(R.id.logout_btn);
-      logout.setOnClickListener(new View.OnClickListener() {
-        @Override
-        public void onClick(View v) {
-          logout();
-        }
-      });
+      getUser();
     }
 
     return fragmentView;
   }
 
-  private void logout() {
-    if (auth.getCurrentUser() != null)
-      auth.signOut();
-    Intent intent = new Intent(getActivity(), MainActivity.class);
-    intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-    intent.setFlags((Intent.FLAG_ACTIVITY_CLEAR_TASK));
-    startActivity(intent);
+  private void getUser() {
+    final String UID = auth.getUid();
+    dbReference.addListenerForSingleValueEvent(new ValueEventListener() {
+      @Override
+      public void onDataChange(@NonNull DataSnapshot userSnapShot) {
+        assert UID != null;
+        User user = userSnapShot.child(UID).getValue(User.class);
+        assert user != null;
+        String fullName = user.getFirstName() + " " + user.getLastName();
+        profileTv.setText(fullName);
+      }
+
+      @Override
+      public void onCancelled(@NonNull DatabaseError databaseError) {
+      }
+    });
   }
 }

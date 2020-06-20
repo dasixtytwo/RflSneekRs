@@ -1,8 +1,11 @@
 package com.da.rflsneekrs.fragments;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -11,6 +14,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
+import android.widget.Toast;
 
 import com.da.rflsneekrs.R;
 import com.da.rflsneekrs.adapters.ListGridAdapter;
@@ -83,17 +87,26 @@ public class FeedFragment extends Fragment {
   }
 
   @Override
-  public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+  public View onCreateView(LayoutInflater inflater, ViewGroup container, final Bundle savedInstanceState) {
     gridLayoutManager = new GridLayoutManager(getActivity(), SPAN_COUNT_ONE);
 
     // Inflate the layout for this fragment
     View fragmentView = inflater.inflate(R.layout.fragment_feed, container, false);
+    imageButton = fragmentView.findViewById(R.id.spanBtn);
 
     productRecyclerView = (RecyclerView) fragmentView.findViewById(R.id.feed_recycle_view);
     productRecyclerView.setHasFixedSize(true);
     productRecyclerView.setLayoutManager(gridLayoutManager);
     fbDatabase = FirebaseDatabase.getInstance();
     dbReference = fbDatabase.getReference("Products");
+
+    imageButton.setOnClickListener(new View.OnClickListener() {
+      @Override
+      public void onClick(View v) {
+        switchLayout();
+        switchIcon(v);
+      }
+    });
 
     return fragmentView;
   }
