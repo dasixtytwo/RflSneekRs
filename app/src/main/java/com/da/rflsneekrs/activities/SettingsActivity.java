@@ -123,11 +123,11 @@ public class SettingsActivity extends AppCompatActivity {
 
     reference.putBytes(baos.toByteArray())
         .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
-      @Override
-      public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-        getDownloadUrl(reference);
-      }
-    }).addOnFailureListener(new OnFailureListener() {
+          @Override
+          public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+            getDownloadUrl(reference);
+          }
+        }).addOnFailureListener(new OnFailureListener() {
       @Override
       public void onFailure(@NonNull Exception e) {
         //Toast.makeText(SettingsActivity.this, "Something Wrong!", Toast.LENGTH_LONG).show();

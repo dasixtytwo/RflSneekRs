@@ -26,14 +26,15 @@ import com.da.rflsneekrs.models.User;
 
 import com.google.android.material.tabs.TabLayout;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import com.google.firebase.database.annotations.NotNull;
 import com.squareup.picasso.Picasso;
-
 
 /**
  * A simple {@link Fragment} subclass.
@@ -49,14 +50,14 @@ public class ProfileFragment extends Fragment {
   private String mParam1;
   private String mParam2;
 
-  private FirebaseAuth auth;
-  private FirebaseDatabase fbDatabase;
-  private DatabaseReference dbReference;
+  FirebaseAuth auth;
+  FirebaseDatabase fbDatabase;
+  DatabaseReference dbReference;
 
-  TabLayout tabLayout;
-  TextView profileTv;
-  ImageView profileImg;
-  ViewPager viewPager;
+  private TabLayout tabLayout;
+  private TextView profileTv;
+  private ImageView profileImg;
+  private ViewPager viewPager;
 
   private FavouritesFragment favouritesFragment;
   private PurchasesFragment purchasesFragment;
@@ -122,6 +123,7 @@ public class ProfileFragment extends Fragment {
     auth = FirebaseAuth.getInstance();
     fbDatabase = FirebaseDatabase.getInstance();
     dbReference = fbDatabase.getReference("Users");
+    FirebaseUser firebaseUser = auth.getCurrentUser();
 
     // Inflate the layout for this fragment
     View fragmentView = inflater.inflate(R.layout.fragment_profile, container, false);
@@ -141,20 +143,17 @@ public class ProfileFragment extends Fragment {
     viewPagerAdapter.addFragment(purchasesFragment, "PURCHASES");
     viewPager.setAdapter(viewPagerAdapter);
 
-    // Load an image if exist on database otherwise load default one using Picasso library
-    if (auth.getCurrentUser().getPhotoUrl() != null) {
-      Picasso.get()
-          .load(auth.getCurrentUser().getPhotoUrl())
-          .into(profileImg);
-    } else {
-      String imgUri = "http://davideagosti.co.uk/wp-content/uploads/2020/06/avatar.png";
-      Picasso.get().load(imgUri).error(R.drawable.avatar).into(profileImg);
-    }
-
     if(auth.getCurrentUser() == null){
       Intent intent = new Intent(getActivity(), MainUnlogActivity.class);
       startActivity(intent);
     } else {
+      // Load an image if exist on database otherwise load default one using Picasso library
+      assert firebaseUser != null;
+      Picasso.get()
+          .load(firebaseUser.getPhotoUrl())
+          .error(R.drawable.avatar)
+          .into(profileImg);
+
       getUser();
     }
 
