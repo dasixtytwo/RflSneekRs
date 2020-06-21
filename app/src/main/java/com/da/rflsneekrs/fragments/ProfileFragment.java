@@ -14,7 +14,6 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -22,6 +21,7 @@ import com.da.rflsneekrs.activities.MainUnlogActivity;
 import com.da.rflsneekrs.R;
 import com.da.rflsneekrs.activities.SettingsActivity;
 import com.da.rflsneekrs.adapters.ViewPagerAdapter;
+import com.da.rflsneekrs.authentication.SessionManager;
 import com.da.rflsneekrs.models.User;
 
 import com.google.android.material.tabs.TabLayout;
@@ -33,7 +33,6 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
-import com.google.firebase.database.annotations.NotNull;
 import com.squareup.picasso.Picasso;
 
 import java.util.Objects;
@@ -56,6 +55,8 @@ public class ProfileFragment extends Fragment {
   private FirebaseAuth auth;
   private FirebaseDatabase fbDatabase;
   private DatabaseReference dbReference;
+
+  private SessionManager userSession;
 
   private TabLayout tabLayout;
   private TextView profileTv;
@@ -123,10 +124,13 @@ public class ProfileFragment extends Fragment {
 
   @Override
   public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+    // Instantiate Firebase
     auth = FirebaseAuth.getInstance();
     fbDatabase = FirebaseDatabase.getInstance();
     dbReference = fbDatabase.getReference("Users");
     FirebaseUser firebaseUser = auth.getCurrentUser();
+    // Initialize session
+    userSession = new SessionManager(requireActivity().getApplicationContext());
     // Inflate the layout for this fragment
     View fragmentView = inflater.inflate(R.layout.fragment_profile, container, false);
     // Check if the user is logged In, if not redirect the main view activity
