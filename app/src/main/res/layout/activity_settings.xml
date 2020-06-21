@@ -53,6 +53,7 @@
         android:clickable="true"
         android:contentDescription="@string/add_pictures"
         android:focusable="true"
+        android:background="@android:color/transparent"
         android:src="@drawable/ic_add_circle" />
 
     </androidx.cardview.widget.CardView>

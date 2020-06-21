@@ -62,6 +62,7 @@ public class SettingsActivity extends AppCompatActivity {
     // initialize Firebase authorization
     auth = FirebaseAuth.getInstance();
     storageReference = FirebaseStorage.getInstance().getReference();
+    FirebaseUser firebaseUser = auth.getCurrentUser();
     // Initialize user session
     userSession = new SessionManager(SettingsActivity.this);
   // Initialize components for this activity
@@ -77,16 +78,16 @@ public class SettingsActivity extends AppCompatActivity {
         }
       }
     });
-
-    //if (Objects.requireNonNull(auth.getCurrentUser()).getPhotoUrl() != null) {
+    assert firebaseUser != null;
+    if (firebaseUser.getPhotoUrl() != null) {
     Picasso.get()
         .load(Objects.requireNonNull(auth.getCurrentUser()).getPhotoUrl())
         .error(R.drawable.avatar)
         .into(imageProfile);
-    /*} else {
+    } else {
       String imgUri = "http://davideagosti.co.uk/wp-content/uploads/2020/06/avatar.png";
       Picasso.get().load(imgUri).error(R.drawable.avatar).into(imageProfile);
-    }*/
+    }
     // Check if the user is logged In, if not redirect the main view activity
     if(auth.getCurrentUser() == null){
       Intent intent = new Intent(SettingsActivity.this, MainUnlogActivity.class);
@@ -175,7 +176,7 @@ public class SettingsActivity extends AppCompatActivity {
         .addOnSuccessListener(new OnSuccessListener<Void>() {
           @Override
           public void onSuccess(Void aVoid) {
-            Toast.makeText(SettingsActivity.this, "Updated succesfully", Toast.LENGTH_SHORT).show();
+            Toast.makeText(SettingsActivity.this, "Updated successfully", Toast.LENGTH_SHORT).show();
           }
         })
         .addOnFailureListener(new OnFailureListener() {
@@ -204,16 +205,6 @@ public class SettingsActivity extends AppCompatActivity {
   }
 
   // logout method
-  /*private void logout() {
-    if (auth.getCurrentUser() != null) {
-      auth.signOut();
-    }
-
-    Intent intent = new Intent(SettingsActivity.this, MainActivity.class);
-    intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-    intent.setFlags((Intent.FLAG_ACTIVITY_CLEAR_TASK));
-    startActivity(intent);
-  }*/
   private void logout(View v) {
     AlertDialog.Builder builder = new AlertDialog.Builder(v.getContext());
     //set title

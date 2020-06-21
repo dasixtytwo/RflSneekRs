@@ -151,10 +151,18 @@ public class ProfileFragment extends Fragment {
       viewPager.setAdapter(viewPagerAdapter);
       // Load an image if exist on database otherwise load default one using Picasso library
       assert firebaseUser != null;
-      Picasso.get()
-          .load(firebaseUser.getPhotoUrl())
-          .error(R.drawable.avatar)
-          .into(profileImg);
+      if (firebaseUser.getPhotoUrl() != null){
+        Picasso.get()
+            .load(firebaseUser.getPhotoUrl())
+            .error(R.drawable.avatar)
+            .into(profileImg);
+      } else {
+        String imgUri = "http://davideagosti.co.uk/wp-content/uploads/2020/06/avatar.png";
+        Picasso.get()
+            .load(imgUri)
+            .error(R.drawable.avatar)
+            .into(profileImg);
+      }
       // call getUser method
       getUser();
     }
