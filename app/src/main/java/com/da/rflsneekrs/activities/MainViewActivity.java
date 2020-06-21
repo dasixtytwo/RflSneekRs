@@ -16,19 +16,20 @@ import com.da.rflsneekrs.fragments.ProfileFragment;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 
-
+@SuppressWarnings("FieldCanBeLocal")
 public class MainViewActivity extends AppCompatActivity {
   private FirebaseAuth auth;
   private BottomNavigationView bottomNavigationView;
+
   @Override
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_main_view);
-
+    // Initialize auth firebase
     auth = FirebaseAuth.getInstance();
-
+    // Initialize components
     initializeViews();
-
+    // the main fragments on main activity
     bottomNavigationView.setOnNavigationItemSelectedListener(bottomNavMethod);
     getSupportFragmentManager().beginTransaction().replace(R.id.fgContainer, new HomeFragment()).commit();
   }
@@ -43,7 +44,7 @@ public class MainViewActivity extends AppCompatActivity {
     startActivity(intent);
     finishAffinity();
   }
-
+  // setting the menu on navigation bar
   private BottomNavigationView.OnNavigationItemSelectedListener bottomNavMethod = new BottomNavigationView.OnNavigationItemSelectedListener() {
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
@@ -67,12 +68,13 @@ public class MainViewActivity extends AppCompatActivity {
           fragment = new ProfileFragment();
           break;
       }
+      assert fragment != null;
       getSupportFragmentManager().beginTransaction().replace(R.id.fgContainer, fragment).commit();
 
       return true;
     }
   };
-
+  // initialize navigation bar
   private void initializeViews() {
     bottomNavigationView = findViewById(R.id.bottom_navigation);
   }

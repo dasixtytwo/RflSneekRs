@@ -14,7 +14,6 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -22,6 +21,7 @@ import com.da.rflsneekrs.activities.MainUnlogActivity;
 import com.da.rflsneekrs.R;
 import com.da.rflsneekrs.activities.SettingsActivity;
 import com.da.rflsneekrs.adapters.ViewPagerAdapter;
+import com.da.rflsneekrs.authentication.SessionManager;
 import com.da.rflsneekrs.models.User;
 
 import com.google.android.material.tabs.TabLayout;
@@ -33,14 +33,16 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
-import com.google.firebase.database.annotations.NotNull;
 import com.squareup.picasso.Picasso;
+
+import java.util.Objects;
 
 /**
  * A simple {@link Fragment} subclass.
  * Use the {@link ProfileFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
+@SuppressWarnings("FieldCanBeLocal")
 public class ProfileFragment extends Fragment {
 
   // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -50,9 +52,11 @@ public class ProfileFragment extends Fragment {
   private String mParam1;
   private String mParam2;
 
-  FirebaseAuth auth;
-  FirebaseDatabase fbDatabase;
-  DatabaseReference dbReference;
+  private FirebaseAuth auth;
+  private FirebaseDatabase fbDatabase;
+  private DatabaseReference dbReference;
+
+  private SessionManager userSession;
 
   private TabLayout tabLayout;
   private TextView profileTv;
@@ -62,7 +66,7 @@ public class ProfileFragment extends Fragment {
   private FavouritesFragment favouritesFragment;
   private PurchasesFragment purchasesFragment;
 
-  public String firstName, lastName, email;
+  private String firstName, lastName, email;
 
   public ProfileFragment() {
     // Required empty public constructor
@@ -88,8 +92,8 @@ public class ProfileFragment extends Fragment {
   @Override
   public void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
-    ((AppCompatActivity) getActivity()).getSupportActionBar().show();
-    ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle("PROFILE");
+    Objects.requireNonNull(((AppCompatActivity) requireActivity()).getSupportActionBar()).show();
+    Objects.requireNonNull(((AppCompatActivity) requireActivity()).getSupportActionBar()).setTitle("PROFILE");
     // Setting the menu item
     setHasOptionsMenu(true);
 
@@ -120,46 +124,56 @@ public class ProfileFragment extends Fragment {
 
   @Override
   public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+    // Instantiate Firebase
     auth = FirebaseAuth.getInstance();
     fbDatabase = FirebaseDatabase.getInstance();
     dbReference = fbDatabase.getReference("Users");
     FirebaseUser firebaseUser = auth.getCurrentUser();
-
+    // Initialize session
+    userSession = new SessionManager(requireActivity().getApplicationContext());
     // Inflate the layout for this fragment
     View fragmentView = inflater.inflate(R.layout.fragment_profile, container, false);
-    viewPager = fragmentView.findViewById(R.id.profile_view_pager);
-    profileTv = fragmentView.findViewById(R.id.profileName);
-    tabLayout = fragmentView.findViewById(R.id.profile_tabs);
-    profileImg = fragmentView.findViewById(R.id.profileImg);
-
-    favouritesFragment = new FavouritesFragment();
-    purchasesFragment = new PurchasesFragment();
-
-    tabLayout.setTabGravity(TabLayout.GRAVITY_FILL);
-    tabLayout.setupWithViewPager(viewPager);
-
-    ViewPagerAdapter viewPagerAdapter = new ViewPagerAdapter(getChildFragmentManager(), 0);
-    viewPagerAdapter.addFragment(favouritesFragment, "FAVOURITES");
-    viewPagerAdapter.addFragment(purchasesFragment, "PURCHASES");
-    viewPager.setAdapter(viewPagerAdapter);
-
+    // Check if the user is logged In, if not redirect the main view activity
     if(auth.getCurrentUser() == null){
       Intent intent = new Intent(getActivity(), MainUnlogActivity.class);
       startActivity(intent);
     } else {
+      viewPager = fragmentView.findViewById(R.id.profile_view_pager);
+      profileTv = fragmentView.findViewById(R.id.profileName);
+      tabLayout = fragmentView.findViewById(R.id.profile_tabs);
+      profileImg = fragmentView.findViewById(R.id.profileImg);
+
+      favouritesFragment = new FavouritesFragment();
+      purchasesFragment = new PurchasesFragment();
+
+      tabLayout.setTabGravity(TabLayout.GRAVITY_FILL);
+      tabLayout.setupWithViewPager(viewPager);
+      // Setting the view pager with 2 tabs
+      ViewPagerAdapter viewPagerAdapter = new ViewPagerAdapter(getChildFragmentManager(), 0);
+      viewPagerAdapter.addFragment(favouritesFragment, "FAVOURITES");
+      viewPagerAdapter.addFragment(purchasesFragment, "PURCHASES");
+      viewPager.setAdapter(viewPagerAdapter);
       // Load an image if exist on database otherwise load default one using Picasso library
       assert firebaseUser != null;
-      Picasso.get()
-          .load(firebaseUser.getPhotoUrl())
-          .error(R.drawable.avatar)
-          .into(profileImg);
-
+      if (firebaseUser.getPhotoUrl() != null){
+        Picasso.get()
+            .load(firebaseUser.getPhotoUrl())
+            .error(R.drawable.avatar)
+            .into(profileImg);
+      } else {
+        String imgUri = "http://davideagosti.co.uk/wp-content/uploads/2020/06/avatar.png";
+        Picasso.get()
+            .load(imgUri)
+            .error(R.drawable.avatar)
+            .into(profileImg);
+      }
+      // call getUser method
       getUser();
     }
-
+    // return the fragment
     return fragmentView;
   }
-
+  // Get user method
   private void getUser() {
     final String UID = auth.getUid();
     dbReference.addListenerForSingleValueEvent(new ValueEventListener() {

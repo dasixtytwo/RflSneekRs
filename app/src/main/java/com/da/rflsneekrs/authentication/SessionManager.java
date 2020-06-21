@@ -11,17 +11,18 @@ public class SessionManager {
   SharedPreferences sharedPreferences;
   SharedPreferences.Editor editor;
 
-  public static final String KEY_LOGIN = "KEY_LOGIN";
+  public static final String KEY_LOGIN = "IsLoggedIn";
 
-  public static final String KEY_FIRST_NAME = "KEY_FIRST_NAME";
-  public static final String KEY_LAST_NAME = "KEY_LAST_NAME";
-  public static final String KEY_EMAIL = "KEY_EMAIL";
-  public static final String KEY_PREFERENCES = "KEY_PREFERENCES";
-  public static final String KEY_COUNTRY = "KEY_COUNTRY";
+  public static final String KEY_FIRST_NAME = "FirstName";
+  public static final String KEY_LAST_NAME = "LastName";
+  public static final String KEY_EMAIL = "Email";
+  public static final String KEY_PREFERENCES = "Preferences";
+  public static final String KEY_COUNTRY = "Country";
+  public static final String KEY_NOTIFICATION = "Notification";
 
   // create a constructor
   public SessionManager(Context context) {
-    sharedPreferences = context.getSharedPreferences("AppSessionKey", Context.MODE_PRIVATE);
+    sharedPreferences = context.getSharedPreferences("UserSession", Context.MODE_PRIVATE);
     editor = sharedPreferences.edit();
     editor.apply();
   }
@@ -61,13 +62,13 @@ public class SessionManager {
 
   // Create set login method
   public void setNotification(boolean notification){
-    editor.putBoolean("KEY_NOTIFICATION", notification);
+    editor.putBoolean(KEY_NOTIFICATION, notification);
     editor.commit();
   }
 
   // Create get login method
   public boolean getNotification(){
-    return sharedPreferences.getBoolean("KEY_NOTIFICATION", false);
+    return sharedPreferences.getBoolean(KEY_NOTIFICATION, false);
   }
 
   public void setLogout(){
