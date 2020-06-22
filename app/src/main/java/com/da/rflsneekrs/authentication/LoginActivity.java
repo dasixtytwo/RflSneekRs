@@ -16,6 +16,7 @@ import android.widget.Toast;
 import com.da.rflsneekrs.R;
 import com.da.rflsneekrs.activities.MainViewActivity;
 import com.da.rflsneekrs.models.User;
+import com.da.rflsneekrs.settings.SessionManager;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;

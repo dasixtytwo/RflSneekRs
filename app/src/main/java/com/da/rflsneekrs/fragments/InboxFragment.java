@@ -14,8 +14,7 @@ import android.view.ViewGroup;
 import com.da.rflsneekrs.activities.MainUnlogActivity;
 import com.da.rflsneekrs.R;
 import com.da.rflsneekrs.adapters.ViewPagerAdapter;
-import com.da.rflsneekrs.authentication.SessionManager;
-import com.google.android.gms.common.internal.Asserts;
+import com.da.rflsneekrs.settings.SessionManager;
 import com.google.android.material.tabs.TabLayout;
 import com.google.firebase.auth.FirebaseAuth;
 

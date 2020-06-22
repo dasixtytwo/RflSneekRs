@@ -28,7 +28,7 @@ import android.widget.Toast;
 
 import com.da.rflsneekrs.R;
 
-import com.da.rflsneekrs.authentication.SessionManager;
+import com.da.rflsneekrs.settings.SessionManager;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
