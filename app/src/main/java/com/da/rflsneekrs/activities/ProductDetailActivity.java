@@ -20,7 +20,6 @@ import java.util.Objects;
 @SuppressWarnings("FieldCanBeLocal")
 public class ProductDetailActivity extends AppCompatActivity {
 
-  private FirebaseDatabase fbDatabase;
   private ImageView imgProduct;
   private TextView txtViewName, txtViewBrand, txtViewSecondaryName, txtViewSecondaryBrand, txtViewPrice, txtViewDescription;
   private ImageButton imgShare, imgFavorite;
@@ -31,8 +30,6 @@ public class ProductDetailActivity extends AppCompatActivity {
     setContentView(R.layout.activity_product_detail);
     // Initialize components
     initialize();
-    // Instantiate the Firebase
-    fbDatabase = FirebaseDatabase.getInstance();
 
     // now we need to bind all data into those views
     // first we need to get product data

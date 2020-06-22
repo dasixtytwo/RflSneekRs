@@ -38,6 +38,7 @@ import static com.da.rflsneekrs.adapters.ListGridAdapter.SPAN_COUNT_TWO;
  * Use the {@link FeedFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
+@SuppressWarnings("FieldCanBeLocal")
 public class FeedFragment extends Fragment {
 
   // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER

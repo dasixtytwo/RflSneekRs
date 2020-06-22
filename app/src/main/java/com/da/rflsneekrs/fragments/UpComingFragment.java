@@ -16,6 +16,7 @@ import com.da.rflsneekrs.R;
  * Use the {@link UpComingFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
+@SuppressWarnings("FieldCanBeLocal")
 public class UpComingFragment extends Fragment {
 
   // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
