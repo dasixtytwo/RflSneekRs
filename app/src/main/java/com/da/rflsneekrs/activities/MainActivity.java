@@ -11,27 +11,31 @@ import com.da.rflsneekrs.R;
 import com.da.rflsneekrs.authentication.LoginActivity;
 import com.da.rflsneekrs.authentication.RegistrationActivity;
 import com.google.firebase.auth.FirebaseAuth;
-
+@SuppressWarnings("FieldCanBeLocal")
 public class MainActivity extends AppCompatActivity {
 
-  Button registerBtn, loginBtn;
-  TextView guestBtn;
-  FirebaseAuth auth;
+  private Button registerBtn, loginBtn;
+  private TextView guestBtn;
+  private FirebaseAuth auth;
+
   @Override
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_main);
-    getSupportActionBar().hide(); //hide title bar
-
+    // Hide the actionbar
+    if (getSupportActionBar() != null) {
+      getSupportActionBar().hide(); //hide title bar
+    }
+    // instantiate authorization
     auth = FirebaseAuth.getInstance();
-
+    // Initialize components
     initializeViews();
-
+    // if current user is logged in will be redirect to main view activity
     if (auth.getCurrentUser() != null){
       Intent intent = new Intent(MainActivity.this, MainViewActivity.class);
       startActivity(intent);
     }
-
+    // set the login button to redirect at the register activity
     registerBtn.setOnClickListener(new View.OnClickListener() {
       @Override
       public void onClick(View v) {
@@ -39,7 +43,7 @@ public class MainActivity extends AppCompatActivity {
         startActivity(intent);
       }
     });
-
+    // set the login button to redirect at the login activity
     loginBtn.setOnClickListener(new View.OnClickListener() {
       @Override
       public void onClick(View v) {
@@ -47,7 +51,7 @@ public class MainActivity extends AppCompatActivity {
         startActivity(intent);
       }
     });
-
+    // set the guest button to redirect the right activity
     guestBtn.setOnClickListener(new View.OnClickListener() {
       @Override
       public void onClick(View v) {
@@ -67,7 +71,7 @@ public class MainActivity extends AppCompatActivity {
     startActivity(intent);
     finishAffinity();
   }
-
+  // method to initialize all activity components
   private void initializeViews() {
     registerBtn = findViewById(R.id.register);
     loginBtn = findViewById(R.id.login);

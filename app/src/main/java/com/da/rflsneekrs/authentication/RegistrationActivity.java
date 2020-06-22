@@ -1,6 +1,7 @@
 package com.da.rflsneekrs.authentication;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
@@ -26,12 +27,15 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
+import java.util.Objects;
+@SuppressWarnings("FieldCanBeLocal")
 public class RegistrationActivity extends AppCompatActivity {
   private FirebaseAuth auth;
   private FirebaseDatabase fbDatabase;
   private DatabaseReference dbReference;
+  private SessionManager userSession;
 
-  private EditText emailEt, passwordEt, firstnameEt, lastnameEt, nationalityEt;
+  private EditText emailEt, passwordEt, firstNameEt, lastNameEt, nationalityEt;
   private CheckBox notificationCb;
   private RadioButton radioManPref, radioWomanPref;
   private Button signUpBtn;
@@ -44,13 +48,20 @@ public class RegistrationActivity extends AppCompatActivity {
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_registration);
-    getSupportActionBar().hide(); //hide title bar
+    // Hide the actionbar
+    if (getSupportActionBar() != null) {
+      getSupportActionBar().hide(); //hide title bar
+    }
 
+    // Initialize session
+    userSession = new SessionManager(RegistrationActivity.this);
+    // Initialize Firebase
     auth = FirebaseAuth.getInstance();
     fbDatabase = FirebaseDatabase.getInstance();
     dbReference = fbDatabase.getReference("Users");
-
+    //
     initializeViews();
+    // set handle sign up button
     signUpBtn.setOnClickListener(new View.OnClickListener() {
       @Override
       public void onClick(View v) {
@@ -58,7 +69,7 @@ public class RegistrationActivity extends AppCompatActivity {
       }
     });
     setupHyperLink();
-
+    // set redirect to login activity if button is clicked
     loginBtn.setOnClickListener(new View.OnClickListener() {
       @Override
       public void onClick(View v) {
@@ -72,14 +83,14 @@ public class RegistrationActivity extends AppCompatActivity {
     TextView hlTextView = findViewById(R.id.activity_main_link);
     hlTextView.setMovementMethod(LinkMovementMethod.getInstance());
   }
-
+  // method to save new user on database
   private void registerNewUser() {
     progressBar.setVisibility(View.VISIBLE);
 
-    final String email, firstname, lastname, nationality;
+    final String email, firstName, lastName, nationality;
     email = emailEt.getText().toString();
-    firstname = firstnameEt.getText().toString();
-    lastname = lastnameEt.getText().toString();
+    firstName = firstNameEt.getText().toString();
+    lastName = lastNameEt.getText().toString();
     nationality = nationalityEt.getText().toString();
     String password = passwordEt.getText().toString();
 
@@ -114,46 +125,50 @@ public class RegistrationActivity extends AppCompatActivity {
     }
 
     auth.createUserWithEmailAndPassword(email,password)
-      .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
-      @Override
-      public void onComplete(@NonNull Task<AuthResult> task) {
+        .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+          @Override
+          public void onComplete(@NonNull Task<AuthResult> task) {
 
-        if(task.isSuccessful()){
-          User user = new User(
-              email,
-              firstname,
-              lastname,
-              nationality,
-              productPreference,
-              notification
-          );
-
-          dbReference.child(auth.getCurrentUser().getUid())
-              .setValue(user).addOnCompleteListener(new OnCompleteListener<Void>() {
-            @Override
-            public void onComplete(@NonNull Task<Void> task) {
-              Toast.makeText(RegistrationActivity.this, "Registration successful!", Toast.LENGTH_LONG).show();
-              progressBar.setVisibility(View.GONE);
-
-              Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
-              startActivity(intent);
-              finish();
+            if(task.isSuccessful()){
+              User user = new User(
+                  email,
+                  firstName,
+                  lastName,
+                  productPreference,
+                  nationality,
+                  notification
+              );
+              // setting up user session
+              userSession.setLogin(false);
+              userSession.setUserDetails(firstName, lastName, email, productPreference, nationality);
+              userSession.setNotification(notification);
+              // save new user into database
+              dbReference.child(Objects.requireNonNull(auth.getCurrentUser()).getUid())
+                  .setValue(user).addOnCompleteListener(new OnCompleteListener<Void>() {
+                @Override
+                public void onComplete(@NonNull Task<Void> task) {
+                  Toast.makeText(RegistrationActivity.this, "Registration successful!", Toast.LENGTH_LONG).show();
+                  progressBar.setVisibility(View.GONE);
+                  // redirect the user at the login activity
+                  Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
+                  startActivity(intent);
+                  finish();
+                }
+              });
             }
-          });
-        }
-        else{
-          Toast.makeText(RegistrationActivity.this,"E-mail or password is wrong", Toast.LENGTH_SHORT).show();
-          progressBar.setVisibility(View.GONE);
-        }
-      }
-    });
+            else{
+              Toast.makeText(RegistrationActivity.this,"E-mail or password is wrong", Toast.LENGTH_SHORT).show();
+              progressBar.setVisibility(View.GONE);
+            }
+          }
+        });
   }
-
+  // method to initialize all activity components
   private void initializeViews() {
     emailEt = findViewById(R.id.email_edt_text);
     passwordEt = findViewById(R.id.pass_edt_text);
-    firstnameEt = findViewById(R.id.firstname_edt_text);
-    lastnameEt = findViewById(R.id.lastname_edt_text);
+    firstNameEt = findViewById(R.id.firstname_edt_text);
+    lastNameEt = findViewById(R.id.lastname_edt_text);
     nationalityEt = findViewById(R.id.nationality_edt_text);
     radioManPref = findViewById(R.id.rbMens);
     radioWomanPref = findViewById(R.id.rbWomens);

@@ -21,23 +21,27 @@ public class ForgotPasswordActivity extends AppCompatActivity {
   private EditText emailEt;
   private Button resetPswBtn;
   private TextView backBtn;
+
   @Override
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_forgot_password);
-    getSupportActionBar().hide(); //hide title bar
-
+    // Hide the action bar
+    if(getSupportActionBar() != null) {
+      getSupportActionBar().hide(); //hide title bar
+    }
+    // instantiate the authorization
     auth = FirebaseAuth.getInstance();
-
+    // Initialize component
     initializeViews();
-
+    // Handle method for login button
     resetPswBtn.setOnClickListener(new View.OnClickListener() {
       @Override
       public void onClick(View v) {
         resetNewPassword();
       }
     });
-
+    // Handle method for back
     backBtn.setOnClickListener(new View.OnClickListener() {
       @Override
       public void onClick(View v) {
@@ -46,15 +50,16 @@ public class ForgotPasswordActivity extends AppCompatActivity {
     });
   }
 
+  // Method to handle forgot password
   private void resetNewPassword() {
     String email;
     email = emailEt.getText().toString();
-
+    // show a message
     if(TextUtils.isEmpty(email)){
       Toast.makeText(getApplicationContext(),"Please fill email",Toast.LENGTH_SHORT).show();
       return;
     }
-
+    // send password to email
     auth.sendPasswordResetEmail(email)
         .addOnCompleteListener(new OnCompleteListener<Void>() {
           @Override
@@ -69,6 +74,7 @@ public class ForgotPasswordActivity extends AppCompatActivity {
         });
   }
 
+  // Initialize all component
   private void initializeViews() {
     emailEt = findViewById(R.id.email_edt_text);
     resetPswBtn = findViewById(R.id.reset_pass_btn);

@@ -23,6 +23,7 @@ import com.google.firebase.auth.FirebaseAuth;
 public class LoginActivity extends AppCompatActivity {
 
   private FirebaseAuth auth;
+  private SessionManager userSession;
 
   private EditText emailEt, passwordEt;
   private Button loginBtn;
@@ -33,12 +34,19 @@ public class LoginActivity extends AppCompatActivity {
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_login);
-    getSupportActionBar().hide(); //hide title bar
-
+    // Hide the actionbar
+    if (getSupportActionBar() != null) {
+      getSupportActionBar().hide(); //hide title bar
+    }
+    // instantiate authorization
     auth = FirebaseAuth.getInstance();
+    // Initialize session
+    userSession = new SessionManager(LoginActivity.this);
 
+    // Initialize all component
     initializeViews();
 
+    // Handle method for login button
     loginBtn.setOnClickListener(new View.OnClickListener() {
       @Override
       public void onClick(View v) {
@@ -76,6 +84,7 @@ public class LoginActivity extends AppCompatActivity {
     hlTextView.setMovementMethod(LinkMovementMethod.getInstance());
   }
 
+  // Method for login
   private void loginUserAccount() {
     progressBar.setVisibility(View.VISIBLE);
 
@@ -98,9 +107,12 @@ public class LoginActivity extends AppCompatActivity {
           @Override
           public void onComplete(@NonNull Task<AuthResult> task) {
             if (task.isSuccessful()) {
+              // Set the session to true
+              userSession.setLogin(true);
+              // display a message for successful login
               Toast.makeText(getApplicationContext(), "Login successful!", Toast.LENGTH_LONG).show();
               progressBar.setVisibility(View.GONE);
-
+              // close the login activity and redirect to main view activity
               Intent intent = new Intent(LoginActivity.this, MainViewActivity.class);
               startActivity(intent);
               finish();
@@ -113,6 +125,7 @@ public class LoginActivity extends AppCompatActivity {
         });
   }
 
+  // method to initialize all activity components
   private void initializeViews() {
     emailEt = findViewById(R.id.email_edt_text);
     passwordEt = findViewById(R.id.pass_edt_text);

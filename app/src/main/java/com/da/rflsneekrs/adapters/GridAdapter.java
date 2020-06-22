@@ -17,7 +17,7 @@ import com.da.rflsneekrs.models.Product;
 import com.squareup.picasso.Picasso;
 
 import java.util.List;
-
+@SuppressWarnings("FieldCanBeLocal")
 public class GridAdapter extends RecyclerView.Adapter<GridAdapter.GridViewHolder> {
   public static final int SPAN_COUNT_TWO = 2;
 

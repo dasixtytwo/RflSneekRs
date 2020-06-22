@@ -11,21 +11,22 @@ import android.widget.TextView;
 import com.da.rflsneekrs.R;
 import com.da.rflsneekrs.authentication.LoginActivity;
 import com.da.rflsneekrs.authentication.RegistrationActivity;
-import com.google.firebase.auth.FirebaseAuth;
 
 public class MainUnlogActivity extends AppCompatActivity {
-  Button registerBtn, loginBtn, closeBtn;
-  TextView guestBtn;
-  FirebaseAuth auth;
+  private Button registerBtn, loginBtn, closeBtn;
+  private TextView guestBtn;
 
   @Override
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_main_unlog);
-    getSupportActionBar().hide(); //hide title bar
-
+    // Hide the actionbar
+    if (getSupportActionBar() != null) {
+      getSupportActionBar().hide(); //hide title bar
+    }
+    // Initialize components
     initialize();
-
+    // handle the close button, close activity when close button is clicked
     closeBtn.setOnClickListener(new View.OnClickListener() {
       @Override
       public void onClick(View v) {
@@ -36,7 +37,7 @@ public class MainUnlogActivity extends AppCompatActivity {
         finish();
       }
     });
-
+    // redirect to register activity when register button is clicked
     registerBtn.setOnClickListener(new View.OnClickListener() {
       @Override
       public void onClick(View v) {
@@ -44,7 +45,7 @@ public class MainUnlogActivity extends AppCompatActivity {
         startActivity(intent);
       }
     });
-
+    // redirect to login activity when login button is clicked
     loginBtn.setOnClickListener(new View.OnClickListener() {
       @Override
       public void onClick(View v) {
@@ -52,7 +53,7 @@ public class MainUnlogActivity extends AppCompatActivity {
         startActivity(intent);
       }
     });
-
+    // redirect to main activity when guest button is clicked
     guestBtn.setOnClickListener(new View.OnClickListener() {
       @Override
       public void onClick(View v) {
@@ -72,7 +73,7 @@ public class MainUnlogActivity extends AppCompatActivity {
     startActivity(intent);
     finish();
   }
-
+  // Initialize all components for this activity
   private void initialize() {
     registerBtn = findViewById(R.id.register);
     loginBtn = findViewById(R.id.login);

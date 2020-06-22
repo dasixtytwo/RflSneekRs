@@ -17,6 +17,7 @@ import com.squareup.picasso.Picasso;
 
 import java.util.Objects;
 
+@SuppressWarnings("FieldCanBeLocal")
 public class ProductDetailActivity extends AppCompatActivity {
 
   private FirebaseDatabase fbDatabase;
@@ -28,9 +29,9 @@ public class ProductDetailActivity extends AppCompatActivity {
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_product_detail);
-
+    // Initialize components
     initialize();
-
+    // Instantiate the Firebase
     fbDatabase = FirebaseDatabase.getInstance();
 
     // now we need to bind all data into those views
@@ -53,7 +54,7 @@ public class ProductDetailActivity extends AppCompatActivity {
     txtViewPrice.setText(String.valueOf(productPrice));
     String productDescription = getIntent().getExtras().getString("description");
     txtViewDescription.setText(productDescription);
-
+    // Handle the share button
     imgShare.setOnClickListener(new View.OnClickListener() {
       @Override
       public void onClick(View v) {
@@ -72,7 +73,7 @@ public class ProductDetailActivity extends AppCompatActivity {
       getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     }
   }
-
+  // Initialize all components
   private void initialize() {
     imgProduct = findViewById(R.id.product_detail_img);
     txtViewName = findViewById(R.id.product_detail_name);

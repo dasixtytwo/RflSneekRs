@@ -14,14 +14,18 @@ import android.view.ViewGroup;
 import com.da.rflsneekrs.activities.MainUnlogActivity;
 import com.da.rflsneekrs.R;
 import com.da.rflsneekrs.adapters.ViewPagerAdapter;
+import com.google.android.gms.common.internal.Asserts;
 import com.google.android.material.tabs.TabLayout;
 import com.google.firebase.auth.FirebaseAuth;
+
+import java.util.Objects;
 
 /**
  * A simple {@link Fragment} subclass.
  * Use the {@link InboxFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
+@SuppressWarnings("FieldCanBeLocal")
 public class InboxFragment extends Fragment {
 
   // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -32,10 +36,10 @@ public class InboxFragment extends Fragment {
   private String mParam1;
   private String mParam2;
 
-  FirebaseAuth auth;
+  private FirebaseAuth auth;
 
-  TabLayout inboxTab;
-  ViewPager inboxVP;
+  private TabLayout inboxTab;
+  private ViewPager inboxVP;
 
   private NotificationsFragment notificationsFragment;
   private OrdersFragment ordersFragment;
@@ -64,7 +68,7 @@ public class InboxFragment extends Fragment {
   @Override
   public void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
-    ((AppCompatActivity) getActivity()).getSupportActionBar().hide();
+    Objects.requireNonNull(((AppCompatActivity) requireActivity()).getSupportActionBar()).hide();
 
     if (getArguments() != null) {
       mParam1 = getArguments().getString(ARG_PARAM1);
@@ -74,31 +78,29 @@ public class InboxFragment extends Fragment {
 
   @Override
   public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+    // instantiate authorization
     auth = FirebaseAuth.getInstance();
-
     // Inflate the layout for this fragment
     View fragmentView = inflater.inflate(R.layout.fragment_inbox, container, false);
-
-    // Initialize layouts
-    inboxTab = fragmentView.findViewById(R.id.in_box_tab_layout);
-    inboxVP = fragmentView.findViewById(R.id.in_box_view_pager);
-
-    // Initialize Fragments
-    notificationsFragment = new NotificationsFragment();
-    ordersFragment = new OrdersFragment();
-
-    inboxTab.setupWithViewPager(inboxVP);
-
+    // Check if the user is logged In, if not redirect the main view activity
     if(auth.getCurrentUser() == null){
       Intent intent = new Intent(getActivity(), MainUnlogActivity.class);
       startActivity(intent);
     } else {
+      // Initialize layouts
+      inboxTab = fragmentView.findViewById(R.id.in_box_tab_layout);
+      inboxVP = fragmentView.findViewById(R.id.in_box_view_pager);
+      // Initialize Fragments
+      notificationsFragment = new NotificationsFragment();
+      ordersFragment = new OrdersFragment();
+
+      inboxTab.setupWithViewPager(inboxVP);
       ViewPagerAdapter viewPagerAdapter = new ViewPagerAdapter(getChildFragmentManager(), 0);
       viewPagerAdapter.addFragment(notificationsFragment, "NOTIFICATIONS");
       viewPagerAdapter.addFragment(ordersFragment, "ORDERS");
       inboxVP.setAdapter(viewPagerAdapter);
     }
-
+    // return the fragment
     return fragmentView;
   }
 }
