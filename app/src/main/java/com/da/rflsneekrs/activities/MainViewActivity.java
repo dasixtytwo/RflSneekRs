@@ -18,15 +18,12 @@ import com.google.firebase.auth.FirebaseAuth;
 
 @SuppressWarnings("FieldCanBeLocal")
 public class MainViewActivity extends AppCompatActivity {
-  private FirebaseAuth auth;
   private BottomNavigationView bottomNavigationView;
 
   @Override
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_main_view);
-    // Initialize auth firebase
-    auth = FirebaseAuth.getInstance();
     // Initialize components
     initializeViews();
     // the main fragments on main activity

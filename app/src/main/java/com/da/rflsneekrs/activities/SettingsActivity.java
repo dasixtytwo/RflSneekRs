@@ -15,6 +15,9 @@ import android.provider.MediaStore;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemSelectedListener;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
@@ -38,6 +41,7 @@ import com.google.firebase.storage.UploadTask;
 import com.squareup.picasso.Picasso;
 
 import java.io.ByteArrayOutputStream;
+import java.util.HashMap;
 import java.util.Objects;
 
 @SuppressWarnings("FieldCanBeLocal")
@@ -45,7 +49,7 @@ public class SettingsActivity extends AppCompatActivity {
   private static final String TAG = "SettingsActivity";
 
   private Button orderHistoryBtn, paymentBtn, deliveryBtn, countryRegionBtn, notificationPrefBtn, helpBtn,  logout;
-  private EditText firstNameTv, lastNameTv, emailTv;
+  private EditText firstNameEt, lastNameEt, emailEt;
   private Spinner genderSp, shoeSp;
   private ImageView imageProfile;
   private ImageButton uploadImg;
@@ -67,7 +71,7 @@ public class SettingsActivity extends AppCompatActivity {
     userSession = new SessionManager(SettingsActivity.this);
   // Initialize components for this activity
     initialize();
-    // open camera when button upload image is clicked
+    // open camera when button upload image is clicked and capture the picture
     uploadImg.setOnClickListener(new View.OnClickListener() {
       @Override
       public void onClick(View v) {
@@ -78,6 +82,7 @@ public class SettingsActivity extends AppCompatActivity {
         }
       }
     });
+    // get the user picture if exist on firebase, otherwise load a default picture
     assert firebaseUser != null;
     if (firebaseUser.getPhotoUrl() != null) {
     Picasso.get()
@@ -88,19 +93,62 @@ public class SettingsActivity extends AppCompatActivity {
       String imgUri = "http://davideagosti.co.uk/wp-content/uploads/2020/06/avatar.png";
       Picasso.get().load(imgUri).error(R.drawable.avatar).into(imageProfile);
     }
-    // Check if the user is logged In, if not redirect the main view activity
-    if(auth.getCurrentUser() == null){
-      Intent intent = new Intent(SettingsActivity.this, MainUnlogActivity.class);
-      startActivity(intent);
-    } else {
-      logout = findViewById(R.id.logout_btn);
-      logout.setOnClickListener(new View.OnClickListener() {
-        @Override
-        public void onClick(View v) {
-          logout(v);
-        }
-      });
-    }
+
+    // Handle the gender when selected
+    genderSp.setOnItemSelectedListener(new OnItemSelectedListener() {
+      @Override
+      public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+        userSession.setGender(position);
+      }
+
+      @Override
+      public void onNothingSelected(AdapterView<?> parent) { }
+    });
+    // Handle the shoes size when selected
+    shoeSp.setOnItemSelectedListener(new OnItemSelectedListener() {
+      @Override
+      public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+        userSession.setShoesSize(position);
+      }
+
+      @Override
+      public void onNothingSelected(AdapterView<?> parent) { }
+    });
+
+    // Map user details on the session
+    HashMap<String, String> userDetails = userSession.getUserDetails();
+    // Fill editor text with user data
+    firstNameEt.setText(userDetails.get(SessionManager.KEY_FIRST_NAME));
+    lastNameEt.setText(userDetails.get(SessionManager.KEY_LAST_NAME));
+    emailEt.setText(userDetails.get(SessionManager.KEY_EMAIL));
+    // disable email text input, for not change
+    emailEt.setEnabled(false);
+    // Create an ArrayAdapter using the string array and a default spinner layout to fill gender spinner
+    ArrayAdapter<CharSequence> genderAdapter = ArrayAdapter.createFromResource(this,
+        R.array.gender_spinner, android.R.layout.simple_spinner_item);
+    // Specify the layout to use when the list of choices appears
+    genderAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+    // Apply the adapter to the spinner
+    genderSp.setAdapter(genderAdapter);
+    genderSp.setSelection(userSession.getGender());
+    // Create an ArrayAdapter using the string array and a default spinner layout to fill gender spinner
+    ArrayAdapter<CharSequence> shoesAdapter = ArrayAdapter.createFromResource(this,
+        R.array.shoes_spinner, android.R.layout.simple_spinner_item);
+    // Specify the layout to use when the list of choices appears
+    shoesAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+    // Apply the adapter to the spinner
+    shoeSp.setAdapter(shoesAdapter);
+    shoeSp.setSelection(userSession.getShoesSize());
+    // Initialize logout button
+    logout = findViewById(R.id.logout_btn);
+    // Handle logout button, the user logout when click the logout button
+    logout.setOnClickListener(new View.OnClickListener() {
+      @Override
+      public void onClick(View v) {
+        logout(v);
+      }
+    });
+    //}
 
     // Check if the action bar is displayed if so, set the back arrow and the title.
     if (getSupportActionBar() != null) {
@@ -189,9 +237,9 @@ public class SettingsActivity extends AppCompatActivity {
 
   // Initialize all components
   private void initialize() {
-    firstNameTv = findViewById(R.id.firstname_edt_text);
-    lastNameTv = findViewById(R.id.lastname_edt_text);
-    emailTv = findViewById(R.id.email_edt_text);
+    firstNameEt = findViewById(R.id.firstname_edt_text);
+    lastNameEt = findViewById(R.id.lastname_edt_text);
+    emailEt = findViewById(R.id.email_edt_text);
     genderSp = findViewById(R.id.gender_spinner);
     shoeSp = findViewById(R.id.shoe_size_spinner);
     orderHistoryBtn = findViewById(R.id.order_history_btn);

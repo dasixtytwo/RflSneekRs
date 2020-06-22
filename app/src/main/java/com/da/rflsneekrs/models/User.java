@@ -7,13 +7,20 @@ public class User {
   // empty constructor
   public User(){}
 
-  public User(String email, String firstName, String lastName, String nationality, String productPreference, Boolean notification){
+  public User(String email, String firstName, String lastName,  String productPreference, String nationality, Boolean notification){
     this.email = email;
     this.firstName = firstName;
     this.lastName = lastName;
-    this.nationality = nationality;
     this.productPreference = productPreference;
+    this.nationality = nationality;
     this.notification = notification;
+  }
+
+  public String getEmail() {
+    return email;
+  }
+  public void setEmail(String email) {
+    this.email = email;
   }
 
   public String getFirstName() {
@@ -30,11 +37,11 @@ public class User {
     this.lastName = lastName;
   }
 
-  public String getEmail() {
-    return email;
+  public String getProductPreference() {
+    return productPreference;
   }
-  public void setEmail(String email) {
-    this.email = email;
+  public void setProductPreference(String productPreference) {
+    this.productPreference = productPreference;
   }
 
   public String getNationality() {
@@ -42,13 +49,6 @@ public class User {
   }
   public void setNationality(String nationality) {
     this.nationality = nationality;
-  }
-
-  public String getProductPreference() {
-    return productPreference;
-  }
-  public void setProductPreference(String productPreference) {
-    this.productPreference = productPreference;
   }
 
   public Boolean getNotification() {

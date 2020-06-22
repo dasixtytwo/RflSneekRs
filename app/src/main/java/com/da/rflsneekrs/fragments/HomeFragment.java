@@ -21,6 +21,7 @@ import com.google.android.material.tabs.TabLayout;
  * Use the {@link HomeFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
+@SuppressWarnings("FieldCanBeLocal")
 public class HomeFragment extends Fragment {
   // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
   private static final String ARG_PARAM1 = "param1";
@@ -29,10 +30,10 @@ public class HomeFragment extends Fragment {
   private String mParam1;
   private String mParam2;
 
-  TabLayout tabLayout;
-  ViewPager viewPager;
+  private TabLayout tabLayout;
+  private ViewPager viewPager;
   public ImageButton spanButton;
-  ImageButton filterButton;
+  private ImageButton filterButton;
 
   private FeedFragment feedFragment;
   private InStockFragment inStockFragment;

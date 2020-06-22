@@ -32,6 +32,7 @@ import static com.da.rflsneekrs.adapters.GridAdapter.SPAN_COUNT_TWO;
  * Use the {@link InStockFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
+@SuppressWarnings("FieldCanBeLocal")
 public class InStockFragment extends Fragment {
 
   // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
