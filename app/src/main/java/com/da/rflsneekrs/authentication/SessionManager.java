@@ -72,13 +72,13 @@ public class SessionManager {
     return userdata;
   }
 
-  // Create set login method
+  // Create set Notification method
   public void setNotification(boolean notification){
     editor.putBoolean(KEY_NOTIFICATION, notification);
     editor.commit();
   }
 
-  // Create get login method
+  // Create get Notification method
   public boolean getNotification(){
     return sharedPreferences.getBoolean(KEY_NOTIFICATION, false);
   }
