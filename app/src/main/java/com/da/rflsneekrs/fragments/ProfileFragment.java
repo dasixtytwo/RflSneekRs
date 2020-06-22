@@ -113,15 +113,12 @@ public class ProfileFragment extends Fragment {
 
   @Override
   public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-    switch (item.getItemId())
-    {
-      case R.id.setting_button:
-        Intent intent = new Intent(getActivity(), SettingsActivity.class);
-        startActivity(intent);
-        return true;
-      default:
-        return super.onOptionsItemSelected(item);
+    if (item.getItemId() == R.id.setting_button) {
+      Intent intent = new Intent(getActivity(), SettingsActivity.class);
+      startActivity(intent);
+      return true;
     }
+    return super.onOptionsItemSelected(item);
   }
 
   @Override
@@ -136,8 +133,6 @@ public class ProfileFragment extends Fragment {
     // Inflate the layout for this fragment
     View fragmentView = inflater.inflate(R.layout.fragment_profile, container, false);
     // Check if the user is logged In, if not redirect the main view activity
-    //if(auth.getCurrentUser() == null){
-    //HashMap<String, String> userDetails = userSession.getUserDetails();
     if(userSession.getLogin() == null) {
       Intent intent = new Intent(getActivity(), MainUnlogActivity.class);
       startActivity(intent);
