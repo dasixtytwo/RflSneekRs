@@ -4,6 +4,8 @@ import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.SharedPreferences;
 
+import com.da.rflsneekrs.models.User;
+
 import java.util.HashMap;
 
 public class SessionManager {
@@ -11,8 +13,8 @@ public class SessionManager {
   SharedPreferences sharedPreferences;
   SharedPreferences.Editor editor;
 
-  public static final String KEY_LOGIN = "IsLoggedIn";
-
+  public static final String SESSION_KEY = "UserSession";
+  public static final String KEY_LOGIN = "IdLogin";
   public static final String KEY_FIRST_NAME = "FirstName";
   public static final String KEY_LAST_NAME = "LastName";
   public static final String KEY_EMAIL = "Email";
@@ -21,24 +23,33 @@ public class SessionManager {
   public static final String KEY_NOTIFICATION = "Notification";
 
   // create a constructor
+  @SuppressLint("CommitPrefEdits")
   public SessionManager(Context context) {
-    sharedPreferences = context.getSharedPreferences("UserSession", Context.MODE_PRIVATE);
+    sharedPreferences = context.getSharedPreferences(SESSION_KEY, Context.MODE_PRIVATE);
     editor = sharedPreferences.edit();
-    editor.apply();
   }
 
   // Create set login method
-  public void setLogin(boolean login){
-    editor.putBoolean(KEY_LOGIN, login);
+  public void setLogin(String login){
+    editor.putString(KEY_LOGIN, login);
     editor.commit();
   }
 
   // Create get login method
-  public boolean getLogin(){
-    return sharedPreferences.getBoolean(KEY_LOGIN, false);
+  public String getLogin(){
+    return sharedPreferences.getString(KEY_LOGIN, null);
   }
 
-  public void setUserDetails(String firstName, String lastName, String email, String preferences, String country) {
+  // Set user session
+  public void setUserDetails(User user) {
+    // Initialize user
+    String firstName = user.getFirstName();
+    String lastName = user.getLastName();
+    String email = user.getEmail();
+    String preferences = user.getProductPreference();
+    String country = user.getNationality();
+
+    // save user detail into user session
     editor.putString(KEY_FIRST_NAME, firstName);
     editor.putString(KEY_LAST_NAME, lastName);
     editor.putString(KEY_EMAIL, email);
@@ -48,6 +59,7 @@ public class SessionManager {
     editor.commit();
   }
 
+  // Get user data from user session
   public HashMap<String, String> getUserDetails() {
     HashMap<String, String> userdata = new HashMap<String, String>();
 
@@ -71,8 +83,10 @@ public class SessionManager {
     return sharedPreferences.getBoolean(KEY_NOTIFICATION, false);
   }
 
+  // clear user session
   public void setLogout(){
     editor.clear();
     editor.commit();
   }
+
 }

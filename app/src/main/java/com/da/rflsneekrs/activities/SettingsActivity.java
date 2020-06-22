@@ -222,10 +222,8 @@ public class SettingsActivity extends AppCompatActivity {
     builder.setPositiveButton("LOG OUT", new DialogInterface.OnClickListener() {
       @Override
       public void onClick(DialogInterface dialog, int which) {
-        // set login to false
-        userSession.setLogin(false);
-        // set current null from firebase
-        auth.signOut();
+        // Clear userSession
+        userSession.setLogout();
         // redirect activity
         Intent intent = new Intent(SettingsActivity.this, MainActivity.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);

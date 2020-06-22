@@ -15,19 +15,28 @@ import android.widget.Toast;
 
 import com.da.rflsneekrs.R;
 import com.da.rflsneekrs.activities.MainViewActivity;
+import com.da.rflsneekrs.models.User;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
-
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+@SuppressWarnings("FieldCanBeLocal")
 public class LoginActivity extends AppCompatActivity {
 
   private FirebaseAuth auth;
+  private FirebaseDatabase fbDatabase;
+  private DatabaseReference dbReference;
   private SessionManager userSession;
 
   private EditText emailEt, passwordEt;
   private Button loginBtn;
-  private TextView resetPasswordTv, signupTv;
+  private TextView resetPasswordTv, signUpTv;
   private ProgressBar progressBar;
 
   @Override
@@ -40,6 +49,9 @@ public class LoginActivity extends AppCompatActivity {
     }
     // instantiate authorization
     auth = FirebaseAuth.getInstance();
+    fbDatabase = FirebaseDatabase.getInstance();
+    dbReference = fbDatabase.getReference("Users");
+    FirebaseUser firebaseUser = auth.getCurrentUser();
     // Initialize session
     userSession = new SessionManager(LoginActivity.this);
 
@@ -56,7 +68,7 @@ public class LoginActivity extends AppCompatActivity {
 
     setupHyperLink();
 
-    signupTv.setOnClickListener(new View.OnClickListener() {
+    signUpTv.setOnClickListener(new View.OnClickListener() {
       @Override
       public void onClick(View v) {
         Intent intent = new Intent(getApplicationContext(),RegistrationActivity.class);
@@ -72,10 +84,6 @@ public class LoginActivity extends AppCompatActivity {
         startActivity(intent);
       }
     });
-
-    /*if(auth.getCurrentUser()!=null){
-      startActivity(new Intent(getApplicationContext(),MainViewActivity.class));
-    }*/
   }
 
   // setting the link on the activity
@@ -107,8 +115,8 @@ public class LoginActivity extends AppCompatActivity {
           @Override
           public void onComplete(@NonNull Task<AuthResult> task) {
             if (task.isSuccessful()) {
-              // Set the session to true
-              userSession.setLogin(true);
+              // call getUser method
+              getUser();
               // display a message for successful login
               Toast.makeText(getApplicationContext(), "Login successful!", Toast.LENGTH_LONG).show();
               progressBar.setVisibility(View.GONE);
@@ -125,12 +133,32 @@ public class LoginActivity extends AppCompatActivity {
         });
   }
 
+  // Get user method
+  private void getUser() {
+    final String UID = auth.getUid();
+    dbReference.addListenerForSingleValueEvent(new ValueEventListener() {
+      @Override
+      public void onDataChange(@NonNull DataSnapshot userSnapShot) {
+        assert UID != null;
+        User user = userSnapShot.child(UID).getValue(User.class);
+        // save user into userSession
+        userSession.setLogin(UID);
+        assert user != null;
+        userSession.setUserDetails(user);
+      }
+
+      @Override
+      public void onCancelled(@NonNull DatabaseError databaseError) {
+      }
+    });
+  }
+
   // method to initialize all activity components
   private void initializeViews() {
     emailEt = findViewById(R.id.email_edt_text);
     passwordEt = findViewById(R.id.pass_edt_text);
     loginBtn = findViewById(R.id.login_btn);
-    signupTv = findViewById(R.id.signup_Tv);
+    signUpTv = findViewById(R.id.signup_Tv);
     resetPasswordTv = findViewById(R.id.reset_pass_tv);
     progressBar = findViewById(R.id.progressBar);
   }

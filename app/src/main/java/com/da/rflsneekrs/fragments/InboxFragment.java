@@ -14,6 +14,7 @@ import android.view.ViewGroup;
 import com.da.rflsneekrs.activities.MainUnlogActivity;
 import com.da.rflsneekrs.R;
 import com.da.rflsneekrs.adapters.ViewPagerAdapter;
+import com.da.rflsneekrs.authentication.SessionManager;
 import com.google.android.gms.common.internal.Asserts;
 import com.google.android.material.tabs.TabLayout;
 import com.google.firebase.auth.FirebaseAuth;
@@ -37,6 +38,7 @@ public class InboxFragment extends Fragment {
   private String mParam2;
 
   private FirebaseAuth auth;
+  private SessionManager userSession;
 
   private TabLayout inboxTab;
   private ViewPager inboxVP;
@@ -80,10 +82,12 @@ public class InboxFragment extends Fragment {
   public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
     // instantiate authorization
     auth = FirebaseAuth.getInstance();
+    // Initialize user session
+    userSession = new SessionManager(requireActivity().getApplicationContext());
     // Inflate the layout for this fragment
     View fragmentView = inflater.inflate(R.layout.fragment_inbox, container, false);
     // Check if the user is logged In, if not redirect the main view activity
-    if(auth.getCurrentUser() == null){
+    if(userSession.getLogin() == null){
       Intent intent = new Intent(getActivity(), MainUnlogActivity.class);
       startActivity(intent);
     } else {
