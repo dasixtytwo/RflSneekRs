@@ -1,4 +1,4 @@
-package com.da.rflsneekrs.authentication;
+package com.da.rflsneekrs.settings;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
@@ -115,7 +115,7 @@ public class SessionManager {
   }
   // set view list/grid default
   public int getListGrid() {
-    return sharedPreferences.getInt(KEY_LIST_GRID, 0);
+    return sharedPreferences.getInt(KEY_LIST_GRID, 1);
   }
 
   // clear user session

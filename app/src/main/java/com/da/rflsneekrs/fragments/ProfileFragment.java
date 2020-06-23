@@ -22,17 +22,13 @@ import com.da.rflsneekrs.activities.MainUnlogActivity;
 import com.da.rflsneekrs.R;
 import com.da.rflsneekrs.activities.SettingsActivity;
 import com.da.rflsneekrs.adapters.ViewPagerAdapter;
-import com.da.rflsneekrs.authentication.SessionManager;
-import com.da.rflsneekrs.models.User;
+import com.da.rflsneekrs.settings.SessionManager;
 
 import com.google.android.material.tabs.TabLayout;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
 
 import com.squareup.picasso.Picasso;
 

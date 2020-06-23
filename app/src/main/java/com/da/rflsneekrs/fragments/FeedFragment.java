@@ -1,11 +1,8 @@
 package com.da.rflsneekrs.fragments;
 
-import android.content.Context;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -14,12 +11,12 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
-import android.widget.Toast;
 
 import com.da.rflsneekrs.R;
 import com.da.rflsneekrs.adapters.ListGridAdapter;
 import com.da.rflsneekrs.models.Product;
 
+import com.da.rflsneekrs.settings.SessionManager;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -50,6 +47,7 @@ public class FeedFragment extends Fragment {
 
   private FirebaseDatabase fbDatabase;
   private DatabaseReference dbReference;
+  private SessionManager userSession;
 
   ImageButton imageButton;
   private RecyclerView productRecyclerView;
@@ -89,8 +87,12 @@ public class FeedFragment extends Fragment {
 
   @Override
   public View onCreateView(LayoutInflater inflater, ViewGroup container, final Bundle savedInstanceState) {
-    gridLayoutManager = new GridLayoutManager(getActivity(), SPAN_COUNT_ONE);
-
+    // instantiate user session
+    userSession = new SessionManager(requireActivity().getApplicationContext());
+    // get the span from session
+    final int spanCountSession = userSession.getListGrid();
+    // instantiate the layout for display the items
+    gridLayoutManager = new GridLayoutManager(getActivity(), spanCountSession);
     // Inflate the layout for this fragment
     View fragmentView = inflater.inflate(R.layout.fragment_feed, container, false);
     imageButton = fragmentView.findViewById(R.id.spanBtn);
@@ -137,8 +139,10 @@ public class FeedFragment extends Fragment {
   private void switchLayout() {
     if (gridLayoutManager.getSpanCount() == SPAN_COUNT_ONE) {
       gridLayoutManager.setSpanCount(SPAN_COUNT_TWO);
+      userSession.setListGrid(SPAN_COUNT_TWO);
     } else {
       gridLayoutManager.setSpanCount(SPAN_COUNT_ONE);
+      userSession.setListGrid(SPAN_COUNT_ONE);
     }
     listGridAdapter.notifyItemRangeChanged(0, listGridAdapter.getItemCount());
   }
