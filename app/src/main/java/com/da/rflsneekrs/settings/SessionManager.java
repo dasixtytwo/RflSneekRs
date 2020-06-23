@@ -28,6 +28,8 @@ public class SessionManager {
   public static final String KEY_SHOES_SIZE = "ShoesSize";
   // declare variable for list/grid preferences
   public static final String KEY_LIST_GRID = "listGrid";
+  public static final String KEY_LIST_GRID_STOCK = "inStockListGrid";
+  public static final String KEY_ICON = "IconListGrid";
 
 
   // create a constructor
@@ -113,9 +115,29 @@ public class SessionManager {
     editor.putInt(KEY_LIST_GRID, grid);
     editor.commit();
   }
-  // set view list/grid default
+  // set view in stock  list/grid default
   public int getListGrid() {
     return sharedPreferences.getInt(KEY_LIST_GRID, 1);
+  }
+
+  // Set view, list or grid
+  public void setListGridStock(int grid){
+    editor.putInt(KEY_LIST_GRID_STOCK, grid);
+    editor.commit();
+  }
+  // set view in stock list/grid default
+  public int getListGridStock() {
+    return sharedPreferences.getInt(KEY_LIST_GRID_STOCK, 2);
+  }
+
+  // Set button icon for list/grid
+  public void setIcon(boolean icon){
+    editor.putBoolean(KEY_ICON, icon);
+    editor.commit();
+  }
+  // return the value to the icon button
+  public boolean getIcon() {
+    return sharedPreferences.getBoolean(KEY_ICON, false);
   }
 
   // clear user session

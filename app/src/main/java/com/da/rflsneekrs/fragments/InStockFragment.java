@@ -3,14 +3,17 @@ package com.da.rflsneekrs.fragments;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
+import android.widget.Toast;
 
 import com.da.rflsneekrs.R;
 import com.da.rflsneekrs.adapters.ListGridAdapter;
@@ -37,7 +40,7 @@ import static com.da.rflsneekrs.adapters.ListGridAdapter.SPAN_COUNT_TWO;
  */
 @SuppressWarnings("FieldCanBeLocal")
 public class InStockFragment extends Fragment {
-
+  private static final String TAG = "MyActivity";
   // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
   private static final String ARG_PARAM1 = "param1";
   private static final String ARG_PARAM2 = "param2";
@@ -94,10 +97,8 @@ public class InStockFragment extends Fragment {
   public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
     // instantiate user session
     userSession = new SessionManager(requireActivity().getApplicationContext());
-    // get the span from session
-    final int spanCountSession = userSession.getListGrid();
     // instantiate the layout for display the items
-    gridLayoutManager = new GridLayoutManager(getActivity(), spanCountSession);
+    gridLayoutManager = new GridLayoutManager(getActivity(), userSession.getListGridStock());
     // Inflate the layout for this fragment
     View fragmentView = inflater.inflate(R.layout.fragment_instock, container, false);
     imageButton = fragmentView.findViewById(R.id.spanBtn);
@@ -113,7 +114,7 @@ public class InStockFragment extends Fragment {
       @Override
       public void onClick(View v) {
         switchLayout();
-        switchIcon(v);
+        switchIcon();
       }
     });
 
@@ -134,7 +135,7 @@ public class InStockFragment extends Fragment {
         }
         listGridAdapter = new ListGridAdapter(getActivity(),productList, gridLayoutManager);
         recyclerView.setAdapter(listGridAdapter);
-        recyclerView.addItemDecoration(new SpaceGridDecoration(5));
+        recyclerView.addItemDecoration(new SpaceGridDecoration(10));
       }
 
       @Override
@@ -144,25 +145,21 @@ public class InStockFragment extends Fragment {
   }
 
   private void switchLayout() {
-    if (gridLayoutManager.getSpanCount() == SPAN_COUNT_ONE) {
+    if (userSession.getListGridStock() == SPAN_COUNT_ONE) {
       gridLayoutManager.setSpanCount(SPAN_COUNT_TWO);
-      userSession.setListGrid(SPAN_COUNT_TWO);
+      userSession.setListGridStock(SPAN_COUNT_TWO);
     } else {
       gridLayoutManager.setSpanCount(SPAN_COUNT_ONE);
-      userSession.setListGrid(SPAN_COUNT_ONE);
+      userSession.setListGridStock(SPAN_COUNT_ONE);
     }
     listGridAdapter.notifyItemRangeChanged(0, listGridAdapter.getItemCount());
   }
 
-  private void switchIcon(View v) {
-    if (gridLayoutManager.getSpanCount() == SPAN_COUNT_TWO) {
-      //item.setIcon(ContextCompat.getDrawable(getActivity(), R.drawable.ic_span_grid));
-      imageButton = (ImageButton) v.findViewById(R.id.spanBtn);
+  private void switchIcon() {
+    if (userSession.getListGridStock() == SPAN_COUNT_TWO) {
       imageButton.setImageResource(R.drawable.ic_span_grid);
     } else {
-      imageButton = (ImageButton) v.findViewById(R.id.spanBtn);
       imageButton.setImageResource(R.drawable.ic_span_list);
-      //item.setIcon(getResources().getDrawable(R.drawable.ic_span_list));
     }
   }
 }

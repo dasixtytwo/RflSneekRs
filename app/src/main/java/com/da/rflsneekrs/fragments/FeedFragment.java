@@ -90,10 +90,8 @@ public class FeedFragment extends Fragment {
   public View onCreateView(LayoutInflater inflater, ViewGroup container, final Bundle savedInstanceState) {
     // instantiate user session
     userSession = new SessionManager(requireActivity().getApplicationContext());
-    // get the span from session
-    final int spanCountSession = userSession.getListGrid();
     // instantiate the layout for display the items
-    gridLayoutManager = new GridLayoutManager(getActivity(), spanCountSession);
+    gridLayoutManager = new GridLayoutManager(getActivity(), userSession.getListGrid());
     // Inflate the layout for this fragment
     View fragmentView = inflater.inflate(R.layout.fragment_feed, container, false);
     imageButton = fragmentView.findViewById(R.id.spanBtn);
@@ -129,7 +127,7 @@ public class FeedFragment extends Fragment {
         }
         listGridAdapter = new ListGridAdapter(getActivity(), productList, gridLayoutManager);
         productRecyclerView.setAdapter(listGridAdapter);
-        productRecyclerView.addItemDecoration(new SpaceGridDecoration(5));
+        productRecyclerView.addItemDecoration(new SpaceGridDecoration(10));
       }
 
       @Override
@@ -139,7 +137,7 @@ public class FeedFragment extends Fragment {
   }
 
   private void switchLayout() {
-    if (gridLayoutManager.getSpanCount() == SPAN_COUNT_ONE) {
+    if (userSession.getListGrid() == SPAN_COUNT_ONE) {
       gridLayoutManager.setSpanCount(SPAN_COUNT_TWO);
       userSession.setListGrid(SPAN_COUNT_TWO);
     } else {
@@ -150,14 +148,13 @@ public class FeedFragment extends Fragment {
   }
 
   private void switchIcon(View v) {
-    if (gridLayoutManager.getSpanCount() == SPAN_COUNT_TWO) {
+    if (userSession.getListGrid() == SPAN_COUNT_TWO) {
       //item.setIcon(ContextCompat.getDrawable(getActivity(), R.drawable.ic_span_grid));
       imageButton = (ImageButton) v.findViewById(R.id.spanBtn);
       imageButton.setImageResource(R.drawable.ic_span_grid);
     } else {
       imageButton = (ImageButton) v.findViewById(R.id.spanBtn);
       imageButton.setImageResource(R.drawable.ic_span_list);
-      //item.setIcon(getResources().getDrawable(R.drawable.ic_span_list));
     }
   }
 }
