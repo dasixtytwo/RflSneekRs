@@ -10,11 +10,13 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
 
 import com.da.rflsneekrs.R;
-import com.da.rflsneekrs.adapters.GridAdapter;
+import com.da.rflsneekrs.adapters.ListGridAdapter;
 import com.da.rflsneekrs.decoration.SpaceGridDecoration;
 import com.da.rflsneekrs.models.Product;
+import com.da.rflsneekrs.settings.SessionManager;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -25,7 +27,8 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.ArrayList;
 import java.util.List;
 
-import static com.da.rflsneekrs.adapters.GridAdapter.SPAN_COUNT_TWO;
+import static com.da.rflsneekrs.adapters.ListGridAdapter.SPAN_COUNT_ONE;
+import static com.da.rflsneekrs.adapters.ListGridAdapter.SPAN_COUNT_TWO;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -49,8 +52,11 @@ public class InStockFragment extends Fragment {
   private DatabaseReference dbReference;
   private Query query;
 
+  private SessionManager userSession;
+
+  private ImageButton imageButton;
   private RecyclerView recyclerView;
-  private GridAdapter gridAdapter;
+  private ListGridAdapter listGridAdapter;
   private GridLayoutManager gridLayoutManager;
   private List<Product> productList;
 
@@ -86,15 +92,30 @@ public class InStockFragment extends Fragment {
 
   @Override
   public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-    gridLayoutManager = new GridLayoutManager(getActivity(), SPAN_COUNT_TWO);
+    // instantiate user session
+    userSession = new SessionManager(requireActivity().getApplicationContext());
+    // get the span from session
+    final int spanCountSession = userSession.getListGrid();
+    // instantiate the layout for display the items
+    gridLayoutManager = new GridLayoutManager(getActivity(), spanCountSession);
     // Inflate the layout for this fragment
     View fragmentView = inflater.inflate(R.layout.fragment_instock, container, false);
+    imageButton = fragmentView.findViewById(R.id.spanBtn);
+
     recyclerView = (RecyclerView) fragmentView.findViewById(R.id.in_stock_recycle_view);
     recyclerView.setHasFixedSize(true);
     recyclerView.setLayoutManager(gridLayoutManager);
     fbDatabase = FirebaseDatabase.getInstance();
     dbReference = fbDatabase.getReference("Products");
     query = dbReference.orderByChild(PRODUCT_KEY).equalTo(STOCK_VALUE);
+
+    imageButton.setOnClickListener(new View.OnClickListener() {
+      @Override
+      public void onClick(View v) {
+        switchLayout();
+        switchIcon(v);
+      }
+    });
 
     return fragmentView;
   }
@@ -111,8 +132,8 @@ public class InStockFragment extends Fragment {
           Product product = productSnap.getValue(Product.class);
           productList.add(product);
         }
-        gridAdapter = new GridAdapter(getActivity(),productList, gridLayoutManager);
-        recyclerView.setAdapter(gridAdapter);
+        listGridAdapter = new ListGridAdapter(getActivity(),productList, gridLayoutManager);
+        recyclerView.setAdapter(listGridAdapter);
         recyclerView.addItemDecoration(new SpaceGridDecoration(5));
       }
 
@@ -120,5 +141,28 @@ public class InStockFragment extends Fragment {
       public void onCancelled(@NonNull DatabaseError databaseError) {
       }
     });
+  }
+
+  private void switchLayout() {
+    if (gridLayoutManager.getSpanCount() == SPAN_COUNT_ONE) {
+      gridLayoutManager.setSpanCount(SPAN_COUNT_TWO);
+      userSession.setListGrid(SPAN_COUNT_TWO);
+    } else {
+      gridLayoutManager.setSpanCount(SPAN_COUNT_ONE);
+      userSession.setListGrid(SPAN_COUNT_ONE);
+    }
+    listGridAdapter.notifyItemRangeChanged(0, listGridAdapter.getItemCount());
+  }
+
+  private void switchIcon(View v) {
+    if (gridLayoutManager.getSpanCount() == SPAN_COUNT_TWO) {
+      //item.setIcon(ContextCompat.getDrawable(getActivity(), R.drawable.ic_span_grid));
+      imageButton = (ImageButton) v.findViewById(R.id.spanBtn);
+      imageButton.setImageResource(R.drawable.ic_span_grid);
+    } else {
+      imageButton = (ImageButton) v.findViewById(R.id.spanBtn);
+      imageButton.setImageResource(R.drawable.ic_span_list);
+      //item.setIcon(getResources().getDrawable(R.drawable.ic_span_list));
+    }
   }
 }

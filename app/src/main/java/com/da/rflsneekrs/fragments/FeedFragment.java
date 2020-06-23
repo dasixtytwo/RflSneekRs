@@ -14,6 +14,7 @@ import android.widget.ImageButton;
 
 import com.da.rflsneekrs.R;
 import com.da.rflsneekrs.adapters.ListGridAdapter;
+import com.da.rflsneekrs.decoration.SpaceGridDecoration;
 import com.da.rflsneekrs.models.Product;
 
 import com.da.rflsneekrs.settings.SessionManager;
@@ -49,7 +50,7 @@ public class FeedFragment extends Fragment {
   private DatabaseReference dbReference;
   private SessionManager userSession;
 
-  ImageButton imageButton;
+  private ImageButton imageButton;
   private RecyclerView productRecyclerView;
   private ListGridAdapter listGridAdapter;
   private GridLayoutManager gridLayoutManager;
@@ -128,6 +129,7 @@ public class FeedFragment extends Fragment {
         }
         listGridAdapter = new ListGridAdapter(getActivity(), productList, gridLayoutManager);
         productRecyclerView.setAdapter(listGridAdapter);
+        productRecyclerView.addItemDecoration(new SpaceGridDecoration(5));
       }
 
       @Override
