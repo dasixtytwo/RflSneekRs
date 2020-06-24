@@ -17,13 +17,14 @@ public class SpaceGridDecoration extends RecyclerView.ItemDecoration {
   public void getItemOffsets(@NonNull Rect outRect, @NonNull View view, @NonNull RecyclerView parent, @NonNull RecyclerView.State state) {
     // Add this code to recyclerView: recyclerView.addItemDecoration(new SpacesItemDecoration(5));
     super.getItemOffsets(outRect, view, parent, state);
-    outRect.left = space;
+    outRect.left = 0;
     outRect.right = space;
     outRect.bottom = space;
+    outRect.top = 0;
 
     // Add top Margin only for the first item to avoid double space between items
     if (parent.getChildLayoutPosition(view) == 0) {
-      outRect.top = space;
+      //outRect.top = space;
     } else {
       outRect.top = 0;
     }
