@@ -7,6 +7,8 @@ import android.content.SharedPreferences;
 import com.da.rflsneekrs.models.User;
 
 import java.util.HashMap;
+import static com.da.rflsneekrs.adapters.ListGridAdapter.SPAN_COUNT_ONE;
+import static com.da.rflsneekrs.adapters.ListGridAdapter.SPAN_COUNT_TWO;
 
 public class SessionManager {
   // Initialize variable
@@ -30,7 +32,6 @@ public class SessionManager {
   public static final String KEY_LIST_GRID = "listGrid";
   public static final String KEY_LIST_GRID_STOCK = "inStockListGrid";
   public static final String KEY_ICON = "IconListGrid";
-
 
   // create a constructor
   @SuppressLint("CommitPrefEdits")
@@ -117,7 +118,7 @@ public class SessionManager {
   }
   // set view in stock  list/grid default
   public int getListGrid() {
-    return sharedPreferences.getInt(KEY_LIST_GRID, 1);
+    return sharedPreferences.getInt(KEY_LIST_GRID, SPAN_COUNT_ONE);
   }
 
   // Set view, list or grid
@@ -127,17 +128,17 @@ public class SessionManager {
   }
   // set view in stock list/grid default
   public int getListGridStock() {
-    return sharedPreferences.getInt(KEY_LIST_GRID_STOCK, 2);
+    return sharedPreferences.getInt(KEY_LIST_GRID_STOCK, SPAN_COUNT_TWO);
   }
 
   // Set button icon for list/grid
-  public void setIcon(boolean icon){
-    editor.putBoolean(KEY_ICON, icon);
+  public void setIcon(String icon){
+    editor.putString(KEY_ICON, icon);
     editor.commit();
   }
   // return the value to the icon button
-  public boolean getIcon() {
-    return sharedPreferences.getBoolean(KEY_ICON, false);
+  public String getIcon() {
+    return sharedPreferences.getString(KEY_ICON, null);
   }
 
   // clear user session
