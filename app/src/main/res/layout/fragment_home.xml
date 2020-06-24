@@ -27,7 +27,7 @@
     app:tabTextColor="@color/colorSecondary"
     tools:ignore="MissingConstraints" />
 
-  <com.google.android.material.floatingactionbutton.FloatingActionButton
+  <!--<com.google.android.material.floatingactionbutton.FloatingActionButton
     android:id="@+id/fab_search"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
@@ -38,6 +38,6 @@
     android:src="@drawable/ic_search"
     app:backgroundTint="@android:color/white"
     app:layout_constraintBottom_toBottomOf="parent"
-    app:layout_constraintEnd_toEndOf="parent" />
+    app:layout_constraintEnd_toEndOf="parent" />-->
 
 </androidx.constraintlayout.widget.ConstraintLayout>
