@@ -124,6 +124,11 @@ public class InStockFragment extends Fragment {
   @Override
   public void onStart() {
     super.onStart();
+    if(userSession.getIconStock()){
+      imageButton.setImageResource(R.drawable.ic_span_grid);
+    } else {
+      imageButton.setImageResource(R.drawable.ic_span_list);
+    }
     // Get List Products from the database
     query.addValueEventListener(new ValueEventListener() {
       @Override
@@ -148,17 +153,21 @@ public class InStockFragment extends Fragment {
     if (userSession.getListGridStock() == SPAN_COUNT_ONE) {
       gridLayoutManager.setSpanCount(SPAN_COUNT_TWO);
       userSession.setListGridStock(SPAN_COUNT_TWO);
+      userSession.setIconStock(true);
     } else {
       gridLayoutManager.setSpanCount(SPAN_COUNT_ONE);
       userSession.setListGridStock(SPAN_COUNT_ONE);
+      userSession.setIconStock(false);
     }
     listGridAdapter.notifyItemRangeChanged(0, listGridAdapter.getItemCount());
   }
 
   private void switchIcon() {
-    if (userSession.getListGridStock() == SPAN_COUNT_TWO) {
+    if(userSession.getIconStock()){
+      Toast.makeText(getContext(), "Set True", Toast.LENGTH_LONG ).show();
       imageButton.setImageResource(R.drawable.ic_span_grid);
     } else {
+      Toast.makeText(getContext(), "Set False", Toast.LENGTH_LONG ).show();
       imageButton.setImageResource(R.drawable.ic_span_list);
     }
   }

@@ -11,7 +11,7 @@
     android:layout_height="58dp"
     android:layout_gravity="bottom|end"
     android:background="@drawable/border_bottom_layout"
-    android:src="@drawable/ic_span_list"
+
     android:visibility="visible"
     app:layout_constraintEnd_toStartOf="@+id/filterBtn"
     app:layout_constraintStart_toStartOf="parent"
