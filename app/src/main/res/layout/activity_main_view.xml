@@ -25,6 +25,4 @@
       android:layout_height="match_parent"
       app:layout_constraintBottom_toTopOf="@+id/bottom_navigation" />
 
-
-
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
