@@ -7,10 +7,12 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
+import android.widget.Toast;
 
 import com.da.rflsneekrs.R;
 import com.da.rflsneekrs.adapters.ListGridAdapter;
@@ -106,9 +108,12 @@ public class FeedFragment extends Fragment {
       @Override
       public void onClick(View v) {
         switchLayout();
-        switchIcon(v);
+        switchIcon();
+
       }
     });
+
+
 
     return fragmentView;
   }
@@ -116,6 +121,11 @@ public class FeedFragment extends Fragment {
   @Override
   public void onStart() {
     super.onStart();
+    if(userSession.getIcon()){
+      imageButton.setImageResource(R.drawable.ic_span_grid);
+    } else {
+      imageButton.setImageResource(R.drawable.ic_span_list);
+    }
     // Get List Products from the database
     dbReference.addValueEventListener(new ValueEventListener() {
       @Override
@@ -140,20 +150,21 @@ public class FeedFragment extends Fragment {
     if (userSession.getListGrid() == SPAN_COUNT_ONE) {
       gridLayoutManager.setSpanCount(SPAN_COUNT_TWO);
       userSession.setListGrid(SPAN_COUNT_TWO);
+      userSession.setIcon(true);
     } else {
       gridLayoutManager.setSpanCount(SPAN_COUNT_ONE);
       userSession.setListGrid(SPAN_COUNT_ONE);
+      userSession.setIcon(false);
     }
     listGridAdapter.notifyItemRangeChanged(0, listGridAdapter.getItemCount());
   }
 
-  private void switchIcon(View v) {
-    if (userSession.getListGrid() == SPAN_COUNT_TWO) {
-      //item.setIcon(ContextCompat.getDrawable(getActivity(), R.drawable.ic_span_grid));
-      imageButton = (ImageButton) v.findViewById(R.id.spanBtn);
+  private void switchIcon() {
+    if(userSession.getIcon()){
+      Toast.makeText(getContext(), "Set True", Toast.LENGTH_LONG ).show();
       imageButton.setImageResource(R.drawable.ic_span_grid);
     } else {
-      imageButton = (ImageButton) v.findViewById(R.id.spanBtn);
+      Toast.makeText(getContext(), "Set False", Toast.LENGTH_LONG ).show();
       imageButton.setImageResource(R.drawable.ic_span_list);
     }
   }
