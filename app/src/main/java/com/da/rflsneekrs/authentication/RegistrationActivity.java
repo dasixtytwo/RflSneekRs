@@ -33,7 +33,6 @@ public class RegistrationActivity extends AppCompatActivity {
   private FirebaseAuth auth;
   private FirebaseDatabase fbDatabase;
   private DatabaseReference dbReference;
-  private SessionManager userSession;
 
   private EditText emailEt, passwordEt, firstNameEt, lastNameEt, nationalityEt;
   private CheckBox notificationCb;
@@ -53,8 +52,6 @@ public class RegistrationActivity extends AppCompatActivity {
       getSupportActionBar().hide(); //hide title bar
     }
 
-    // Initialize session
-    userSession = new SessionManager(RegistrationActivity.this);
     // Initialize Firebase
     auth = FirebaseAuth.getInstance();
     fbDatabase = FirebaseDatabase.getInstance();
@@ -138,10 +135,6 @@ public class RegistrationActivity extends AppCompatActivity {
                   nationality,
                   notification
               );
-              // setting up user session
-              userSession.setLogin(false);
-              userSession.setUserDetails(firstName, lastName, email, productPreference, nationality);
-              userSession.setNotification(notification);
               // save new user into database
               dbReference.child(Objects.requireNonNull(auth.getCurrentUser()).getUid())
                   .setValue(user).addOnCompleteListener(new OnCompleteListener<Void>() {

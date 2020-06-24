@@ -59,4 +59,31 @@
   <string name="notification_preferences">Notification Preferences</string>
   <string name="help">Help</string>
   <string name="payment_information">Payment Information</string>
+  <string-array name="gender_spinner">
+    <item>Male</item>
+    <item>Female</item>
+  </string-array>
+  <string-array name="shoes_spinner">
+    <item>UK 5.5</item>
+    <item>UK 6 (EU 39)</item>
+    <item>UK 6 (EU 40)</item>
+    <item>UK 6.5</item>
+    <item>UK 7</item>
+    <item>UK 7.5</item>
+    <item>UK 8</item>
+    <item>UK 8.5</item>
+    <item>UK 9</item>
+    <item>UK 9.5</item>
+    <item>UK 10</item>
+    <item>UK 10.5</item>
+    <item>UK 11</item>
+    <item>UK 11.5</item>
+    <item>UK 12</item>
+    <item>UK 12.5</item>
+    <item>UK 13</item>
+    <item>UK 14</item>
+    <item>UK 15</item>
+    <item>UK 16</item>
+    <item>UK 17</item>
+  </string-array>
 </resources>

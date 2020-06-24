@@ -2,6 +2,7 @@ package com.da.rflsneekrs.activities;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.coordinatorlayout.widget.CoordinatorLayout;
 import androidx.fragment.app.Fragment;
 
 import android.content.Intent;
@@ -9,26 +10,26 @@ import android.os.Bundle;
 import android.view.MenuItem;
 
 import com.da.rflsneekrs.R;
+import com.da.rflsneekrs.helper.ScrollNavigationBar;
 import com.da.rflsneekrs.fragments.DiscoverFragment;
 import com.da.rflsneekrs.fragments.HomeFragment;
 import com.da.rflsneekrs.fragments.InboxFragment;
 import com.da.rflsneekrs.fragments.ProfileFragment;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
-import com.google.firebase.auth.FirebaseAuth;
 
 @SuppressWarnings("FieldCanBeLocal")
 public class MainViewActivity extends AppCompatActivity {
-  private FirebaseAuth auth;
   private BottomNavigationView bottomNavigationView;
 
   @Override
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_main_view);
-    // Initialize auth firebase
-    auth = FirebaseAuth.getInstance();
     // Initialize components
     initializeViews();
+    // attaching bottom sheet behaviour - hide / show on scroll
+    CoordinatorLayout.LayoutParams layoutParams = (CoordinatorLayout.LayoutParams) bottomNavigationView.getLayoutParams();
+    layoutParams.setBehavior(new ScrollNavigationBar());
     // the main fragments on main activity
     bottomNavigationView.setOnNavigationItemSelectedListener(bottomNavMethod);
     getSupportFragmentManager().beginTransaction().replace(R.id.fgContainer, new HomeFragment()).commit();
@@ -76,6 +77,7 @@ public class MainViewActivity extends AppCompatActivity {
   };
   // initialize navigation bar
   private void initializeViews() {
+
     bottomNavigationView = findViewById(R.id.bottom_navigation);
   }
 }

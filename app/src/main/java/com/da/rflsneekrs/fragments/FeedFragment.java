@@ -1,11 +1,8 @@
 package com.da.rflsneekrs.fragments;
 
-import android.content.Context;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -14,12 +11,13 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
-import android.widget.Toast;
 
 import com.da.rflsneekrs.R;
 import com.da.rflsneekrs.adapters.ListGridAdapter;
+import com.da.rflsneekrs.decoration.SpaceGridDecoration;
 import com.da.rflsneekrs.models.Product;
 
+import com.da.rflsneekrs.settings.SessionManager;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -38,6 +36,7 @@ import static com.da.rflsneekrs.adapters.ListGridAdapter.SPAN_COUNT_TWO;
  * Use the {@link FeedFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
+@SuppressWarnings("FieldCanBeLocal")
 public class FeedFragment extends Fragment {
 
   // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -49,8 +48,9 @@ public class FeedFragment extends Fragment {
 
   private FirebaseDatabase fbDatabase;
   private DatabaseReference dbReference;
+  private SessionManager userSession;
 
-  ImageButton imageButton;
+  private ImageButton imageButton;
   private RecyclerView productRecyclerView;
   private ListGridAdapter listGridAdapter;
   private GridLayoutManager gridLayoutManager;
@@ -88,8 +88,10 @@ public class FeedFragment extends Fragment {
 
   @Override
   public View onCreateView(LayoutInflater inflater, ViewGroup container, final Bundle savedInstanceState) {
-    gridLayoutManager = new GridLayoutManager(getActivity(), SPAN_COUNT_ONE);
-
+    // instantiate user session
+    userSession = new SessionManager(requireActivity().getApplicationContext());
+    // instantiate the layout for display the items
+    gridLayoutManager = new GridLayoutManager(getActivity(), userSession.getListGrid());
     // Inflate the layout for this fragment
     View fragmentView = inflater.inflate(R.layout.fragment_feed, container, false);
     imageButton = fragmentView.findViewById(R.id.spanBtn);
@@ -125,6 +127,7 @@ public class FeedFragment extends Fragment {
         }
         listGridAdapter = new ListGridAdapter(getActivity(), productList, gridLayoutManager);
         productRecyclerView.setAdapter(listGridAdapter);
+        productRecyclerView.addItemDecoration(new SpaceGridDecoration(10));
       }
 
       @Override
@@ -134,23 +137,24 @@ public class FeedFragment extends Fragment {
   }
 
   private void switchLayout() {
-    if (gridLayoutManager.getSpanCount() == SPAN_COUNT_ONE) {
+    if (userSession.getListGrid() == SPAN_COUNT_ONE) {
       gridLayoutManager.setSpanCount(SPAN_COUNT_TWO);
+      userSession.setListGrid(SPAN_COUNT_TWO);
     } else {
       gridLayoutManager.setSpanCount(SPAN_COUNT_ONE);
+      userSession.setListGrid(SPAN_COUNT_ONE);
     }
     listGridAdapter.notifyItemRangeChanged(0, listGridAdapter.getItemCount());
   }
 
   private void switchIcon(View v) {
-    if (gridLayoutManager.getSpanCount() == SPAN_COUNT_TWO) {
+    if (userSession.getListGrid() == SPAN_COUNT_TWO) {
       //item.setIcon(ContextCompat.getDrawable(getActivity(), R.drawable.ic_span_grid));
       imageButton = (ImageButton) v.findViewById(R.id.spanBtn);
       imageButton.setImageResource(R.drawable.ic_span_grid);
     } else {
       imageButton = (ImageButton) v.findViewById(R.id.spanBtn);
       imageButton.setImageResource(R.drawable.ic_span_list);
-      //item.setIcon(getResources().getDrawable(R.drawable.ic_span_list));
     }
   }
 }

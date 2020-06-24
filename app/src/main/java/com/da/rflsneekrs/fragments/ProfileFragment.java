@@ -1,5 +1,6 @@
 package com.da.rflsneekrs.fragments;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 
@@ -21,20 +22,17 @@ import com.da.rflsneekrs.activities.MainUnlogActivity;
 import com.da.rflsneekrs.R;
 import com.da.rflsneekrs.activities.SettingsActivity;
 import com.da.rflsneekrs.adapters.ViewPagerAdapter;
-import com.da.rflsneekrs.authentication.SessionManager;
-import com.da.rflsneekrs.models.User;
+import com.da.rflsneekrs.settings.SessionManager;
 
 import com.google.android.material.tabs.TabLayout;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
 
 import com.squareup.picasso.Picasso;
 
+import java.util.HashMap;
 import java.util.Objects;
 
 /**
@@ -111,15 +109,12 @@ public class ProfileFragment extends Fragment {
 
   @Override
   public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-    switch (item.getItemId())
-    {
-      case R.id.setting_button:
-        Intent intent = new Intent(getActivity(), SettingsActivity.class);
-        startActivity(intent);
-        return true;
-      default:
-        return super.onOptionsItemSelected(item);
+    if (item.getItemId() == R.id.setting_button) {
+      Intent intent = new Intent(getActivity(), SettingsActivity.class);
+      startActivity(intent);
+      return true;
     }
+    return super.onOptionsItemSelected(item);
   }
 
   @Override
@@ -134,7 +129,7 @@ public class ProfileFragment extends Fragment {
     // Inflate the layout for this fragment
     View fragmentView = inflater.inflate(R.layout.fragment_profile, container, false);
     // Check if the user is logged In, if not redirect the main view activity
-    if(auth.getCurrentUser() == null){
+    if(userSession.getLogin() == null) {
       Intent intent = new Intent(getActivity(), MainUnlogActivity.class);
       startActivity(intent);
     } else {
@@ -174,21 +169,11 @@ public class ProfileFragment extends Fragment {
     return fragmentView;
   }
   // Get user method
+  @SuppressLint("SetTextI18n")
   private void getUser() {
-    final String UID = auth.getUid();
-    dbReference.addListenerForSingleValueEvent(new ValueEventListener() {
-      @Override
-      public void onDataChange(@NonNull DataSnapshot userSnapShot) {
-        assert UID != null;
-        User user = userSnapShot.child(UID).getValue(User.class);
-        assert user != null;
-        String fullName = user.getFirstName() + " " + user.getLastName();
-        profileTv.setText(fullName);
-      }
-
-      @Override
-      public void onCancelled(@NonNull DatabaseError databaseError) {
-      }
-    });
+    HashMap<String, String> userDetails = userSession.getUserDetails();
+    String firstName = userDetails.get(SessionManager.KEY_FIRST_NAME);
+    String lastName = userDetails.get(SessionManager.KEY_LAST_NAME);
+    profileTv.setText(firstName + " " + lastName);
   }
 }

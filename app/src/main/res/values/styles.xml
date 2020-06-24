@@ -41,4 +41,9 @@
     <item name="android:textSize">14sp</item>
     <item name="fontFamily">@font/barlow_regular</item>
   </style>
+
+  <!-- Spinner style -->
+  <style name="SpinnerWithNoArrow" parent="@android:style/Widget.Spinner" >
+    <item name="android:background">@android:drawable/edit_text</item>
+  </style>
 </resources>
