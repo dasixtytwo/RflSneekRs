@@ -164,10 +164,8 @@ public class InStockFragment extends Fragment {
 
   private void switchIcon() {
     if(userSession.getIconStock()){
-      Toast.makeText(getContext(), "Set True", Toast.LENGTH_LONG ).show();
       imageButton.setImageResource(R.drawable.ic_span_grid);
     } else {
-      Toast.makeText(getContext(), "Set False", Toast.LENGTH_LONG ).show();
       imageButton.setImageResource(R.drawable.ic_span_list);
     }
   }

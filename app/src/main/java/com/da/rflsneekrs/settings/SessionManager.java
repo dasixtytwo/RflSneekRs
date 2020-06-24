@@ -149,7 +149,7 @@ public class SessionManager {
   }
   // return the value to the icon button
   public boolean getIconStock() {
-    return sharedPreferences.getBoolean(KEY_ICON_STOCK, false);
+    return sharedPreferences.getBoolean(KEY_ICON_STOCK, true);
   }
 
   // clear user session
