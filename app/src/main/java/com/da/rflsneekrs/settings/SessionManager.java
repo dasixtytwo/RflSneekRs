@@ -32,6 +32,7 @@ public class SessionManager {
   public static final String KEY_LIST_GRID = "listGrid";
   public static final String KEY_LIST_GRID_STOCK = "inStockListGrid";
   public static final String KEY_ICON = "IconListGrid";
+  public static final String KEY_ICON_STOCK = "IconListGridStock";
 
   // create a constructor
   @SuppressLint("CommitPrefEdits")
@@ -132,13 +133,23 @@ public class SessionManager {
   }
 
   // Set button icon for list/grid
-  public void setIcon(String icon){
-    editor.putString(KEY_ICON, icon);
-    editor.commit();
+  public void setIcon(boolean icon){
+    editor.putBoolean(KEY_ICON, icon);
+    editor.apply();
   }
   // return the value to the icon button
-  public String getIcon() {
-    return sharedPreferences.getString(KEY_ICON, null);
+  public boolean getIcon() {
+    return sharedPreferences.getBoolean(KEY_ICON, true);
+  }
+
+  // Set button icon for list/grid
+  public void setIconStock(boolean icon){
+    editor.putBoolean(KEY_ICON_STOCK, icon);
+    editor.apply();
+  }
+  // return the value to the icon button
+  public boolean getIconStock() {
+    return sharedPreferences.getBoolean(KEY_ICON_STOCK, false);
   }
 
   // clear user session
