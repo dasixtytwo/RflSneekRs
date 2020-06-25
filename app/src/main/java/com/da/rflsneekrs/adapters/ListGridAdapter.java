@@ -11,16 +11,25 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.da.rflsneekrs.R;
 import com.da.rflsneekrs.activities.ProductDetailActivity;
 import com.da.rflsneekrs.models.Product;
+
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.MutableData;
+import com.google.firebase.database.Transaction;
+
 import com.squareup.picasso.Picasso;
 
 import java.util.List;
-
+@SuppressWarnings("FieldCanBeLocal")
 public class ListGridAdapter extends RecyclerView.Adapter<ListGridAdapter.ListGridViewHolder> {
   public static final int SPAN_COUNT_ONE = 1;
   public static final int SPAN_COUNT_TWO = 2;
@@ -31,6 +40,9 @@ public class ListGridAdapter extends RecyclerView.Adapter<ListGridAdapter.ListGr
   private Context context;
   private List<Product> productItems;
   private GridLayoutManager gridLayoutManager;
+
+  private FirebaseDatabase fbDatabase;
+  private DatabaseReference dbReference;
 
   public ListGridAdapter(Context cx, List<Product> product, GridLayoutManager layoutManager) {
     this.context = cx;
@@ -80,12 +92,12 @@ public class ListGridAdapter extends RecyclerView.Adapter<ListGridAdapter.ListGr
     return productItems.size();
   }
 
-  class ListGridViewHolder extends RecyclerView.ViewHolder {
+  public class ListGridViewHolder extends RecyclerView.ViewHolder {
     TextView tvName, tvBrand;
     ImageView imgProduct;
     ImageButton imgShare, imgFavourite;
 
-    ListGridViewHolder(View ItemView, int viewType){
+    public ListGridViewHolder(View ItemView, int viewType){
       super(ItemView);
       if (viewType == VIEW_TYPE_LIST) {
         tvName = ItemView.findViewById(R.id.row_product_name);
@@ -94,6 +106,9 @@ public class ListGridAdapter extends RecyclerView.Adapter<ListGridAdapter.ListGr
       } else {
         imgProduct = ItemView.findViewById(R.id.col_product_image);
       }
+
+      fbDatabase = FirebaseDatabase.getInstance();
+      dbReference = fbDatabase.getReference("FavouriteItem");
 
       // Setting share button
       imgShare = ItemView.findViewById(R.id.share_btn);
@@ -118,7 +133,33 @@ public class ListGridAdapter extends RecyclerView.Adapter<ListGridAdapter.ListGr
         imgFavourite.setOnClickListener(new View.OnClickListener() {
           @Override
           public void onClick(View v) {
-            Toast.makeText(context.getApplicationContext(), "Favourite Add", Toast.LENGTH_LONG).show();
+            int position = getAdapterPosition();
+            final Product product = productItems.get(position);
+            final DatabaseReference upFavRefLike = dbReference.child(productItems.get(position).getKeyId());
+            //removeItem(position);
+
+            upFavRefLike.runTransaction(new Transaction.Handler() {
+              @NonNull
+              @Override
+              public Transaction.Result doTransaction(@NonNull MutableData mutableData) {
+                try {
+                  Integer currentValue = mutableData.getValue(Integer.class);
+                  if (currentValue == null) {
+                    mutableData.setValue(1);
+                  } else {
+                    mutableData.setValue(currentValue - 1);
+                  }
+                } catch (Exception ex) {
+                  throw ex;
+                }
+                return Transaction.success(mutableData);
+              }
+
+              @Override
+              public void onComplete(@Nullable DatabaseError databaseError, boolean b, @Nullable DataSnapshot dataSnapshot) {
+                Toast.makeText(context, "Thanks for Choose me!", Toast.LENGTH_SHORT).show();
+              }
+            });
           }
         });
       }
@@ -146,6 +187,12 @@ public class ListGridAdapter extends RecyclerView.Adapter<ListGridAdapter.ListGr
         }
       });
 
+    }
+
+    private void removeItem(int position) {
+      productItems.remove(position);
+      notifyItemRemoved(position);
+      notifyItemRangeChanged(position,productItems.size());
     }
   }
 }
