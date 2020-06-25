@@ -153,21 +153,19 @@ public class InStockFragment extends Fragment {
     if (userSession.getListGridStock() == SPAN_COUNT_ONE) {
       gridLayoutManager.setSpanCount(SPAN_COUNT_TWO);
       userSession.setListGridStock(SPAN_COUNT_TWO);
-      userSession.setIconStock(true);
+      userSession.setIconStock(false);
     } else {
       gridLayoutManager.setSpanCount(SPAN_COUNT_ONE);
       userSession.setListGridStock(SPAN_COUNT_ONE);
-      userSession.setIconStock(false);
+      userSession.setIconStock(true);
     }
     listGridAdapter.notifyItemRangeChanged(0, listGridAdapter.getItemCount());
   }
 
   private void switchIcon() {
     if(userSession.getIconStock()){
-      Toast.makeText(getContext(), "Set True", Toast.LENGTH_LONG ).show();
       imageButton.setImageResource(R.drawable.ic_span_grid);
     } else {
-      Toast.makeText(getContext(), "Set False", Toast.LENGTH_LONG ).show();
       imageButton.setImageResource(R.drawable.ic_span_list);
     }
   }

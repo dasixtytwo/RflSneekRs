@@ -139,7 +139,7 @@ public class SessionManager {
   }
   // return the value to the icon button
   public boolean getIcon() {
-    return sharedPreferences.getBoolean(KEY_ICON, false);
+    return sharedPreferences.getBoolean(KEY_ICON, true);
   }
 
   // Set button icon for list/grid
