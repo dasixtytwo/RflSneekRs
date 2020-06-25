@@ -8,6 +8,7 @@ import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.GridLayoutManager;
@@ -27,7 +28,7 @@ public class ListGridAdapter extends RecyclerView.Adapter<ListGridAdapter.ListGr
   public static final int VIEW_TYPE_LIST = 1;
   public static final int VIEW_TYPE_GRID = 2;
 
-  Context context;
+  private Context context;
   private List<Product> productItems;
   private GridLayoutManager gridLayoutManager;
 
@@ -51,7 +52,7 @@ public class ListGridAdapter extends RecyclerView.Adapter<ListGridAdapter.ListGr
 
   @NonNull
   @Override
-  public ListGridAdapter.ListGridViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+  public ListGridViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
     View view;
     if (viewType == VIEW_TYPE_LIST){
       view = LayoutInflater.from(parent.getContext()).inflate(R.layout.row_product_item, parent, false);
@@ -59,7 +60,7 @@ public class ListGridAdapter extends RecyclerView.Adapter<ListGridAdapter.ListGr
       view = LayoutInflater.from(parent.getContext()).inflate(R.layout.column_product_item, parent, false);
     }
 
-    return new ListGridAdapter.ListGridViewHolder(view, viewType);
+    return new ListGridViewHolder(view, viewType);
   }
 
   @Override
@@ -82,7 +83,7 @@ public class ListGridAdapter extends RecyclerView.Adapter<ListGridAdapter.ListGr
   class ListGridViewHolder extends RecyclerView.ViewHolder {
     TextView tvName, tvBrand;
     ImageView imgProduct;
-    ImageButton imgShare;
+    ImageButton imgShare, imgFavourite;
 
     ListGridViewHolder(View ItemView, int viewType){
       super(ItemView);
@@ -96,7 +97,10 @@ public class ListGridAdapter extends RecyclerView.Adapter<ListGridAdapter.ListGr
 
       // Setting share button
       imgShare = ItemView.findViewById(R.id.share_btn);
+      // Setting favourites button
+      imgFavourite = ItemView.findViewById(R.id.favorite_btn);
 
+      // Show list or Grid, depend of viewType receive
       if (viewType == VIEW_TYPE_LIST) {
         imgShare.setOnClickListener(new View.OnClickListener() {
           @Override
@@ -110,12 +114,19 @@ public class ListGridAdapter extends RecyclerView.Adapter<ListGridAdapter.ListGr
             context.startActivity(shareIntent);
           }
         });
-      }
 
+        imgFavourite.setOnClickListener(new View.OnClickListener() {
+          @Override
+          public void onClick(View v) {
+            Toast.makeText(context.getApplicationContext(), "Favourite Add", Toast.LENGTH_LONG).show();
+          }
+        });
+      }
+      // show item details on product detail activity when click on item
       itemView.setOnClickListener(new View.OnClickListener() {
         @Override
         public void onClick(View view) {
-          Intent postDetailActivity = new Intent(context, ProductDetailActivity.class);
+          Intent productDetailActivity = new Intent(context, ProductDetailActivity.class);
           int position = getAdapterPosition();
 
           // Save the double data Type from database in a variable, ready to be converted
@@ -123,15 +134,15 @@ public class ListGridAdapter extends RecyclerView.Adapter<ListGridAdapter.ListGr
           // convert the variable above in a string
           String price = "£." + d;
 
-          postDetailActivity.putExtra("name",productItems.get(position).getName());
-          postDetailActivity.putExtra("brand",productItems.get(position).getBrand());
-          postDetailActivity.putExtra("image",productItems.get(position).getImage());
-          postDetailActivity.putExtra("description",productItems.get(position).getDescription());
-          postDetailActivity.putExtra("price", price);
-          // will fix this later i forgot to add user name to post object
-          //long timestamp  = (long) productData.get(position).getTimeStamp();
-          //postDetailActivity.putExtra("postDate",timestamp) ;
-          context.startActivity(postDetailActivity);
+          productDetailActivity.putExtra("name",productItems.get(position).getName());
+          productDetailActivity.putExtra("brand",productItems.get(position).getBrand());
+          productDetailActivity.putExtra("image",productItems.get(position).getImage());
+          productDetailActivity.putExtra("description",productItems.get(position).getDescription());
+          productDetailActivity.putExtra("price", price);
+          // will fix this later
+          //long timestamp  = (long) productItems.get(position).getTimeStamp();
+          //productDetailActivity.putExtra("postDate",timestamp) ;
+          context.startActivity(productDetailActivity);
         }
       });
 
