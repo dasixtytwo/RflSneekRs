@@ -109,7 +109,6 @@ public class FeedFragment extends Fragment {
       public void onClick(View v) {
         switchLayout();
         switchIcon();
-
       }
     });
 
@@ -148,11 +147,11 @@ public class FeedFragment extends Fragment {
     if (userSession.getListGrid() == SPAN_COUNT_ONE) {
       gridLayoutManager.setSpanCount(SPAN_COUNT_TWO);
       userSession.setListGrid(SPAN_COUNT_TWO);
-      userSession.setIcon(true);
+      userSession.setIcon(false);
     } else {
       gridLayoutManager.setSpanCount(SPAN_COUNT_ONE);
       userSession.setListGrid(SPAN_COUNT_ONE);
-      userSession.setIcon(false);
+      userSession.setIcon(true);
     }
     listGridAdapter.notifyItemRangeChanged(0, listGridAdapter.getItemCount());
   }

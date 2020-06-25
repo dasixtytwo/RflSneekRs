@@ -153,11 +153,11 @@ public class InStockFragment extends Fragment {
     if (userSession.getListGridStock() == SPAN_COUNT_ONE) {
       gridLayoutManager.setSpanCount(SPAN_COUNT_TWO);
       userSession.setListGridStock(SPAN_COUNT_TWO);
-      userSession.setIconStock(true);
+      userSession.setIconStock(false);
     } else {
       gridLayoutManager.setSpanCount(SPAN_COUNT_ONE);
       userSession.setListGridStock(SPAN_COUNT_ONE);
-      userSession.setIconStock(false);
+      userSession.setIconStock(true);
     }
     listGridAdapter.notifyItemRangeChanged(0, listGridAdapter.getItemCount());
   }
