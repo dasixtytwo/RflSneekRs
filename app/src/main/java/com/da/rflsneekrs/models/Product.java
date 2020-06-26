@@ -2,11 +2,13 @@ package com.da.rflsneekrs.models;
 
 public class Product {
 
-  private String name, brand, description, image, gender;
+  private String keyId, name, brand, description, image, gender;
   private Double price;
   private Boolean inStock;
+  private int favStatus;
 
-  public Product(String name, String brand, String description, Boolean inStock, String image, String gender, Double price){
+  public Product(String keyId, String name, String brand, String description, Boolean inStock, String image, String gender, Double price, int favStatus){
+    this.keyId = keyId;
     this.name = name;
     this.brand = brand;
     this.description = description;
@@ -14,10 +16,13 @@ public class Product {
     this.image = image;
     this.inStock = inStock;
     this.price = price;
+    this.favStatus = favStatus;
   }
 
   // empty constructor
   public Product() {}
+  public String getKeyId() { return keyId; }
+  public void setKeyId(String keyId) { this.keyId = keyId; }
 
   public String getName() {
     return name;
@@ -67,4 +72,7 @@ public class Product {
   public void setPrice(Double price) {
     this.price = price;
   }
+
+  public int getFavStatus() { return favStatus; }
+  public void setFavStatus(int favStatus) { this.favStatus = favStatus; }
 }
