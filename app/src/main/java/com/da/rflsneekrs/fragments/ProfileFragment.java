@@ -128,6 +128,7 @@ public class ProfileFragment extends Fragment {
     userSession = new SessionManager(requireActivity().getApplicationContext());
     // Inflate the layout for this fragment
     View fragmentView = inflater.inflate(R.layout.fragment_profile, container, false);
+
     // Check if the user is logged In, if not redirect the main view activity
     if(userSession.getLogin() == null) {
       Intent intent = new Intent(getActivity(), MainUnlogActivity.class);
@@ -148,6 +149,7 @@ public class ProfileFragment extends Fragment {
       viewPagerAdapter.addFragment(favouritesFragment, "FAVOURITES");
       viewPagerAdapter.addFragment(purchasesFragment, "PURCHASES");
       viewPager.setAdapter(viewPagerAdapter);
+
       // Load an image if exist on database otherwise load default one using Picasso library
       assert firebaseUser != null;
       if (firebaseUser.getPhotoUrl() != null){
@@ -165,6 +167,7 @@ public class ProfileFragment extends Fragment {
       // call getUser method
       getUser();
     }
+
     // return the fragment
     return fragmentView;
   }
