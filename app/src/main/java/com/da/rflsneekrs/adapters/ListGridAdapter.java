@@ -185,7 +185,6 @@ public class ListGridAdapter extends RecyclerView.Adapter<ListGridAdapter.ListGr
           context.startActivity(productDetailActivity);
         }
       });
-
     }
 
     private void likeClick(Product productItem, ImageButton imgFavourite) {
