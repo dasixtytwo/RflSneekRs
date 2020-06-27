@@ -1,32 +1,27 @@
 package com.da.rflsneekrs.adapters;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.ImageView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.da.rflsneekrs.R;
+import com.da.rflsneekrs.activities.ProductDetailActivity;
 import com.da.rflsneekrs.models.FavItem;
-import com.da.rflsneekrs.models.Product;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.MutableData;
-import com.google.firebase.database.Transaction;
+
 import com.squareup.picasso.Picasso;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
+
 
 @SuppressWarnings("FieldCanBeLocal")
 public class FavGridAdapter extends RecyclerView.Adapter<FavGridAdapter.ViewHolder> {
@@ -76,52 +71,31 @@ public class FavGridAdapter extends RecyclerView.Adapter<FavGridAdapter.ViewHold
       imgFavBtn= itemView.findViewById(R.id.favorite_btn);
 
       // instantiate database
-      fbDatabase = FirebaseDatabase.getInstance();
-      dbReference = fbDatabase.getReference("FavouriteItem");
-      //remove from fav after click
+      /*fbDatabase = FirebaseDatabase.getInstance();
+      dbReference = fbDatabase.getReference("FavouriteItem");*/
+      // show item details on product detail activity when click on item
       itemView.setOnClickListener(new View.OnClickListener() {
         @Override
-        public void onClick(View v) {
-          //initialize position
+        public void onClick(View view) {
+          Intent productDetailActivity = new Intent(context, ProductDetailActivity.class);
           int position = getAdapterPosition();
-          final FavItem favItem = favItemList.get(position);
-          final DatabaseReference upFavRefLike = dbReference.child(favItemList.get(position).getKeyId());
 
-          Map<String, Object> userUpdates = new HashMap<>();
-          userUpdates.put(favItem.getKeyId(), new FavItem(null, null,0));
-          dbReference.updateChildren(userUpdates);
-          removeItem(position);
+          // Save the double data Type from database in a variable, ready to be converted
+          Double d = favItemList.get(position).getPrice();
+          // convert the variable above in a string
+          String price = "£." + d;
 
-          upFavRefLike.runTransaction(new Transaction.Handler() {
-            @NonNull
-            @Override
-            public Transaction.Result doTransaction(@NonNull MutableData mutableData) {
-              try {
-                Integer currentValue = mutableData.getValue(Integer.class);
-                if (currentValue == null) {
-                  mutableData.setValue(1);
-                } else {
-                  mutableData.setValue(currentValue - 1);
-                }
-              } catch (Exception e) {
-                throw e;
-              }
-              return Transaction.success(mutableData);
-            }
-
-            @Override
-            public void onComplete(@Nullable DatabaseError databaseError, boolean b, @Nullable DataSnapshot dataSnapshot) {
-              Toast.makeText(context.getApplicationContext(), "Removed from favourite", Toast.LENGTH_LONG).show();
-            }
-          });
+          productDetailActivity.putExtra("name",favItemList.get(position).getName());
+          productDetailActivity.putExtra("brand",favItemList.get(position).getBrand());
+          productDetailActivity.putExtra("image",favItemList.get(position).getImageUri());
+          productDetailActivity.putExtra("description",favItemList.get(position).getDescription());
+          productDetailActivity.putExtra("price", price);
+          // will fix this later
+          //long timestamp  = (long) productItems.get(position).getTimeStamp();
+          //productDetailActivity.putExtra("postDate",timestamp) ;
+          context.startActivity(productDetailActivity);
         }
       });
-    }
-
-    private void removeItem(int position) {
-      favItemList.remove(position);
-      notifyItemRemoved(position);
-      notifyItemRangeChanged(position,favItemList.size());
     }
   }
 }

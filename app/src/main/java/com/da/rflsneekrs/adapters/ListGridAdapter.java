@@ -115,6 +115,10 @@ public class ListGridAdapter extends RecyclerView.Adapter<ListGridAdapter.ListGr
       auth = FirebaseAuth.getInstance();
       // Initialize user session
       userSession = new SessionManager(context.getApplicationContext());
+      // Setting share button
+      imgShare = ItemView.findViewById(R.id.share_btn);
+      // Setting favourites button
+      imgFavourite = ItemView.findViewById(R.id.favorite_btn);
       // Check if view type is list or grid, and show appropriate layout
       if (viewType == VIEW_TYPE_LIST) {
         tvName = ItemView.findViewById(R.id.row_product_name);
@@ -125,12 +129,11 @@ public class ListGridAdapter extends RecyclerView.Adapter<ListGridAdapter.ListGr
       }
       // instantiate database
       fbDatabase = FirebaseDatabase.getInstance();
-      dbReference = fbDatabase.getReference("FavouriteItem");
-
-      // Setting share button
-      imgShare = ItemView.findViewById(R.id.share_btn);
-      // Setting favourites button
-      imgFavourite = ItemView.findViewById(R.id.favorite_btn);
+      if (userSession.getLogin() == null) {
+        dbReference = fbDatabase.getReference("FavouriteItem");
+      } else {
+        dbReference = fbDatabase.getReference("FavouriteItem").child(Objects.requireNonNull(auth.getUid()));
+      }
 
       // Show list or Grid, depend of viewType receive
       if (viewType == VIEW_TYPE_LIST) {
@@ -189,15 +192,29 @@ public class ListGridAdapter extends RecyclerView.Adapter<ListGridAdapter.ListGr
 
     private void likeClick(Product productItem, ImageButton imgFavourite) {
       final DatabaseReference upFavRefLike = dbReference.child(productItem.getKeyId());
+// Declare variable FavItem
+      final String keyId, name, brand, description, imageUrl;
+      final Double price;
+      final int favStatus;
 
       if (productItem.getFavStatus() == 0){
         // set the status of favorite to 1
         productItem.setFavStatus(1);
-        Map<String, FavItem> favProduct = new HashMap<>();
-        favProduct.put(productItem.getKeyId(), new FavItem(productItem.getImage(), productItem.getKeyId(), productItem.getFavStatus()));
-        dbReference.setValue(favProduct);
-        imgFavourite.setImageResource(R.drawable.ic_favorite_red);
+        userSession.setIconFav(true);
+        // Initialize variable
+        keyId = productItem.getKeyId();
+        name = productItem.getName();
+        brand = productItem.getBrand();
+        description = productItem.getDescription();
+        imageUrl = productItem.getImage();
+        price = productItem.getPrice();
+        favStatus = productItem.getFavStatus();
+        FavItem favItem = new FavItem(keyId, name, brand, description, imageUrl, price, favStatus);
+        // save new record on FavItem
+        dbReference.child(keyId).setValue(favItem);
+        // set the image button icon
         imgFavourite.setSelected(true);
+        imgFavourite.setImageResource(R.drawable.ic_favorite_full);
 
         upFavRefLike.runTransaction(new Transaction.Handler() {
           @NonNull
@@ -224,15 +241,21 @@ public class ListGridAdapter extends RecyclerView.Adapter<ListGridAdapter.ListGr
 
           @Override
           public void onComplete(@Nullable DatabaseError databaseError, boolean b, @Nullable DataSnapshot dataSnapshot) {
-            System.out.println("Add to favourite");
+            Toast.makeText(context.getApplicationContext(), "Add to favourite!", Toast.LENGTH_LONG).show();
           }
         });
       } else if (productItem.getFavStatus() == 1) {
         productItem.setFavStatus(0);
-        Map<String, Object> userUpdates = new HashMap<>();
-        userUpdates.put(productItem.getKeyId(), new FavItem(null, null, 0));
-        dbReference.updateChildren(userUpdates);
-
+        userSession.setIconFav(false);
+        // Remove record from FavItem
+        // set child to update
+        keyId = productItem.getKeyId();
+        // set null record on FavItem
+        FavItem favItem = new FavItem(null, null, null, null,
+            null, null, 0);
+        // update record with keyId on FavItem
+        dbReference.child(keyId).setValue(favItem);
+        // set the image button icon
         imgFavourite.setImageResource(R.drawable.ic_favorite);
         imgFavourite.setSelected(false);
 
@@ -261,7 +284,7 @@ public class ListGridAdapter extends RecyclerView.Adapter<ListGridAdapter.ListGr
 
           @Override
           public void onComplete(@Nullable DatabaseError databaseError, boolean b, @Nullable DataSnapshot dataSnapshot) {
-            Toast.makeText(context.getApplicationContext(), "Removed from favourite", Toast.LENGTH_LONG).show();
+            Toast.makeText(context.getApplicationContext(), "Removed from favourite!", Toast.LENGTH_LONG).show();
           }
         });
       }

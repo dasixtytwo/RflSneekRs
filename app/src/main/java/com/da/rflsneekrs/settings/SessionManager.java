@@ -29,10 +29,12 @@ public class SessionManager {
   public static final String KEY_GENDER = "Gender";
   public static final String KEY_SHOES_SIZE = "ShoesSize";
   // declare variable for list/grid preferences
-  public static final String KEY_LIST_GRID = "listGrid";
-  public static final String KEY_LIST_GRID_STOCK = "inStockListGrid";
+  public static final String KEY_LIST_GRID = "ListGrid";
+  public static final String KEY_LIST_GRID_STOCK = "InStockListGrid";
   public static final String KEY_ICON = "IconListGrid";
   public static final String KEY_ICON_STOCK = "IconListGridStock";
+  // declare variable for favourite
+  public static final String KEY_FAV_STATUS = "FavouriteStatus";
 
   // create a constructor
   @SuppressLint("CommitPrefEdits")
@@ -135,7 +137,7 @@ public class SessionManager {
   // Set button icon for list/grid
   public void setIcon(boolean icon){
     editor.putBoolean(KEY_ICON, icon);
-    editor.apply();
+    editor.commit();
   }
   // return the value to the icon button
   public boolean getIcon() {
@@ -145,11 +147,21 @@ public class SessionManager {
   // Set button icon for list/grid
   public void setIconStock(boolean icon){
     editor.putBoolean(KEY_ICON_STOCK, icon);
-    editor.apply();
+    editor.commit();
   }
   // return the value to the icon button
   public boolean getIconStock() {
     return sharedPreferences.getBoolean(KEY_ICON_STOCK, false);
+  }
+
+  // Set icon button favourite color
+  public void setIconFav(boolean icon){
+    editor.putBoolean(KEY_FAV_STATUS, icon);
+    editor.commit();
+  }
+  // return the value to the icon button
+  public boolean getIconFav() {
+    return sharedPreferences.getBoolean(KEY_FAV_STATUS, false);
   }
 
   // clear user session

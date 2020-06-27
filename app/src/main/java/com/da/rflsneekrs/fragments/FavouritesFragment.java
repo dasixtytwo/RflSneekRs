@@ -5,7 +5,6 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
-import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.view.LayoutInflater;
@@ -14,22 +13,24 @@ import android.view.ViewGroup;
 
 import com.da.rflsneekrs.R;
 import com.da.rflsneekrs.adapters.FavGridAdapter;
-import com.da.rflsneekrs.adapters.ListGridAdapter;
 import com.da.rflsneekrs.decoration.SpaceGridDecoration;
 import com.da.rflsneekrs.models.FavItem;
 import com.da.rflsneekrs.models.Product;
 import com.da.rflsneekrs.settings.SessionManager;
 
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
-import static com.da.rflsneekrs.adapters.ListGridAdapter.SPAN_COUNT_TWO;
+import static com.da.rflsneekrs.adapters.FavGridAdapter.SPAN_COUNT_TWO;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -46,15 +47,18 @@ public class FavouritesFragment extends Fragment {
   private String mParam1;
   private String mParam2;
 
+  private static final String PRODUCT_KEY = "favStatus";
+  private static final int FAV_STATUS = 1;
+
+  private Query query;
+  private FirebaseAuth auth;
   private FirebaseDatabase fbDatabase;
   private DatabaseReference dbReference;
   private SessionManager userSession;
 
   private RecyclerView favRecyclerView;
   private FavGridAdapter favGridAdapter;
-  //private ListGridAdapter favGridAdapter;
   private List<FavItem> favItemList;
-  //private List<Product> favItemList;
   private GridLayoutManager gridLayoutManager;
 
   public FavouritesFragment() {
@@ -92,34 +96,30 @@ public class FavouritesFragment extends Fragment {
     // instantiate user session
     userSession = new SessionManager(requireActivity().getApplicationContext());
     // instantiate the layout for display the items
-    gridLayoutManager = new GridLayoutManager(getActivity(), 2);
+    gridLayoutManager = new GridLayoutManager(getActivity(), SPAN_COUNT_TWO);
     // Inflate the layout for this fragment
     View fragmentView = inflater.inflate(R.layout.fragment_favourites, container, false);
 
     favRecyclerView = (RecyclerView) fragmentView.findViewById(R.id.fav_recycler_view);
     favRecyclerView.setHasFixedSize(true);
     favRecyclerView.setLayoutManager(gridLayoutManager);
+    // instantiate authorization
+    auth = FirebaseAuth.getInstance();
     fbDatabase = FirebaseDatabase.getInstance();
-    dbReference = fbDatabase.getReference("FavouriteItem");
-    //dbReference = fbDatabase.getReference("FavouriteItem");
+    dbReference = fbDatabase.getReference("FavouriteItem").child(Objects.requireNonNull(auth.getUid()));
+    query = dbReference.orderByChild(PRODUCT_KEY).equalTo(FAV_STATUS);
 
-    // add item touch helper
-    ItemTouchHelper itemTouchHelper = new ItemTouchHelper(simpleCallback);
-    // set swipe to recyclerview
-    itemTouchHelper.attachToRecyclerView(favRecyclerView);
-
-    //loadData();
     return fragmentView;
   }
 
   @Override
   public void onStart() {
     super.onStart();
-    /*if (favItemList != null) {
+    if (favItemList != null) {
       favItemList.clear();
-    }*/
+    }
     // Get List Products from the database
-    dbReference.addValueEventListener(new ValueEventListener() {
+    query.addValueEventListener(new ValueEventListener() {
       @Override
       public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
         favItemList = new ArrayList<>();
@@ -137,22 +137,4 @@ public class FavouritesFragment extends Fragment {
       }
     });
   }
-
-  private ItemTouchHelper.SimpleCallback simpleCallback = new ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT) {
-    @Override
-    public boolean onMove(@NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder, @NonNull RecyclerView.ViewHolder target) {
-      return false;
-    }
-
-    @Override
-    public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int direction) {
-      final int position = viewHolder.getAdapterPosition(); // get position which is swipe
-      final FavItem favItem = favItemList.get(position);
-      if (direction == ItemTouchHelper.LEFT) { //if swipe left
-        favGridAdapter.notifyItemRemoved(position); // item removed from recyclerview
-        favItemList.remove(position); //then remove item
-        //favDB.remove_fav(favItem.getKey_id()); // remove item from database
-      }
-    }
-  };
 }
