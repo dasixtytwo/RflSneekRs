@@ -125,7 +125,11 @@ public class ListGridAdapter extends RecyclerView.Adapter<ListGridAdapter.ListGr
       }
       // instantiate database
       fbDatabase = FirebaseDatabase.getInstance();
-      dbReference = fbDatabase.getReference("FavouriteItem");
+      if (userSession.getLogin() == null) {
+        dbReference = fbDatabase.getReference("FavouriteItem");
+      } else {
+        dbReference = fbDatabase.getReference("FavouriteItem").child(Objects.requireNonNull(auth.getUid()));
+      }
 
       // Setting share button
       imgShare = ItemView.findViewById(R.id.share_btn);
@@ -193,11 +197,19 @@ public class ListGridAdapter extends RecyclerView.Adapter<ListGridAdapter.ListGr
       if (productItem.getFavStatus() == 0){
         // set the status of favorite to 1
         productItem.setFavStatus(1);
+        userSession.setIconFav(true);
         Map<String, FavItem> favProduct = new HashMap<>();
-        favProduct.put(productItem.getKeyId(), new FavItem(productItem.getImage(), productItem.getKeyId(), productItem.getFavStatus()));
+        favProduct.put(productItem.getKeyId(), new FavItem(
+            productItem.getKeyId(),
+            productItem.getName(),
+            productItem.getBrand(),
+            productItem.getDescription(),
+            productItem.getImage(),
+            productItem.getPrice(),
+            productItem.getFavStatus()));
         dbReference.setValue(favProduct);
-        imgFavourite.setImageResource(R.drawable.ic_favorite_red);
         imgFavourite.setSelected(true);
+        imgFavourite.setImageResource(R.drawable.ic_favorite_full);
 
         upFavRefLike.runTransaction(new Transaction.Handler() {
           @NonNull
@@ -229,10 +241,11 @@ public class ListGridAdapter extends RecyclerView.Adapter<ListGridAdapter.ListGr
         });
       } else if (productItem.getFavStatus() == 1) {
         productItem.setFavStatus(0);
+        userSession.setIconFav(false);
         Map<String, Object> userUpdates = new HashMap<>();
-        userUpdates.put(productItem.getKeyId(), new FavItem(null, null, 0));
+        userUpdates.put(productItem.getKeyId(), new FavItem(null, null, null, null,
+            null, null, 0));
         dbReference.updateChildren(userUpdates);
-
         imgFavourite.setImageResource(R.drawable.ic_favorite);
         imgFavourite.setSelected(false);
 
